@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XShala - Resume & Job Portal Assistance</title>
+  <style>
+    /* ===================================
+        Base Styling & Variables
+        ===================================
+    */
+    :root {
+        /* Color Palette - Day & Night */
+        --primary-bg: #0a0a0a;
+        --secondary-bg: #1a1a2e;
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --accent-cyan: #00ffff;
+        --accent-magenta: #ff00ff;
+        --accent-green: #00ff00;
+        --card-bg: rgba(0, 0, 0, 0.7);
+        --card-border-cyan: rgba(0, 255, 255, 0.3);
+        --card-border-magenta: rgba(255, 0, 255, 0.3);
+        --card-border-green: rgba(0, 255, 0, 0.3);
+        --logo-text-shadow: 0 0 20px var(--accent-cyan);
+        --logo-accent-color: var(--accent-cyan);
+        --header-bg: rgba(10, 10, 10, 0.95);
+        --header-border: 2px solid var(--accent-cyan);
+        --footer-bg: rgba(0, 0, 0, 0.95);
+        --btn-primary-start: #00ffff;
+        --btn-primary-end: #0080ff;
+    }
+
+    /* Day Theme */
+    :root.theme-day {
+        --primary-bg: #f0f2f5;
+        --secondary-bg: #e2e4e8;
+        --text-primary: #1a1a1a;
+        --text-secondary: #555555;
+        --accent-cyan: #0080ff;
+        --accent-magenta: #ff6600;
+        --accent-green: #008800;
+        --card-bg: rgba(255, 255, 255, 0.8);
+        --card-border-cyan: rgba(0, 128, 255, 0.3);
+        --card-border-magenta: rgba(255, 102, 0, 0.3);
+        --card-border-green: rgba(0, 136, 0, 0.3);
+        --logo-text-shadow: none;
+        --logo-accent-color: var(--text-primary);
+        --header-bg: rgba(255, 255, 255, 0.95);
+        --header-border: 2px solid var(--accent-cyan);
+        --footer-bg: rgba(255, 255, 255, 0.95);
+        --btn-primary-start: #0080ff;
+        --btn-primary-end: #0055aa;
+    }
+
+    /* ===================================
+        Global & Utility
+        ===================================
+    */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--primary-bg);
+      transition: background 0.5s ease, color 0.5s ease;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      padding: 80px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    p {
+        line-height: 1.6;
+        color: var(--text-secondary);
+        opacity: 0.9;
+    }
+    ul.list-style-none {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    ul.list-style-none li {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 1.2rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, var(--btn-primary-start), var(--btn-primary-end));
+      color: #000;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+    }
+    
+    .theme-day .btn-primary:hover {
+        box-shadow: 0 15px 35px rgba(0, 128, 255, 0.4);
+    }
+    
+    .btn-secondary {
+        background: transparent;
+        color: var(--accent-cyan);
+        border: 2px solid var(--accent-cyan);
+    }
+
+    .btn-secondary:hover {
+        background: var(--accent-cyan);
+        color: #000;
+        transform: translateY(-5px);
+    }
+
+    .mode-toggle-btn, .language-btn {
+        background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        color: #000;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .mode-toggle-btn {
+        font-size: 1.2rem;
+        padding: 0.4rem;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+        box-shadow: none;
+    }
+
+    .mode-toggle-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    }
+
+    .language-btn.active {
+        background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+        box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    }
+    
+    .theme-day .language-btn.active {
+        background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+    }
+
+
+    /* ===================================
+        Header & Navigation
+        ===================================
+    */
+    header {
+      background: var(--header-bg);
+      backdrop-filter: blur(15px);
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 15px 0;
+      border-bottom: 2px solid var(--header-border);
+      transition: background-color 0.5s ease, border-bottom 0.5s ease;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      text-shadow: var(--logo-text-shadow);
+    }
+
+    .logo span {
+      color: var(--logo-accent-color);
+      animation: neonPulse 2s ease-in-out infinite alternate;
+    }
+    
+    .theme-day .logo span {
+        animation: none;
+    }
+
+    @keyframes neonPulse {
+        0% { text-shadow: 0 0 20px var(--accent-cyan); }
+        100% { text-shadow: 0 0 30px var(--accent-cyan), 0 0 40px var(--accent-cyan); }
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+
+    .language-selector {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    /* ===================================
+        Animated Background & Effects
+        ===================================
+    */
+    .animated-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+    }
+
+    .theme-day .animated-background {
+        background: linear-gradient(135deg, #f0f2f5 0%, #e2e4e8 25%, #d1d4d8 50%, #c1c4c8 75%, #b1b4b8 100%);
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* Floating Elements */
+      /* Enhanced Floating STEM Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(0, 255, 255, 0.3);
+            font-size: 4rem;
+            animation: float 25s infinite linear;
+            text-shadow: 0 0 20px currentColor;
+        }
+        
+        /* Day Mode Floating Elements */
+        .theme-day .floating-element {
+            color: rgba(0, 128, 255, 0.3);
+            text-shadow: none;
+        }
+
+        .floating-element:nth-child(odd) {
+            animation-direction: reverse;
+            color: rgba(255, 0, 255, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(odd) {
+            color: rgba(255, 102, 0, 0.3);
+        }
+
+        .floating-element:nth-child(3n) {
+            color: rgba(0, 255, 0, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(3n) {
+            color: rgba(0, 136, 0, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(0.7);
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) rotate(324deg) scale(0.7);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Neon Circuit Lines */
+        .circuit-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            height: 2px;
+            animation: circuitFlow 8s infinite;
+        }
+
+        .circuit-line:nth-child(1) {
+            top: 20%;
+            width: 100%;
+            animation-delay: 0s;
+        }
+
+        .circuit-line:nth-child(2) {
+            top: 60%;
+            width: 100%;
+            animation-delay: -2s;
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent);
+        }
+
+        .circuit-line:nth-child(3) {
+            top: 80%;
+            width: 100%;
+            animation-delay: -4s;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+
+        @keyframes circuitFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* DNA Helix Enhanced */
+        .dna-helix {
+            position: fixed;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 400px;
+            z-index: -1;
+        }
+
+        .dna-strand {
+            position: absolute;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+            border-radius: 3px;
+            animation: dnaRotate 12s infinite linear;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        .theme-day .dna-strand {
+            box-shadow: none;
+        }
+
+        .dna-strand:nth-child(1) {
+            left: 30px;
+            transform-origin: center;
+        }
+
+        .dna-strand:nth-child(2) {
+            right: 30px;
+            animation-delay: -6s;
+            background: linear-gradient(180deg, var(--accent-magenta), var(--accent-green));
+        }
+
+        @keyframes dnaRotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+    /* ===================================
+        Hero Section
+        ===================================
+    */
+    .hero {
+      text-align: center;
+      padding: 150px 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+    
+    .theme-day .hero h1 {
+      animation: none;
+      -webkit-text-fill-color: initial;
+      background: none;
+    }
+
+    @keyframes titleGlow {
+        0% { filter: brightness(1); }
+        100% { filter: brightness(1.3); text-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      max-width: 600px;
+      margin: 0 auto;
+      margin-bottom: 3rem;
+      animation: fadeInUp 1s ease-out 0.5s both;
+    }
+    
+    .cta-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        animation: fadeInUp 1s ease-out 1s both;
+    }
+    
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .card {
+        background: var(--card-bg);
+        padding: 2rem;
+        border: 1px solid var(--accent-cyan);
+        border-radius: 10px;
+        text-align: center;
+        transition: .3s;
+    }
+
+    .card:hover {
+        background: rgba(0,255,255,0.1);
+        transform: translateY(-8px);
+    }
+
+    .card h3 {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+    }
+
+    .card p {
+        font-size: 0.9rem;
+    }
+
+    /* ===================================
+        Services/Programs Section
+        ===================================
+    */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 8px 32px 0 rgba(0, 255, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease, border 0.5s ease;
+      border: 1px solid var(--card-border-cyan);
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+    }
+    
+    .theme-day .service-card:hover {
+      box-shadow: 0 20px 40px rgba(0, 128, 255, 0.2);
+    }
+
+    .service-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .theme-day .service-card h3 {
+      background: none;
+      -webkit-text-fill-color: initial;
+      color: var(--text-primary);
+    }
+
+    .service-card p {
+      margin-bottom: 25px;
+    }
+    .service-card ul {
+        text-align: left;
+    }
+
+    /* ===================================
+        About/Features Section
+        ===================================
+    */
+    .section-title {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 20px;
+        background: -webkit-linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    .theme-day .section-title {
+        animation: none;
+        -webkit-text-fill-color: initial;
+        background: none;
+    }
+
+    .features p {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 1.1rem;
+    }
+    
+    /* ===================================
+        New Section for Index Page
+        ===================================
+    */
+    .new-features {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      padding: 4rem 0;
+      margin: 2rem 0;
+      border-radius: 20px;
+      border: 1px solid var(--card-border-green);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .feature-item {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(0, 255, 0, 0.1);
+        border-radius: 15px;
+        border: 1px solid var(--card-border-green);
+        transition: all 0.3s ease;
+    }
+    
+    .theme-day .feature-item {
+        background: rgba(0, 136, 0, 0.1);
+    }
+
+    .feature-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 255, 0, 0.2);
+        background: rgba(0, 255, 0, 0.2);
+    }
+    
+    .theme-day .feature-item:hover {
+        box-shadow: 0 20px 40px rgba(0, 136, 0, 0.2);
+        background: rgba(0, 136, 0, 0.2);
+    }
+
+    .feature-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        color: var(--accent-green);
+        animation: pulse 2s infinite;
+    }
+    
+    /* Form Styling */
+    .admission-form-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      border: 1px solid var(--accent-cyan);
+    }
+
+    .admission-form-container input,
+    .admission-form-container textarea {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border-cyan);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .theme-day .admission-form-container input,
+    .theme-day .admission-form-container textarea {
+        background: rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--card-border-cyan);
+        color: var(--text-primary);
+    }
+
+    .admission-form-container input:focus,
+    .admission-form-container textarea:focus {
+      outline: none;
+      box-shadow: 0 0 10px var(--accent-cyan);
+      border-color: var(--accent-magenta);
+    }
+
+    .admission-form-container ::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.7;
+    }
+
+    /* ===================================
+        Footer
+        ===================================
+    */
+    footer {
+      background: var(--footer-bg);
+      backdrop-filter: blur(10px);
+      padding: 40px 0;
+      text-align: center;
+      border-top: 2px solid var(--accent-cyan);
+      transition: background-color 0.5s ease, border-top 0.5s ease;
+    }
+
+    footer h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: var(--text-primary);
+    }
+
+    footer p {
+        margin-bottom: 10px;
+        opacity: 0.7;
+    }
+
+    .footer-bottom {
+        margin-top: 30px;
+        border-top: 1px solid var(--card-border-cyan);
+        padding-top: 20px;
+    }
+
+    /* ===================================
+        Language-specific visibility
+        ===================================
+    */
+    .hindi, .marathi { display: none; }
+    body.lang-hindi .english, body.lang-hindi .marathi { display: none; }
+    body.lang-hindi .hindi { display: inline; }
+
+    body.lang-marathi .english, body.lang-marathi .hindi { display: none; }
+    body.lang-marathi .marathi { display: inline; }
+
+    body.lang-hindi .hindi-block { display: block; }
+    body.lang-marathi .marathi-block { display: block; }
+    .hindi-block, .marathi-block { display: none; }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 0.9;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="animated-background"></div>
+  <div class="circuit-lines">
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+  </div>
+  <div class="floating-elements">
+        <div class="floating-element" style="left: 5%; animation-delay: 0s;">🧬</div>
+        <div class="floating-element" style="left: 15%; animation-delay: -2s;">⚛️</div>
+        <div class="floating-element" style="left: 25%; animation-delay: -4s;">🔬</div>
+        <div class="floating-element" style="left: 35%; animation-delay: -6s;">🧪</div>
+        <div class="floating-element" style="left: 45%; animation-delay: -8s;">⚙️</div>
+        <div class="floating-element" style="left: 55%; animation-delay: -10s;">💡</div>
+        <div class="floating-element" style="left: 65%; animation-delay: -12s;">🔭</div>
+        <div class="floating-element" style="left: 75%; animation-delay: -14s;">📐</div>
+        <div class="floating-element" style="left: 85%; animation-delay: -16s;">∑</div>
+        <div class="floating-element" style="left: 95%; animation-delay: -18s;">π</div>
+        <div class="floating-element" style="left: 10%; animation-delay: -1s;">∞</div>
+        <div class="floating-element" style="left: 20%; animation-delay: -3s;">△</div>
+        <div class="floating-element" style="left: 30%; animation-delay: -5s;">∮</div>
+        <div class="floating-element" style="left: 40%; animation-delay: -7s;">∫</div>
+        <div class="floating-element" style="left: 50%; animation-delay: -9s;">🎯</div>
+        <div class="floating-element" style="left: 60%; animation-delay: -11s;">🚀</div>
+        <div class="floating-element" style="left: 70%; animation-delay: -13s;">🔋</div>
+        <div class="floating-element" style="left: 80%; animation-delay: -15s;">💻</div>
+        <div class="floating-element" style="left: 90%; animation-delay: -17s;">🌐</div>
+    </div>
+  <div class="dna-helix" >
+    <div class="dna-strand"></div>
+    <div class="dna-strand"></div>
+  </div>
+
+  <header>
+    <nav class="container">
+      <a href="#" class="logo"><span>X</span>Shala</a>
+      <ul class="nav-links">
+        <li>
+          <a href="#hero" class="english">Home</a>
+          <a href="#hero" class="hindi">होम</a>
+          <a href="#hero" class="marathi">मुखपृष्ठ</a>
+        </li>
+        <li>
+          <a href="#about" class="english">About</a>
+          <a href="#about" class="hindi">हमारे बारे में</a>
+          <a href="#about" class="marathi">आमच्याबद्दल</a>
+        </li>
+        <li>
+          <a href="#courses" class="english">Services</a>
+          <a href="#courses" class="hindi">सेवाएँ</a>
+          <a href="#courses" class="marathi">सेवा</a>
+        </li>
+        <li>
+          <a href="#admission" class="english">Consultation</a>
+          <a href="#admission" class="hindi">परामर्श</a>
+          <a href="#admission" class="marathi">सल्ला</a>
+        </li>
+        <li>
+          <a href="#faqs" class="english">FAQs</a>
+          <a href="#faqs" class="hindi">सामान्य प्रश्न</a>
+          <a href="#faqs" class="marathi">प्रश्नोत्तरे</a>
+        </li>
+        <li>
+          <a href="#contact" class="english">Contact</a>
+          <a href="#contact" class="hindi">संपर्क</a>
+          <a href="#contact" class="marathi">संपर्क</a>
+        </li>
+      </ul>
+      <div class="language-selector">
+        <button id="mode-toggle-btn" class="mode-toggle-btn">🌙</button>
+        <button class="language-btn" data-lang="english">EN</button>
+        <button class="language-btn" data-lang="hindi">हि</button>
+        <button class="language-btn" data-lang="marathi">म</button>
+      </div>
+    </nav>
+  </header>
+
+  <section id="hero" class="hero">
+    <div class="container">
+      <h1>
+        <span class="english">Craft Your Resume & Land Your Dream Job</span>
+        <span class="hindi">अपना रेज़्यूमे बनाएँ और अपनी ड्रीम जॉब पाएँ</span>
+        <span class="marathi">तुमचा रेझ्युमे तयार करा आणि तुमची ड्रीम नोकरी मिळवा</span>
+      </h1>
+      <p>
+        <span class="english">We help you build professional resumes, optimize your job search, and navigate top job portals to accelerate your career.</span>
+        <span class="hindi">हम आपको पेशेवर रेज़्यूमे बनाने, नौकरी की खोज को अनुकूलित करने और शीर्ष जॉब पोर्टलों को नेविगेट करने में मदद करते हैं ताकि आपके करियर को गति मिले।</span>
+        <span class="marathi">तुमचा करिअर वेगवान करण्यासाठी आम्ही तुम्हाला व्यावसायिक रेझ्युमे तयार करण्यास, तुमची नोकरी शोध सुधारण्यास आणि प्रमुख जॉब पोर्टल्सवर मार्गदर्शन करण्यास मदत करतो.</span>
+      </p>
+      <div class="cta-buttons">
+        <a href="#courses" class="btn btn-primary">
+          <span class="english">Explore Services</span>
+          <span class="hindi">सेवाएँ देखें</span>
+          <span class="marathi">सेवा पहा</span>
+        </a>
+        <a href="#admission" class="btn btn-secondary">
+          <span class="english">Request Consultation</span>
+          <span class="hindi">परामर्श का अनुरोध करें</span>
+          <span class="marathi">सल्ल्यासाठी विनंती करा</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <section id="about">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="english">About Us</span>
+          <span class="hindi">हमारे बारे में</span>
+          <span class="marathi">आमच्याबद्दल</span>
+        </h2>
+        <p style="max-width:900px;margin:auto;text-align:center">
+          <span class="english">XShala specializes in empowering job seekers with the tools and strategies needed to stand out in a competitive market. We offer personalized guidance to showcase your skills effectively.</span>
+          <span class="hindi">एक्सशाला प्रतिस्पर्धी बाजार में नौकरी चाहने वालों को अलग दिखने के लिए आवश्यक उपकरणों और रणनीतियों के साथ सशक्त बनाने में माहिर है। हम आपके कौशल को प्रभावी ढंग से प्रदर्शित करने के लिए व्यक्तिगत मार्गदर्शन प्रदान करते हैं।</span>
+          <span class="marathi">एक्सशाला स्पर्धात्मक बाजारपेठेत नोकरी शोधकांना वेगळे दिसण्यासाठी आवश्यक साधने आणि धोरणांनी सक्षम बनवण्यात माहिर आहे. आम्ही तुमची कौशल्ये प्रभावीपणे दाखवण्यासाठी वैयक्तिक मार्गदर्शन देतो.</span>
+        </p>
+      </div>
+  </section>
+
+  <section id="benefits" class="new-features">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="english">Our Specialized Services</span>
+        <span class="hindi">हमारी विशेष सेवाएँ</span>
+        <span class="marathi">आमच्या विशेष सेवा</span>
+      </h2>
+      <div class="features-grid">
+          <div class="feature-item">
+              <span class="feature-icon">📄</span>
+              <h3>
+                  <span class="english">Professional Resume Writing</span>
+                  <span class="hindi">पेशेवर रेज़्यूमे लेखन</span>
+                  <span class="marathi">व्यावसायिक रेझ्युमे लेखन</span>
+              </h3>
+              <p>
+                  <span class="english">Get a professionally written resume that highlights your achievements and is optimized for applicant tracking systems (ATS).</span>
+                  <span class="hindi">एक पेशेवर रूप से लिखा गया रेज़्यूमे प्राप्त करें जो आपकी उपलब्धियों को उजागर करता है और आवेदक ट्रैकिंग सिस्टम (एटीएस) के लिए अनुकूलित है।</span>
+                  <span class="marathi">तुमच्या कर्तृत्वावर जोर देणारा आणि एटीएस (ATS) साठी अनुकूल असा व्यावसायिक रेझ्युमे मिळवा.</span>
+              </p>
+          </div>
+          <div class="feature-item">
+              <span class="feature-icon">✉️</span>
+              <h3>
+                  <span class="english">Customized Cover Letters</span>
+                  <span class="hindi">अनुकूलित कवर लेटर</span>
+                  <span class="marathi">अनुकूलित कव्हर लेटर</span>
+              </h3>
+              <p>
+                  <span class="english">Receive a tailored cover letter for each job application, designed to catch the eye of hiring managers and land you an interview.</span>
+                  <span class="hindi">प्रत्येक नौकरी के आवेदन के लिए एक अनुकूलित कवर लेटर प्राप्त करें, जो भर्ती प्रबंधकों का ध्यान आकर्षित करने और आपको एक साक्षात्कार दिलाने के लिए डिज़ाइन किया गया है।</span>
+                  <span class="marathi">प्रत्येक नोकरीच्या अर्जासाठी एक अनुकूल कव्हर लेटर मिळवा, जे भरती व्यवस्थापकांचे लक्ष वेधून घेईल आणि तुम्हाला मुलाखत मिळवून देईल.</span>
+              </p>
+          </div>
+          <div class="feature-item">
+              <span class="feature-icon">🔗</span>
+              <h3>
+                  <span class="english">LinkedIn Profile Optimization</span>
+                  <span class="hindi">लिंक्डइन प्रोफाइल अनुकूलन</span>
+                  <span class="marathi">लिंक्डइन प्रोफाइल ऑप्टिमायझेशन</span>
+              </h3>
+              <p>
+                  <span class="english">Enhance your professional brand with a fully optimized LinkedIn profile that attracts recruiters and builds your network.</span>
+                  <span class="hindi">एक पूरी तरह से अनुकूलित लिंक्डइन प्रोफाइल के साथ अपने पेशेवर ब्रांड को बढ़ाएं जो भर्तीकर्ताओं को आकर्षित करता है और आपके नेटवर्क का निर्माण करता है।</span>
+                  <span class="marathi">तुमची व्यावसायिक ओळख सुधारण्यासाठी एक पूर्णपणे अनुकूलित लिंक्डइन प्रोफाइल तयार करा, जे भरती करणाऱ्यांना आकर्षित करेल आणि तुमचे नेटवर्क वाढवेल.</span>
+              </p>
+          </div>
+          <div class="feature-item">
+              <span class="feature-icon">🌐</span>
+              <h3>
+                  <span class="english">Job Portal Navigation</span>
+                  <span class="hindi">जॉब पोर्टल नेविगेशन</span>
+                  <span class="marathi">जॉब पोर्टल मार्गदर्शन</span>
+              </h3>
+              <p>
+                  <span class="english">Learn to effectively use platforms like Naukri, LinkedIn, and Indeed to find relevant job openings and manage your applications efficiently.</span>
+                  <span class="hindi">संबंधित नौकरी के अवसरों को खोजने और अपने आवेदनों को कुशलतापूर्वक प्रबंधित करने के लिए Naukri, LinkedIn और Indeed जैसे प्लेटफार्मों का प्रभावी ढंग से उपयोग करना सीखें।</span>
+                  <span class="marathi">संबंधित नोकरी शोधण्यासाठी आणि तुमचे अर्ज कार्यक्षमतेने व्यवस्थापित करण्यासाठी Naukri, LinkedIn आणि Indeed सारख्या प्लॅटफॉर्मचा प्रभावीपणे वापर करायला शिका.</span>
+              </p>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="courses" class="features">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="english">Our Service Packages</span>
+        <span class="hindi">हमारी सेवा पैकेज</span>
+        <span class="marathi">आमचे सेवा पॅकेजेस</span>
+      </h2>
+      <p>
+        <span class="english">Choose from our tailored packages to fit your specific career needs.</span>
+        <span class="hindi">अपनी विशिष्ट करियर आवश्यकताओं के अनुरूप हमारे अनुकूलित पैकेजों में से चुनें।</span>
+        <span class="marathi">तुमच्या विशिष्ट करिअर गरजा पूर्ण करण्यासाठी आमच्या तयार पॅकेजेसची निवड करा.</span>
+      </p>
+      <div class="services-grid">
+          <div class="service-card">
+              <h3>
+                  <span class="english">Resume & Cover Letter</span>
+                  <span class="hindi">रेज़्यूमे और कवर लेटर</span>
+                  <span class="marathi">रेझ्युमे आणि कव्हर लेटर</span>
+              </h3>
+              <p>
+                  <span class="english">Get a complete, professionally written resume and a matching cover letter to apply for new roles.</span>
+                  <span class="hindi">नए पदों के लिए आवेदन करने के लिए एक पूर्ण, पेशेवर रूप से लिखा गया रेज़्यूमे और एक मिलान वाला कवर लेटर प्राप्त करें।</span>
+                  <span class="marathi">नवीन पदांसाठी अर्ज करण्यासाठी एक पूर्ण, व्यावसायिकरित्या लिहिलेला रेझ्युमे आणि एक जुळणारे कव्हर लेटर मिळवा.</span>
+              </p>
+          </div>
+          <div class="service-card">
+              <h3>
+                  <span class="english">Job Portal & Profile</span>
+                  <span class="hindi">जॉब पोर्टल और प्रोफाइल</span>
+                  <span class="marathi">जॉब पोर्टल आणि प्रोफाइल</span>
+              </h3>
+              <p>
+                  <span class="english">Guidance on how to find jobs efficiently and a fully optimized LinkedIn profile to attract recruiters.</span>
+                  <span class="hindi">नौकरियाँ कुशलतापूर्वक कैसे खोजें, इस पर मार्गदर्शन और भर्तीकर्ताओं को आकर्षित करने के लिए एक पूरी तरह से अनुकूलित लिंक्डइन प्रोफाइल।</span>
+                  <span class="marathi">नोकरी प्रभावीपणे कशी शोधायची याबद्दल मार्गदर्शन आणि भरती करणाऱ्यांना आकर्षित करण्यासाठी एक पूर्णपणे अनुकूलित लिंक्डइन प्रोफाइल.</span>
+              </p>
+          </div>
+          <div class="service-card">
+              <h3>
+                  <span class="english">Full Career Package</span>
+                  <span class="hindi">पूर्ण करियर पैकेज</span>
+                  <span class="marathi">पूर्ण करिअर पॅकेज</span>
+              </h3>
+              <p>
+                  <span class="english">All-inclusive package with resume, cover letter, and expert support on job searching and interview preparation.</span>
+                  <span class="hindi">रेज़्यूमे, कवर लेटर और नौकरी की खोज और साक्षात्कार की तैयारी पर विशेषज्ञ समर्थन के साथ एक सर्व-समावेशी पैकेज।</span>
+                  <span class="marathi">रेझ्युमे, कव्हर लेटर, आणि नोकरी शोध आणि मुलाखत तयारीसाठी तज्ञ समर्थनासह सर्व-समावेशक पॅकेज.</span>
+              </p>
+          </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="admission">
+    <div class="container">
+        <h2 class="section-title">
+          <span class="english">Request a Consultation</span>
+          <span class="hindi">परामर्श का अनुरोध करें</span>
+          <span class="marathi">सल्ल्याची विनंती करा</span>
+        </h2>
+        <div class="admission-form-container">
+            <form action="#" method="POST">
+                <input type="text" 
+                       placeholder="Your Name / आपका नाम / तुमचे नाव" 
+                       required>
+                <input type="email" 
+                       placeholder="Your Email / आपका ईमेल / तुमचा ईमेल" 
+                       required>
+                <textarea rows="5" 
+                          placeholder="Your Message (e.g. current role, career goals) / आपका संदेश (जैसे वर्तमान भूमिका, करियर लक्ष्य) / तुमचा संदेश (उदा. सध्याची भूमिका, करिअरचे ध्येय)" 
+                          required></textarea>
+                <button type="submit" class="btn btn-primary">
+                    <span class="english">Submit Request</span>
+                    <span class="hindi">अनुरोध जमा करें</span>
+                    <span class="marathi">विनंती सादर करा</span>
+                </button>
+            </form>
+        </div>
+    </div>
+  </section>
+
+  <section id="faqs">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="english">FAQs</span>
+        <span class="hindi">सामान्य प्रश्न</span>
+        <span class="marathi">प्रश्नोत्तरे</span>
+      </h2>
+      <div class="grid">
+        <div class="card">
+          <h3>
+            <span class="english">How long does the process take?</span>
+            <span class="hindi">प्रक्रिया में कितना समय लगता है?</span>
+            <span class="marathi">प्रक्रियेला किती वेळ लागतो?</span>
+          </h3>
+        </div>
+        <div class="card">
+          <h3>
+            <span class="english">Can you help with my LinkedIn profile?</span>
+            <span class="hindi">क्या आप मेरी लिंक्डइन प्रोफाइल में मदद कर सकते हैं?</span>
+            <span class="marathi">तुम्ही माझ्या लिंक्डइन प्रोफाइलमध्ये मदत करू शकता का?</span>
+          </h3>
+        </div>
+        <div class="card">
+          <h3>
+            <span class="english">Do you guarantee job placement?</span>
+            <span class="hindi">क्या आप नौकरी की गारंटी देते हैं?</span>
+            <span class="marathi">तुम्ही नोकरीची हमी देता का?</span>
+          </h3>
+        </div>
+        <div class="card">
+          <h3>
+            <span class="english">How do I share my current resume?</span>
+            <span class="hindi">मैं अपना वर्तमान रेज़्यूमे कैसे साझा करूँ?</span>
+            <span class="marathi">मी माझा सध्याचा रेझ्युमे कसा शेअर करू?</span>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="container">
+      <h3>
+        <span class="english">Contact</span>
+        <span class="hindi">संपर्क</span>
+        <span class="marathi">संपर्क</span>
+      </h3>
+      <p>Email: contact@xshala.edu</p>
+      <p>Phone: +91 98765 43210</p>
+      <div class="footer-bottom">
+        <p>
+          <span class="english">© 2025 XShala. Empowering Careers for All.</span>
+          <span class="hindi">© 2025 एक्सशाला। सभी के लिए करियर को सशक्त बनाना।</span>
+          <span class="marathi">© 2025 एक्सशाला. सर्वांसाठी करिअरला सक्षम करणे.</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const MODE_KEY = 'xshala-mode';
+    const LANG_KEY = 'xshala-lang';
+
+    let currentMode = 'night';
+    let currentLanguage = 'english';
+
+    function applyMode(mode) {
+      const root = document.documentElement;
+      if (mode === 'day') {
+        root.classList.add('theme-day');
+        document.body.classList.add('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '☀️';
+        currentMode = 'day';
+      } else {
+        root.classList.remove('theme-day');
+        document.body.classList.remove('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '🌙';
+        currentMode = 'night';
+      }
+      localStorage.setItem(MODE_KEY, currentMode);
+    }
+
+    function toggleMode() {
+      applyMode(currentMode === 'night' ? 'day' : 'night');
+    }
+
+    function setLanguage(lang) {
+      document.body.className = document.body.className.replace(/\blang-\w+\b/g, '').trim();
+      if (lang !== 'english') {
+        document.body.classList.add('lang-' + lang);
+      }
+      currentLanguage = lang;
+      localStorage.setItem(LANG_KEY, currentLanguage);
+
+      document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+      const btn = document.querySelector(`.language-btn[data-lang="${lang}"]`);
+      if (btn) btn.classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // restore saved preferences
+      const savedMode = localStorage.getItem(MODE_KEY);
+      const savedLang = localStorage.getItem(LANG_KEY);
+
+      applyMode(savedMode || 'night');
+      setLanguage(savedLang || 'english');
+
+      document.getElementById('mode-toggle-btn').addEventListener('click', toggleMode);
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+      });
+
+      // smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

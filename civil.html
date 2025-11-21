@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XShala - Civil Services Guidance</title>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Default Dark Mode Variables */
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent-cyan: #00ffff;
+            --accent-magenta: #ff00ff;
+            --accent-green: #00ff00;
+            --card-bg: rgba(0, 0, 0, 0.7);
+            --card-border-cyan: rgba(0, 255, 255, 0.3);
+            --card-border-magenta: rgba(255, 0, 255, 0.3);
+            --card-border-green: rgba(0, 255, 0, 0.3);
+            --card-hover-bg-cyan: rgba(0, 255, 255, 0.15);
+            --card-hover-bg-magenta: rgba(255, 0, 255, 0.15);
+            --card-hover-bg-green: rgba(0, 255, 0, 0.15);
+            --logo-text-shadow: 0 0 20px var(--accent-cyan);
+            --logo-accent-color: var(--accent-cyan);
+            --header-bg: rgba(10, 10, 10, 0.95);
+            --header-border: 2px solid var(--accent-cyan);
+            --footer-bg: rgba(0, 0, 0, 0.95);
+        }
+
+        /* Day Mode Variables */
+        :root.theme-day {
+            --primary-bg: #f0f2f5;
+            --secondary-bg: #e2e4e8;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --accent-cyan: #0080ff;
+            --accent-magenta: #ff6600;
+            --accent-green: #008800;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border-cyan: rgba(0, 128, 255, 0.3);
+            --card-border-magenta: rgba(255, 102, 0, 0.3);
+            --card-border-green: rgba(0, 136, 0, 0.3);
+            --card-hover-bg-cyan: rgba(0, 128, 255, 0.1);
+            --card-hover-bg-magenta: rgba(255, 102, 0, 0.1);
+            --card-hover-bg-green: rgba(0, 136, 0, 0.1);
+            --logo-text-shadow: none;
+            --logo-accent-color: var(--text-primary);
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --header-border: 2px solid var(--accent-cyan);
+            --footer-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* Animated Dark STEM Background (Kept for visual style) */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        .theme-day .animated-background {
+            background: linear-gradient(135deg, #f0f2f5 0%, #e2e4e8 25%, #d1d4d8 50%, #c1c4c8 75%, #b1b4b8 100%);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Enhanced Floating STEM Elements (Kept for visual style) */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(0, 255, 255, 0.3);
+            font-size: 4rem;
+            animation: float 25s infinite linear;
+            text-shadow: 0 0 20px currentColor;
+        }
+        
+        .theme-day .floating-element {
+            color: rgba(0, 128, 255, 0.3);
+            text-shadow: none;
+        }
+
+        .floating-element:nth-child(odd) {
+            animation-direction: reverse;
+            color: rgba(255, 0, 255, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(odd) {
+            color: rgba(255, 102, 0, 0.3);
+        }
+
+        .floating-element:nth-child(3n) {
+            color: rgba(0, 255, 0, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(3n) {
+            color: rgba(0, 136, 0, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(0.7);
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) rotate(324deg) scale(0.7);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Neon Circuit Lines */
+        .circuit-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            height: 2px;
+            animation: circuitFlow 8s infinite;
+        }
+
+        .circuit-line:nth-child(2) {
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent);
+        }
+
+        .circuit-line:nth-child(3) {
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+
+        @keyframes circuitFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* DNA Helix Enhanced */
+        .dna-helix {
+            position: fixed;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 400px;
+            z-index: -1;
+        }
+
+        .dna-strand {
+            position: absolute;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+            border-radius: 3px;
+            animation: dnaRotate 12s infinite linear;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        .theme-day .dna-strand {
+            box-shadow: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            background: var(--header-bg);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: var(--header-border);
+            transition: background-color 0.5s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            text-decoration: none;
+            position: relative;
+            text-shadow: var(--logo-text-shadow);
+        }
+
+        .logo span {
+            color: var(--logo-accent-color);
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+        
+        .theme-day .logo span {
+            animation: none;
+        }
+
+        @keyframes neonPulse {
+            0% { text-shadow: 0 0 20px var(--accent-cyan); }
+            100% { text-shadow: 0 0 30px var(--accent-cyan), 0 0 40px var(--accent-cyan); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .language-btn, .mode-toggle-btn {
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            color: #000;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mode-toggle-btn {
+            font-size: 1.2rem;
+            padding: 0.4rem;
+            border-radius: 50%;
+        }
+
+        .language-btn:hover, .mode-toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
+        }
+
+        .language-btn.active {
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.3); text-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
+        }
+        
+        .theme-day .hero h1 {
+            animation: none;
+            -webkit-text-fill-color: initial;
+            background: none;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-secondary);
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .btn {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-cyan), #0080ff);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-cyan);
+            color: var(--text-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+        }
+
+        /* Services Section - Main content blocks */
+        .services {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border: 1px solid var(--card-border-magenta);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid var(--card-border-cyan);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 280px; /* Increased min-height for uniform look with more text */
+        }
+        
+        .theme-day .service-card {
+            background: linear-gradient(135deg, rgba(0, 128, 255, 0.1), rgba(255, 102, 0, 0.1));
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 255, 255, 0.2);
+            border-color: var(--accent-cyan);
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-cyan);
+        }
+
+        .service-card ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        .service-card li {
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+            transition: transform 0.2s ease;
+            font-size: 1.1rem;
+        }
+
+        .service-card li:hover {
+            transform: translateX(5px);
+            color: var(--accent-cyan);
+        }
+
+        .service-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Strategy Section Styles */
+        .strategy-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border: 1px solid var(--card-border-green);
+        }
+        
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .strategy-card {
+            background: rgba(0, 255, 0, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--card-border-green);
+            transition: all 0.3s ease;
+            text-align: left;
+            min-height: 220px;
+        }
+        
+        .theme-day .strategy-card {
+            background: rgba(0, 136, 0, 0.1);
+        }
+
+        .strategy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 0, 0.2);
+            background: var(--card-hover-bg-green);
+        }
+
+        .strategy-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-green);
+        }
+
+        .strategy-card p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .strategy-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-green);
+            float: right;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--footer-bg);
+            backdrop-filter: blur(10px);
+            padding: 3rem 0 1rem;
+            margin-top: 2rem;
+            border-top: 2px solid var(--accent-cyan);
+            transition: background-color 0.5s ease;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+            font-size: 1.3rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--accent-cyan);
+            transform: translateX(5px);
+        }
+        
+        .theme-day .footer-section a:hover {
+            text-shadow: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border-cyan);
+            color: var(--text-secondary);
+        }
+
+        /* Language Toggle Styles */
+        .hindi, .marathi {
+            display: none;
+        }
+
+        body.lang-hindi .english {
+            display: none;
+        }
+
+        body.lang-hindi .hindi {
+            display: block;
+        }
+
+        body.lang-marathi .english {
+            display: none;
+        }
+
+        body.lang-marathi .marathi {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 80%;
+                max-width: 300px;
+            }
+
+            .floating-element {
+                font-size: 3rem;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+  </style>
+</head>
+<body>
+
+  <div class="animated-background"></div>
+
+  <div class="circuit-lines">
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+  </div>
+
+  <div class="floating-elements" aria-hidden="true">
+    <div class="floating-element" style="left: 5%; animation-delay: 0s;">🧭</div>
+    <div class="floating-element" style="left: 25%; animation-delay: -4s;">📚</div>
+    <div class="floating-element" style="left: 45%; animation-delay: -8s;">⚖️</div>
+    <div class="floating-element" style="left: 65%; animation-delay: -12s;">🎯</div>
+    <div class="floating-element" style="left: 85%; animation-delay: -16s;">💡</div>
+  </div>
+
+  <div class="dna-helix" aria-hidden="true">
+    <div class="dna-strand"></div>
+    <div class="dna-strand"></div>
+  </div>
+
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo" aria-label="XShala Home"><span>X</span>Shala</a>
+
+      <ul class="nav-links" role="navigation" aria-label="Main navigation">
+        <li>
+          <a href="index.html" class="english">Home</a>
+          <a href="index.html" class="hindi">होम</a>
+          <a href="index.html" class="marathi">होम</a>
+        </li>
+        <li>
+          <a href="#info" class="english">Civil Services</a>
+          <a href="#info" class="hindi">सिविल सेवा</a>
+          <a href="#info" class="marathi">नागरी सेवा</a>
+        </li>
+        <li>
+          <a href="#strategy" class="english">Strategy</a>
+          <a href="#strategy" class="hindi">रणनीति</a>
+          <a href="#strategy" class="marathi">धोरण</a>
+        </li>
+        <li>
+          <a href="#contact" class="english">Contact</a>
+          <a href="#contact" class="hindi">संपर्क</a>
+          <a href="#contact" class="marathi">संपर्क</a>
+        </li>
+      </ul>
+
+      <div class="language-selector" aria-label="Language and theme controls">
+        <button id="mode-toggle-btn" class="mode-toggle-btn" aria-label="Toggle day night">🌙</button>
+        <button class="language-btn active" data-lang="english" onclick="setLanguage('english')">EN</button>
+        <button class="language-btn" data-lang="hindi" onclick="setLanguage('hindi')">हि</button>
+        <button class="language-btn" data-lang="marathi" onclick="setLanguage('marathi')">म</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container">
+        <h1>
+          <span class="english">Civil Services Guidance</span>
+          <span class="hindi">सिविल सेवा मार्गदर्शन</span>
+          <span class="marathi">नागरी सेवा मार्गदर्शन</span>
+        </h1>
+        <p>
+          <span class="english">Preparation and comprehensive guidance for Civil Services exams: **UPSC, MPSC, State PSCs**, and other government service exams.</span>
+          <span class="hindi">सिविल सेवा परीक्षाओं के लिए तैयारी और व्यापक मार्गदर्शन: **UPSC, MPSC, राज्य PSCs**, और अन्य सरकारी सेवा परीक्षाएँ।</span>
+          <span class="marathi">नागरी सेवा परीक्षांसाठी तयारी आणि सर्वसमावेशक मार्गदर्शन: **UPSC, MPSC, राज्य PSCs**, व इतर सरकारी सेवा परीक्षा.</span>
+        </p>
+        <div class="cta-buttons">
+          <a href="#info" class="btn btn-primary">
+            <span class="english">Explore Exams</span>
+            <span class="hindi">परीक्षाएँ देखें</span>
+            <span class="marathi">परीक्षा शोधा</span>
+          </a>
+          <a href="#strategy" class="btn btn-secondary">
+            <span class="english">Preparation Strategy</span>
+            <span class="hindi">तैयारी की रणनीति</span>
+            <span class="marathi">तयारीचे धोरण</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="info" class="services">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="english">Civil Services Exams</span>
+          <span class="hindi">सिविल सेवा परीक्षाएँ</span>
+          <span class="marathi">नागरी सेवा परीक्षा</span>
+        </h2>
+
+        <div class="services-grid">
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Exam Structure</span>
+              <span class="hindi">परीक्षा संरचना</span>
+              <span class="marathi">परीक्षा रचना</span>
+            </h3>
+            <p>
+              <span class="english">UPSC, MPSC, and most State PSCs follow a common three-stage process: **Preliminary Exam** (Screening), **Main Exam** (Rank-determining), and **Interview/Personality Test**.</span>
+              <span class="hindi">UPSC, MPSC और अधिकांश राज्य PSCs तीन-चरणीय प्रक्रिया का पालन करते हैं: **प्रारंभिक परीक्षा** (स्क्रीनिंग), **मुख्य परीक्षा** (रैंक-निर्धारक), और **साक्षात्कार/व्यक्तित्व परीक्षण**।</span>
+              <span class="marathi">UPSC, MPSC आणि बहुतेक राज्य PSCs तीन-टप्प्यांची प्रक्रिया वापरतात: **प्रारंभीची परीक्षा** (स्क्रीनिंग), **मुख्य परीक्षा** (रँक-ठरवणारी), आणि **मुलाखत/व्यक्तिमत्त्व चाचणी**.</span>
+            </p>
+            <ul>
+              <li><span class="english"><strong>Eligibility:</strong> Generally, a Bachelor's Degree from a recognized university.</span><span class="hindi"><strong>पात्रता:</strong> सामान्यतः, मान्यता प्राप्त विश्वविद्यालय से स्नातक की डिग्री।</span><span class="marathi"><strong>पात्रता:</strong> सामान्यतः, मान्यताप्राप्त विद्यापीठातून पदवी.</span></li>
+              <li><span class="english"><strong>Age Limit:</strong> Varies by category and exam, usually between 21 and 32 years (UPSC).</span><span class="hindi"><strong>आयु सीमा:</strong> श्रेणी और परीक्षा के अनुसार भिन्न होती है, सामान्यतः 21 से 32 वर्ष (UPSC)।</span><span class="marathi"><strong>वयोमर्यादा:</strong> श्रेणीनुसार आणि परीक्षानुसार बदलते, सामान्यतः 21 ते 32 वर्षे (UPSC).</span></li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">UPSC Civil Services</span>
+              <span class="hindi">UPSC सिविल सेवा</span>
+              <span class="marathi">UPSC नागरी सेवा</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">Prelims (400 Marks):</span><span class="hindi">प्रिलिम्स (400 अंक):</span><span class="marathi">प्रिलिम्स (400 गुण):</span></strong>
+                <span class="english"> General Studies (GS) paper is for merit. **CSAT** (Paper II) is mandatory and qualifying (33%).</span>
+                <span class="hindi"> सामान्य अध्ययन (GS) पेपर योग्यता के लिए है। **CSAT** (पेपर II) अनिवार्य और योग्यता (33%) है।</span>
+                <span class="marathi"> सामान्य अभ्यास (GS) पेपर गुणवत्तेसाठी आहे. **CSAT** (पेपर II) अनिवार्य आणि पात्रता (33%) आहे.</span>
+              </li>
+              <li>
+                <strong><span class="english">Mains (1750 Marks):</span><span class="hindi">मेन्स (1750 अंक):</span><span class="marathi">मेन्स (1750 गुण):</span></strong>
+                <span class="english"> 7 Merit papers (Essay, 4 GS papers, 2 Optional Subject papers). Focus on **Ethics (GS IV)** and governance.</span>
+                <span class="hindi"> 7 मेरिट पत्र (निबंध, 4 GS पत्र, 2 वैकल्पिक विषय पत्र)। **नैतिकता (GS IV)** और शासन पर ध्यान दें।</span>
+                <span class="marathi"> 7 गुणवत्ता पेपर्स (निबंध, 4 GS पेपर्स, 2 वैकल्पिक विषय पेपर्स). **नीतिशास्त्र (GS IV)** आणि प्रशासनावर लक्ष केंद्रित करा.</span>
+              </li>
+              <li>
+                <strong><span class="english">Key Services:</span><span class="hindi">मुख्य सेवाएँ:</span><span class="marathi">मुख्य सेवा:</span></strong>
+                <span class="english"> IAS, IPS, IFS (Foreign Service), IRS, and Group 'A' central services.</span>
+                <span class="hindi"> IAS, IPS, IFS (विदेश सेवा), IRS, और ग्रुप 'ए' केंद्रीय सेवाएँ।</span>
+                <span class="marathi"> IAS, IPS, IFS (परराष्ट्र सेवा), IRS, आणि गट 'अ' केंद्रीय सेवा.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">MPSC & State PSCs</span>
+              <span class="hindi">MPSC और राज्य PSCs</span>
+              <span class="marathi">MPSC व राज्य PSCs</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">Prelims Focus:</span><span class="hindi">प्रारंभिक परीक्षा फोकस:</span><span class="marathi">पूर्व परीक्षा लक्ष:</span></strong>
+                <span class="english"> GS and Aptitude/CSAT with a significant portion dedicated to the **respective state's geography, history, and polity**.</span>
+                <span class="hindi"> GS और योग्यता/CSAT जिसमें **संबंधित राज्य के भूगोल, इतिहास और राजव्यवस्था** को महत्वपूर्ण हिस्सा समर्पित है।</span>
+                <span class="marathi"> GS आणि योग्यता/CSAT ज्यामध्ये **संबंधित राज्याचा भूगोल, इतिहास आणि राज्यघटना** याला महत्त्वपूर्ण भाग समर्पित आहे.</span>
+              </li>
+              <li>
+                <strong><span class="english">Mains Structure:</span><span class="hindi">मुख्य परीक्षा संरचना:</span><span class="marathi">मुख्य परीक्षा रचना:</span></strong>
+                <span class="english"> Includes mandatory language papers (usually English and the regional language) and General Studies papers with state-specific modules.</span>
+                <span class="hindi"> अनिवार्य भाषा पत्र (आमतौर पर अंग्रेजी और क्षेत्रीय भाषा) और राज्य-विशिष्ट मॉड्यूल के साथ सामान्य अध्ययन पत्र शामिल हैं।</span>
+                <span class="marathi"> अनिवार्य भाषा पेपर्स (सामान्यत: इंग्रजी आणि प्रादेशिक भाषा) आणि राज्य-विशिष्ट मॉड्यूल्ससह सामान्य अभ्यास पेपर्सचा समावेश.</span>
+              </li>
+              <li>
+                <strong><span class="english">MPSC Services:</span><span class="hindi">MPSC सेवाएँ:</span><span class="marathi">MPSC सेवा:</span></strong>
+                <span class="english"> Deputy Collector, Deputy Superintendent of Police, Tehsildar, and other state-level Group A/B posts.</span>
+                <span class="hindi"> उप कलेक्टर, पुलिस उपाधीक्षक, तहसीलदार, और अन्य राज्य-स्तरीय ग्रुप A/B पद।</span>
+                <span class="marathi"> उपजिल्हाधिकारी, पोलीस उपअधीक्षक, तहसीलदार, आणि इतर राज्य-स्तरीय गट अ/ब पदे.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card" style="min-height: auto;">
+            <h3>
+              <span class="english">Other Central/State Exams</span>
+              <span class="hindi">अन्य केंद्रीय/राज्य परीक्षाएँ</span>
+              <span class="marathi">इतर केंद्र/राज्य परीक्षा</span>
+            </h3>
+            <p>
+              <span class="english">Beyond PSCs, there are numerous exams for government service, primarily focusing on **Aptitude, English, and General Awareness**.</span>
+              <span class="hindi">PSCs से परे, सरकारी सेवा के लिए कई परीक्षाएँ हैं, जो मुख्य रूप से **योग्यता, अंग्रेजी और सामान्य जागरूकता** पर केंद्रित हैं।</span>
+              <span class="marathi">PSCs व्यतिरिक्त, सरकारी सेवेसाठी अनेक परीक्षा आहेत, ज्या प्रामुख्याने **योग्यता, इंग्रजी आणि सामान्य जागरूकता** वर लक्ष केंद्रित करतात.</span>
+            </p>
+            <ul>
+              <li>
+                <span class="english"><strong>Banking Sector:</strong> IBPS PO/Clerk, SBI PO/Clerk, RBI Grade B. Requires high speed and accuracy in quant, reasoning, and English.</span>
+                <span class="hindi"><strong>बैंकिंग क्षेत्र:</strong> IBPS PO/क्लर्क, SBI PO/क्लर्क, RBI ग्रेड B. क्वांट, रीजनिंग और अंग्रेजी में उच्च गति और सटीकता की आवश्यकता होती है।</span>
+                <span class="marathi"><strong>बँकिंग क्षेत्र:</strong> IBPS PO/क्लर्क, SBI PO/क्लर्क, RBI ग्रेड B. क्वांट, रिजनिंग आणि इंग्रजीमध्ये उच्च गती आणि अचूकता आवश्यक आहे.</span>
+              </li>
+              <li>
+                <span class="english"><strong>SSC Exams:</strong> SSC CGL, CHSL, MTS. These recruit for various non-gazetted posts in Central Ministries and Departments.</span>
+                <span class="hindi"><strong>SSC परीक्षाएँ:</strong> SSC CGL, CHSL, MTS. ये केंद्रीय मंत्रालयों और विभागों में विभिन्न गैर-राजपत्रित पदों के लिए भर्ती करते हैं।</span>
+                <span class="marathi"><strong>SSC परीक्षा:</strong> SSC CGL, CHSL, MTS. हे केंद्रीय मंत्रालये आणि विभागांमध्ये विविध अराजपत्रित पदांसाठी भरती करतात.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Recommended Study Material</span>
+              <span class="hindi">सुझावित अध्ययन सामग्री</span>
+              <span class="marathi">शिफारसी अभ्यास साहित्य</span>
+            </h3>
+            <p>
+              <span class="english">**Foundation (All Exams):** NCERTs (Class 6-12, History, Geography, Polity), Daily National Newspaper (**The Hindu/Indian Express**), Government Portals (PIB, Yojana).</span>
+              <span class="hindi">**नींव (सभी परीक्षाएँ):** NCERTs (कक्षा 6-12, इतिहास, भूगोल, राजव्यवस्था), दैनिक राष्ट्रीय समाचार पत्र (**द हिंदू/इंडियन एक्सप्रेस**), सरकारी पोर्टल (PIB, योजना)।</span>
+              <span class="marathi">**पायाभूत (सर्व परीक्षा):** NCERTs (इयत्ता 6-12, इतिहास, भूगोल, राज्यशास्त्र), दैनिक राष्ट्रीय वर्तमानपत्र (**द हिंदू/इंडियन एक्सप्रेस**), सरकारी पोर्टल्स (PIB, योजना).</span>
+            </p>
+            <p>
+              <span class="english">**Subject Specific:** M. Laxmikanth (Polity), Spectrum (Modern History), Ramesh Singh (Economy, UPSC only). State-specific reference books are essential for PSC exams.</span>
+              <span class="hindi">**विषय विशिष्ट:** M. Laxmikanth (राजव्यवस्था), स्पेक्ट्रम (आधुनिक इतिहास), रमेश सिंह (अर्थव्यवस्था, केवल UPSC)। PSC परीक्षाओं के लिए राज्य-विशिष्ट संदर्भ पुस्तकें आवश्यक हैं।</span>
+              <span class="marathi">**विषय विशिष्ट:** M. Laxmikanth (राज्यशास्त्र), स्पेक्ट्रम (आधुनिक इतिहास), रमेश सिंग (अर्थव्यवस्था, केवळ UPSC). PSC परीक्षांसाठी राज्य-विशिष्ट संदर्भ पुस्तके आवश्यक आहेत.</span>
+            </p>
+          </div>
+
+        </div> </div>
+    </section>
+
+    <section id="strategy" class="strategy-section">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="english">Strategy & Planning</span>
+          <span class="hindi">रणनीति और योजना</span>
+          <span class="marathi">धोरण व नियोजन</span>
+        </h2>
+        <div class="strategy-grid">
+            
+            <div class="strategy-card">
+                <span class="strategy-icon">🎯</span>
+                <h4>
+                    <span class="english">Phase 1: Foundation Building</span>
+                    <span class="hindi">चरण 1: नींव का निर्माण</span>
+                    <span class="marathi">टप्पा 1: पायाभूत निर्मिती</span>
+                </h4>
+                <p>
+                    <span class="english">Start with **NCERTs** (6th to 12th) to build basic conceptual clarity. Simultaneously read one standard book for Polity/History/Economy. Focus on developing reading speed and comprehension.</span>
+                    <span class="hindi">बुनियादी वैचारिक स्पष्टता के लिए **NCERTs** (6वीं से 12वीं) से शुरुआत करें। साथ ही, राजव्यवस्था/इतिहास/अर्थव्यवस्था के लिए एक मानक पुस्तक पढ़ें। पढ़ने की गति और समझ विकसित करने पर ध्यान दें।</span>
+                    <span class="marathi">मूलभूत संकल्पना स्पष्ट करण्यासाठी **NCERTs** (6 वी ते 12 वी) पासून सुरुवात करा. त्याच वेळी राज्यशास्त्र/इतिहास/अर्थशास्त्र साठी एक प्रमाणित पुस्तक वाचा. वाचन गती आणि आकलन विकसित करण्यावर लक्ष केंद्रित करा.</span>
+                </p>
+            </div>
+
+            <div class="strategy-card">
+                <span class="strategy-icon">📝</span>
+                <h4>
+                    <span class="english">Phase 2: Prelims Mastery</span>
+                    <span class="hindi">चरण 2: प्रारंभिक परीक्षा में महारत</span>
+                    <span class="marathi">टप्पा 2: पूर्व परीक्षेवर प्रभुत्व</span>
+                </h4>
+                <p>
+                    <span class="english">Focus on high-yield topics, **Current Affairs** (last 12-18 months), and rigorous **Mock Tests**. Analyze mistakes in tests to improve accuracy and time management. Practice CSAT consistently, as it is mandatory.</span>
+                    <span class="hindi">उच्च-उपज वाले विषयों, **समसामयिक घटनाएँ** (पिछले 12-18 महीने), और कठोर **मॉक टेस्ट** पर ध्यान दें। सटीकता और समय प्रबंधन में सुधार के लिए गलतियों का विश्लेषण करें। CSAT का लगातार अभ्यास करें।</span>
+                    <span class="marathi">उच्च-महत्त्वाच्या विषयांवर, **चालू घडामोडी** (मागील 12-18 महिने), आणि कठोर **मॉक टेस्ट** वर लक्ष केंद्रित करा. अचूकता आणि वेळेचे व्यवस्थापन सुधारण्यासाठी चुकांचे विश्लेषण करा. CSAT चा नियमित सराव करा.</span>
+                </p>
+            </div>
+
+            <div class="strategy-card">
+                <span class="strategy-icon">✍️</span>
+                <h4>
+                    <span class="english">Phase 3: Mains & Answer Writing</span>
+                    <span class="hindi">चरण 3: मुख्य परीक्षा और उत्तर लेखन</span>
+                    <span class="marathi">टप्पा 3: मुख्य परीक्षा व उत्तर लेखन</span>
+                </h4>
+                <p>
+                    <span class="english">Develop **Answer Writing Skills** by practicing daily questions. Integrate static and current knowledge. Pay special attention to Essay, Ethics (GS IV), and Optional Subject preparation, as they determine rank.</span>
+                    <span class="hindi">दैनिक प्रश्नों का अभ्यास करके **उत्तर लेखन कौशल** विकसित करें। स्थिर और समसामयिक ज्ञान को एकीकृत करें। निबंध, नैतिकता (GS IV), और वैकल्पिक विषय पर विशेष ध्यान दें, क्योंकि वे रैंक निर्धारित करते हैं।</span>
+                    <span class="marathi">दररोज प्रश्नांचा सराव करून **उत्तर लेखन कौशल्ये** विकसित करा. स्थिर आणि चालू घडामोडींचे ज्ञान एकत्र करा. निबंध, नीतिशास्त्र (GS IV), आणि वैकल्पिक विषयाच्या तयारीवर विशेष लक्ष द्या, कारण ते रँक ठरवतात.</span>
+                </p>
+            </div>
+
+            <div class="strategy-card">
+                <span class="strategy-icon">🗣️</span>
+                <h4>
+                    <span class="english">Phase 4: Interview Preparation</span>
+                    <span class="hindi">चरण 4: साक्षात्कार की तैयारी</span>
+                    <span class="marathi">टप्पा 4: मुलाखतीची तयारी</span>
+                </h4>
+                <p>
+                    <span class="english">Review your Detailed Application Form (**DAF**). Be thorough with your state's facts, hobbies, and opinion on current/controversial issues. Practice mock interviews to refine communication and composure.</span>
+                    <span class="hindi">अपने विस्तृत आवेदन फॉर्म (**DAF**) की समीक्षा करें। अपने राज्य के तथ्यों, शौकों और वर्तमान/विवादास्पद मुद्दों पर राय के साथ अच्छी तरह से तैयार रहें। संचार और धैर्य को सुधारने के लिए मॉक इंटरव्यू का अभ्यास करें।</span>
+                    <span class="marathi">तुमच्या सविस्तर अर्ज फॉर्मची (**DAF**) उजळणी करा. तुमच्या राज्याची माहिती, छंद आणि वर्तमान/वादग्रस्त समस्यांवरील मतांशी चांगले परिचित व्हा. संवाद आणि शांतता सुधारण्यासाठी मॉक मुलाखतींचा सराव करा.</span>
+                </p>
+            </div>
+
+        </div>
+      </div>
+    </section>
+    
+    <section id="links" class="services" style="border: 1px solid var(--card-border-cyan);">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="english">Useful Links & Resources</span>
+          <span class="hindi">उपयोगी लिंक और संसाधन</span>
+          <span class="marathi">उपयुक्त दुवे व संसाधने</span>
+        </h2>
+        <div class="services-grid">
+            
+            <div class="service-card" style="min-height: auto;">
+                <h3>
+                  <span class="english">Official Government Portals</span>
+                  <span class="hindi">आधिकारिक सरकारी पोर्टल</span>
+                  <span class="marathi">अधिकृत सरकारी पोर्टल</span>
+                </h3>
+                <ul>
+                  <li><a href="https://www.upsc.gov.in" target="_blank" rel="noopener">UPSC Official Website</a> (For IAS, IPS, IFS, etc.)</li>
+                  <li><a href="https://mpsc.gov.in" target="_blank" rel="noopener">MPSC Official Website</a> (For Maharashtra State Services)</li>
+                  <li><a href="https://www.psc.gov.in" target="_blank" rel="noopener">State PSCs General Portal</a> (Links to various State PSCs)</li>
+                  <li><a href="https://www.indiagov.in/" target="_blank" rel="noopener">Government of India Portal</a> (General information)</li>
+                </ul>
+            </div>
+            
+            <div class="service-card" style="min-height: auto;">
+                <h3>
+                  <span class="english">Other Government Exam Links</span>
+                  <span class="hindi">अन्य सरकारी परीक्षा लिंक</span>
+                  <span class="marathi">इतर सरकारी परीक्षा दुवे</span>
+                </h3>
+                <ul>
+                  <li><a href="https://ssc.nic.in" target="_blank" rel="noopener">SSC Official Website</a> (CGL, CHSL, MTS)</li>
+                  <li><a href="https://www.ibps.in" target="_blank" rel="noopener">IBPS Official Website</a> (PO, Clerk, Specialist Officer)</li>
+                  <li><a href="https://www.rbi.org.in" target="_blank" rel="noopener">RBI Official Website</a> (Grade B, Assistant)</li>
+                  <li><a href="http://upsconline.nic.in" target="_blank" rel="noopener">UPSC Online Application</a> (Application Portal)</li>
+                </ul>
+            </div>
+
+
+            <div class="service-card" style="min-height: auto; grid-column: span 2; display: flex; flex-direction: column; align-items: center;">
+                <h3>
+                  <span class="english">UPSC/PSC Exam - Free Lecture (Sample)</span>
+                  <span class="hindi">UPSC/PSC परीक्षा - मुफ्त व्याख्यान (नमूना)</span>
+                  <span class="marathi">UPSC/PSC परीक्षा - मुक्त व्याख्यान (नमुना)</span>
+                </h3>
+                <div style="margin-top: 10px; border-radius: 10px; overflow: hidden; width: 100%; max-width: 600px;">
+                  <iframe width="100%" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY" title="Sample Lecture: Introduction to Indian Polity" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <p style="text-align: center; margin-top: 15px; color: var(--accent-green);">
+                  <span class="english">**Note:** Utilize free online resources like YouTube channels for initial understanding and guidance.</span>
+                  <span class="hindi">**नोट:** प्रारंभिक समझ और मार्गदर्शन के लिए YouTube चैनलों जैसे मुफ्त ऑनलाइन संसाधनों का उपयोग करें।</span>
+                  <span class="marathi">**सूचना:** प्रारंभिक समजा आणि मार्गदर्शनासाठी YouTube चॅनेलसारख्या विनामूल्य ऑनलाइन संसाधनांचा वापर करा.</span>
+                </p>
+            </div>
+            
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>
+            <span class="english">Contact Info</span>
+            <span class="hindi">संपर्क जानकारी</span>
+            <span class="marathi">संपर्क माहिती</span>
+          </h3>
+          <p><span class="english">Email: info@xshala.edu</span><span class="hindi">ईमेल: info@xshala.edu</span><span class="marathi">ईमेल: info@xshala.edu</span></p>
+          <p><span class="english">Phone: +91 98765 43210</span><span class="hindi">फ़ोन: +91 98765 43210</span><span class="marathi">फोन: +91 98765 43210</span></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p><span class="english">© 2025 XShala. Civil Services Guidance.</span><span class="hindi">© 2025 XShala. सिविल सेवा मार्गदर्शन।</span><span class="marathi">© 2025 XShala. नागरी सेवा मार्गदर्शन.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // language + theme with persistence (localStorage) so pages can be synced if other pages use same keys
+    const MODE_KEY = 'xshala-mode';     // 'day' or 'night'
+    const LANG_KEY = 'xshala-lang';     // 'english'|'hindi'|'marathi'
+
+    let currentMode = 'night';
+    let currentLanguage = 'english';
+
+    function applyMode(mode) {
+      const root = document.documentElement;
+      if (mode === 'day') {
+        root.classList.add('theme-day');
+        document.body.classList.add('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '☀️';
+        currentMode = 'day';
+      } else {
+        root.classList.remove('theme-day');
+        document.body.classList.remove('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '🌙';
+        currentMode = 'night';
+      }
+      try { localStorage.setItem(MODE_KEY, currentMode); } catch (e) {}
+    }
+
+    function toggleMode() {
+      applyMode(currentMode === 'night' ? 'day' : 'night');
+    }
+
+    function setLanguage(lang) {
+      // remove any existing lang-* classes
+      document.body.className = document.body.className.replace(/\blang-\w+\b/g, '').trim();
+      if (lang && lang !== 'english') {
+        document.body.classList.add('lang-' + lang);
+      }
+      currentLanguage = lang || 'english';
+
+      // update active state of buttons
+      document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+      const selector = `.language-btn[data-lang="${lang}"]`;
+      const btn = document.querySelector(selector);
+      if (btn) btn.classList.add('active');
+
+      try { localStorage.setItem(LANG_KEY, currentLanguage); } catch (e) {}
+    }
+
+    // Smooth scroll for anchors beginning with #
+    function enableSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          // If href is only "#", let it be
+          const href = this.getAttribute('href');
+          if (href === '#' || href === '') return;
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            // If it links to another page fragment (like index.html#something), navigate normally
+            const parts = href.split('#');
+            if (parts.length === 2 && parts[0] !== '') {
+              window.location.href = href;
+            }
+          }
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // apply saved settings from localStorage (if any)
+      try {
+        const savedMode = localStorage.getItem(MODE_KEY);
+        const savedLang = localStorage.getItem(LANG_KEY);
+        if (savedMode) applyMode(savedMode);
+        else applyMode('night');
+
+        if (savedLang) setLanguage(savedLang);
+        else setLanguage('english');
+
+      } catch (e) {
+        // fallback defaults
+        applyMode('night');
+        setLanguage('english');
+      }
+
+      // Bind language buttons to allow keyboard activation as well
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = btn.dataset.lang;
+          setLanguage(lang);
+        });
+      });
+
+      // Bind toggle button
+      const modeBtn = document.getElementById('mode-toggle-btn');
+      modeBtn.addEventListener('click', toggleMode);
+
+      enableSmoothScroll();
+
+    });
+
+  </script>
+</body>
+</html>

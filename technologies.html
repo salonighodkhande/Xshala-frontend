@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XShala - Emerging Technologies Guidance (8 Domains)</title>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Default Dark Mode Variables */
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent-cyan: #00ffff; /* Bright Cyan */
+            --accent-magenta: #ff00ff; /* Bright Magenta */
+            --accent-green: #00ff00; /* Bright Green */
+            --card-bg: rgba(0, 0, 0, 0.7);
+            --card-border-cyan: rgba(0, 255, 255, 0.3);
+            --card-border-magenta: rgba(255, 0, 255, 0.3);
+            --card-border-green: rgba(0, 255, 0, 0.3);
+            --card-hover-bg-cyan: rgba(0, 255, 255, 0.15);
+            --card-hover-bg-magenta: rgba(255, 0, 255, 0.15);
+            --card-hover-bg-green: rgba(0, 255, 0, 0.15);
+            --logo-text-shadow: 0 0 20px var(--accent-cyan);
+            --logo-accent-color: var(--accent-cyan);
+            --header-bg: rgba(10, 10, 10, 0.95);
+            --header-border: 2px solid var(--accent-cyan);
+            --footer-bg: rgba(0, 0, 0, 0.95);
+        }
+
+        /* Day Mode Variables */
+        :root.theme-day {
+            --primary-bg: #f0f2f5;
+            --secondary-bg: #e2e4e8;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --accent-cyan: #0080ff;
+            --accent-magenta: #ff6600;
+            --accent-green: #008800;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border-cyan: rgba(0, 128, 255, 0.3);
+            --card-border-magenta: rgba(255, 102, 0, 0.3);
+            --card-border-green: rgba(0, 136, 0, 0.3);
+            --card-hover-bg-cyan: rgba(0, 128, 255, 0.1);
+            --card-hover-bg-magenta: rgba(255, 102, 0, 0.1);
+            --card-hover-bg-green: rgba(0, 136, 0, 0.1);
+            --logo-text-shadow: none;
+            --logo-accent-color: var(--text-primary);
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --header-border: 2px solid var(--accent-cyan);
+            --footer-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* Animated Dark STEM Background */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        .theme-day .animated-background {
+            background: linear-gradient(135deg, #f0f2f5 0%, #e2e4e8 25%, #d1d4d8 50%, #c1c4c8 75%, #b1b4b8 100%);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Enhanced Floating STEM Elements (Tech symbols) */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(0, 255, 255, 0.3); /* Cyan */
+            font-size: 4rem;
+            animation: float 25s infinite linear;
+            text-shadow: 0 0 20px currentColor;
+        }
+        
+        .theme-day .floating-element {
+            color: rgba(0, 128, 255, 0.3);
+            text-shadow: none;
+        }
+
+        .floating-element:nth-child(odd) {
+            animation-direction: reverse;
+            color: rgba(255, 0, 255, 0.3); /* Magenta */
+        }
+
+        .theme-day .floating-element:nth-child(odd) {
+            color: rgba(255, 102, 0, 0.3);
+        }
+
+        .floating-element:nth-child(3n) {
+            color: rgba(0, 255, 0, 0.3); /* Green */
+        }
+
+        .theme-day .floating-element:nth-child(3n) {
+            color: rgba(0, 136, 0, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(0.7);
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) rotate(324deg) scale(0.7);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Neon Circuit Lines */
+        .circuit-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            height: 2px;
+            animation: circuitFlow 8s infinite;
+        }
+
+        .circuit-line:nth-child(2) {
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent);
+        }
+
+        .circuit-line:nth-child(3) {
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+
+        @keyframes circuitFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Removed the vertical matrix element */
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            background: var(--header-bg);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: var(--header-border);
+            transition: background-color 0.5s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            text-decoration: none;
+            position: relative;
+            text-shadow: var(--logo-text-shadow);
+        }
+
+        .logo span {
+            color: var(--logo-accent-color);
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+        
+        .theme-day .logo span {
+            animation: none;
+        }
+
+        @keyframes neonPulse {
+            0% { text-shadow: 0 0 20px var(--accent-cyan); }
+            100% { text-shadow: 0 0 30px var(--accent-cyan), 0 0 40px var(--accent-cyan); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .language-btn, .mode-toggle-btn {
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            color: #000;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mode-toggle-btn {
+            font-size: 1.2rem;
+            padding: 0.4rem;
+            border-radius: 50%;
+        }
+
+        .language-btn:hover, .mode-toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
+        }
+
+        .language-btn.active {
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.3); text-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
+        }
+        
+        .theme-day .hero h1 {
+            animation: none;
+            -webkit-text-fill-color: initial;
+            background: none;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-secondary);
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .btn {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-cyan), #0080ff);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-cyan);
+            color: var(--text-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+        }
+
+        /* Services Section - Main content blocks */
+        .services {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border: 1px solid var(--card-border-magenta);
+        }
+        
+        .services-grid {
+            /* Adjusted for 8 cards: allows up to 4 columns on wide screens */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid var(--card-border-cyan);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 280px; 
+        }
+        
+        .theme-day .service-card {
+            background: linear-gradient(135deg, rgba(0, 128, 255, 0.1), rgba(255, 102, 0, 0.1));
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 255, 255, 0.2);
+            border-color: var(--accent-cyan);
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-cyan);
+        }
+
+        .service-card ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        .service-card li {
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+            transition: transform 0.2s ease;
+            font-size: 1.1rem;
+        }
+
+        .service-card li:hover {
+            transform: translateX(5px);
+            color: var(--accent-cyan);
+        }
+
+        .service-card li:before {
+            content: "💻"; /* Computer icon */
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Strategy Section Styles */
+        .strategy-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border: 1px solid var(--card-border-green);
+        }
+        
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .strategy-card {
+            background: rgba(0, 255, 0, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--card-border-green);
+            transition: all 0.3s ease;
+            text-align: left;
+            min-height: 220px;
+        }
+        
+        .theme-day .strategy-card {
+            background: rgba(0, 136, 0, 0.1);
+        }
+
+        .strategy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 0, 0.2);
+            background: var(--card-hover-bg-green);
+        }
+
+        .strategy-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-green);
+        }
+
+        .strategy-card p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .strategy-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-green);
+            float: right;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--footer-bg);
+            backdrop-filter: blur(10px);
+            padding: 3rem 0 1rem;
+            margin-top: 2rem;
+            border-top: 2px solid var(--accent-cyan);
+            transition: background-color 0.5s ease;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+            font-size: 1.3rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--accent-cyan);
+            transform: translateX(5px);
+        }
+        
+        .theme-day .footer-section a:hover {
+            text-shadow: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border-cyan);
+            color: var(--text-secondary);
+        }
+
+        /* Language Toggle Styles */
+        .hindi, .marathi {
+            display: none;
+        }
+
+        body.lang-hindi .english {
+            display: none;
+        }
+
+        body.lang-hindi .hindi {
+            display: block;
+        }
+
+        body.lang-marathi .english {
+            display: none;
+        }
+
+        body.lang-marathi .marathi {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 80%;
+                max-width: 300px;
+            }
+
+            .floating-element {
+                font-size: 3rem;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+  </style>
+</head>
+<body>
+
+  <div class="animated-background"></div>
+
+  <div class="circuit-lines">
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+  </div>
+
+  <div class="floating-elements" aria-hidden="true">
+    <div class="floating-element" style="left: 5%; animation-delay: 0s;">🤖</div>
+    <div class="floating-element" style="left: 25%; animation-delay: -4s;">🔒</div>
+    <div class="floating-element" style="left: 45%; animation-delay: -8s;">🌐</div>
+    <div class="floating-element" style="left: 65%; animation-delay: -12s;">🧠</div>
+    <div class="floating-element" style="left: 85%; animation-delay: -16s;">🔌</div>
+    <div class="floating-element" style="left: 15%; animation-delay: -20s;">⛓️</div>
+    <div class="floating-element" style="left: 55%; animation-delay: -24s;">☁️</div>
+    <div class="floating-element" style="left: 75%; animation-delay: -28s;">📐</div>
+  </div>
+
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo" aria-label="XShala Home"><span>X</span>Shala</a>
+
+      <ul class="nav-links" role="navigation" aria-label="Main navigation">
+        <li>
+          <a href="index.html" class="english">Home</a>
+          <a href="index.html" class="hindi">होम</a>
+          <a href="index.html" class="marathi">होम</a>
+        </li>
+        <li>
+          <a href="#info" class="english">8 Tech Domains</a>
+          <a href="#info" class="hindi">8 प्रौद्योगिकी डोमेन</a>
+          <a href="#info" class="marathi">8 तंत्रज्ञान डोमेन्स</a>
+        </li>
+        <li>
+          <a href="#strategy" class="english">Career Strategy</a>
+          <a href="#strategy" class="hindi">करियर रणनीति</a>
+          <a href="#strategy" class="marathi">करिअर धोरण</a>
+        </li>
+        <li>
+          <a href="#contact" class="english">Contact</a>
+          <a href="#contact" class="hindi">संपर्क</a>
+          <a href="#contact" class="marathi">संपर्क</a>
+        </li>
+      </ul>
+
+      <div class="language-selector" aria-label="Language and theme controls">
+        <button id="mode-toggle-btn" class="mode-toggle-btn" aria-label="Toggle day night">🌙</button>
+        <button class="language-btn active" data-lang="english" onclick="setLanguage('english')">EN</button>
+        <button class="language-btn" data-lang="hindi" onclick="setLanguage('hindi')">हि</button>
+        <button class="language-btn" data-lang="marathi" onclick="setLanguage('marathi')">म</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container">
+        <h1>
+          <span class="english">Emerging Technologies Guidance</span>
+          <span class="hindi">उभरती प्रौद्योगिकियाँ मार्गदर्शन</span>
+          <span class="marathi">उदयोन्मुख तंत्रज्ञान मार्गदर्शन</span>
+        </h1>
+        <p>
+          <span class="english">Focused roadmap for careers in **AI/ML, Cloud, Web3, Cybersecurity, Web Development, IoT, Networking, and Design/Manufacturing**. Master the skills for the new age economy.</span>
+          <span class="hindi">**AI/ML, क्लाउड, Web3, साइबर सुरक्षा, वेब विकास, IoT, नेटवर्किंग, और डिज़ाइन/विनिर्माण** में करियर के लिए केंद्रित रोडमैप। नए युग की अर्थव्यवस्था के लिए कौशल में महारत हासिल करें।</span>
+          <span class="marathi">**AI/ML, क्लाउड, Web3, सायबर सुरक्षा, वेब डेव्हलपमेंट, IoT, नेटवर्किंग, आणि डिझाइन/उत्पादन** मधील करिअरसाठी केंद्रित मार्गदर्शक. नवीन युगातील अर्थव्यवस्थेसाठी कौशल्ये आत्मसात करा.</span>
+        </p>
+        <div class="cta-buttons">
+          <a href="#info" class="btn btn-primary">
+            <span class="english">Explore 8 Domains</span>
+            <span class="hindi">8 डोमेन देखें</span>
+            <span class="marathi">8 डोमेन्स शोधा</span>
+          </a>
+          <a href="#strategy" class="btn btn-secondary">
+            <span class="english">Career Strategy</span>
+            <span class="hindi">करियर रणनीति</span>
+            <span class="marathi">करिअर धोरण</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="info" class="services">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="english">Top 8 Emerging Technology Domains</span>
+          <span class="hindi">शीर्ष 8 उभरती प्रौद्योगिकी डोमेन</span>
+          <span class="marathi">शीर्ष 8 उदयोन्मुख तंत्रज्ञान डोमेन्स</span>
+        </h2>
+
+        <div class="services-grid">
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Artificial Intelligence / ML</span>
+              <span class="hindi">आर्टिफिशियल इंटेलिजेंस / ML</span>
+              <span class="marathi">कृत्रिम बुद्धिमत्ता / ML</span>
+            </h3>
+            <p>
+              <span class="english">The study of algorithms and models that enable computers to learn from data and make predictions. Requires strong math and programming skills.</span>
+              <span class="hindi">डेटा से सीखने और भविष्यवाणी करने के लिए कंप्यूटर को सक्षम करने वाले एल्गोरिदम और मॉडल का अध्ययन। मजबूत गणित और प्रोग्रामिंग कौशल की आवश्यकता है।</span>
+              <span class="marathi">संगणकांना डेटावरून शिकण्यास आणि भविष्यवाणी करण्यास सक्षम करणाऱ्या अल्गोरिदम आणि मॉडेल्सचा अभ्यास. यासाठी मजबूत गणित आणि प्रोग्रामिंग कौशल्ये आवश्यक आहेत.</span>
+            </p>
+            <ul>
+              <li><span class="english"><strong>Key Tools:</strong> Python, TensorFlow, PyTorch, Pandas, Scikit-learn.</span><span class="hindi"><strong>प्रमुख उपकरण:</strong> पायथन, टेंसरफ्लो, पायटॉर्च, पांडा, साइकिट-लर्न।</span><span class="marathi"><strong>मुख्य साधने:</strong> पायथन, टेंसरफ्लो, पायटॉर्च, पांडा, सायकिट-लर्न.</span></li>
+              <li><span class="english"><strong>Careers:</strong> Data Scientist, ML Engineer, NLP Specialist.</span><span class="hindi"><strong>करियर:</strong> डेटा साइंटिस्ट, ML इंजीनियर, NLP विशेषज्ञ।</span><span class="marathi"><strong>करिअर:</strong> डेटा सायंटिस्ट, ML इंजिनियर, NLP विशेषज्ञ.</span></li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Cybersecurity & Ethical Hacking</span>
+              <span class="hindi">साइबर सुरक्षा और एथिकल हैकिंग</span>
+              <span class="marathi">सायबर सुरक्षा आणि एथिकल हॅकिंग</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">Focus:</span><span class="hindi">फोकस:</span><span class="marathi">लक्ष:</span></strong>
+                <span class="english"> Protecting systems, networks, and programs from digital attacks. Involves risk assessment and penetration testing.</span>
+                <span class="hindi"> डिजिटल हमलों से सिस्टम, नेटवर्क और कार्यक्रमों की सुरक्षा करना। इसमें जोखिम मूल्यांकन और प्रवेश परीक्षण शामिल है।</span>
+                <span class="marathi"> डिजिटल हल्ल्यांपासून सिस्टीम, नेटवर्क आणि प्रोग्राम्सचे संरक्षण करणे. यात जोखीम मूल्यांकन आणि प्रवेश चाचणी समाविष्ट आहे.</span>
+              </li>
+              <li>
+                <strong><span class="english">Core Skills:</span><span class="hindi">मुख्य कौशल्य:</span><span class="marathi">मुख्य कौशल्ये:</span></strong>
+                <span class="english"> Network Security, Cryptography, Linux, Threat Analysis.</span>
+                <span class="hindi"> नेटवर्क सुरक्षा, क्रिप्टोग्राफी, लिनक्स, खतरा विश्लेषण।</span>
+                <span class="marathi"> नेटवर्क सुरक्षा, क्रिप्टोग्राफी, लिनक्स, धोक्याचे विश्लेषण.</span>
+              </li>
+              <li>
+                <strong><span class="english">Certifications:</span><span class="hindi">प्रमाणन:</span><span class="marathi">प्रमाणपत्रे:</span></strong>
+                <span class="english"> CompTIA Security+, CEH, CISSP.</span>
+                <span class="hindi"> CompTIA Security+, CEH, CISSP।</span>
+                <span class="marathi"> CompTIA Security+, CEH, CISSP.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Full Stack Web Development</span>
+              <span class="hindi">फुल स्टैक वेब विकास</span>
+              <span class="marathi">फुल स्टॅक वेब डेव्हलपमेंट</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">Front-end:</span><span class="hindi">फ्रंट-एंड:</span><span class="marathi">फ्रंट-एंड:</span></strong>
+                <span class="english"> HTML, CSS, JavaScript, and frameworks like React or Vue. Focus on responsive design and UX.</span>
+                <span class="hindi"> HTML, CSS, जावास्क्रिप्ट, और React या Vue जैसे फ्रेमवर्क। प्रतिक्रियाशील डिजाइन और उपयोगकर्ता अनुभव पर ध्यान दें।</span>
+                <span class="marathi"> HTML, CSS, JavaScript, आणि React किंवा Vue सारखे फ्रेमवर्क. प्रतिसाद देणारे डिझाइन आणि वापरकर्ता अनुभव वर लक्ष केंद्रित करा.</span>
+              </li>
+              <li>
+                <strong><span class="english">Back-end:</span><span class="hindi">बैक-एंड:</span><span class="marathi">बॅक-एंड:</span></strong>
+                <span class="english"> Server-side logic using Node.js/Python/Java, databases (SQL/NoSQL), and REST APIs.</span>
+                <span class="hindi"> Node.js/Python/Java, डेटाबेस (SQL/NoSQL), और REST API का उपयोग करके सर्वर-साइड लॉजिक।</span>
+                <span class="marathi"> Node.js/Python/Java वापरून सर्व्हर-साइड लॉजिक, डेटाबेस (SQL/NoSQL), आणि REST APIs.</span>
+              </li>
+              <li>
+                <strong><span class="english">Trends:</span><span class="hindi">रुझान:</span><span class="marathi">कल:</span></strong>
+                <span class="english"> Serverless architectures and modern API design (GraphQL).</span>
+                <span class="hindi"> सर्वरलेस आर्किटेक्चर और आधुनिक API डिजाइन (GraphQL)।</span>
+                <span class="marathi"> सर्व्हरलेस आर्किटेक्चर्स आणि आधुनिक API डिझाइन (GraphQL).</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="service-card">
+            <h3>
+              <span class="english">Internet of Things (IoT) & Embedded Systems</span>
+              <span class="hindi">इंटरनेट ऑफ थिंग्स (IoT) और एम्बेडेड सिस्टम</span>
+              <span class="marathi">इंटरनेट ऑफ थिंग्ज (IoT) आणि एम्बेडेड सिस्टीम</span>
+            </h3>
+            <p>
+              <span class="english">Connecting everyday physical devices to the internet to collect and exchange data. Involves embedded systems, sensors, and microcontrollers.</span>
+              <span class="hindi">डेटा एकत्र करने और आदान-प्रदान करने के लिए रोजमर्रा के भौतिक उपकरणों को इंटरनेट से जोड़ना। इसमें एम्बेडेड सिस्टम, सेंसर और माइक्रोकंट्रोलर शामिल है।</span>
+              <span class="marathi">डेटा गोळा करण्यासाठी आणि देवाणघेवाण करण्यासाठी रोजच्या भौतिक उपकरणांना इंटरनेटशी जोडणे. यात एम्बेडेड सिस्टीम, सेन्सर्स आणि मायक्रोकंट्रोलर्स समाविष्ट आहे.</span>
+            </p>
+            <ul>
+              <li>
+                <strong><span class="english">Hardware:</span><span class="hindi">हार्डवेयर:</span><span class="marathi">हार्डवेअर:</span></strong>
+                <span class="english"> Arduino, Raspberry Pi, Microcontrollers, and C/C++.</span>
+                <span class="hindi"> Arduino, Raspberry Pi, माइक्रोकंट्रोलर, और C/C++।</span>
+                <span class="marathi"> Arduino, Raspberry Pi, मायक्रोकंट्रोलर्स आणि C/C++.</span>
+              </li>
+              <li>
+                <strong><span class="english">Integration:</span><span class="hindi">एकीकरण:</span><span class="marathi">एकत्रीकरण:</span></strong>
+                <span class="english"> MQTT, CoAP protocols for data transmission, and Cloud integration.</span>
+                <span class="hindi"> डेटा ट्रांसमिशन और क्लाउड एकीकरण के लिए MQTT, CoAP प्रोटोकॉल।</span>
+                <span class="marathi"> डेटा ट्रांसमिशन आणि क्लाउड एकत्रीकरणासाठी MQTT, CoAP प्रोटोकॉल.</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="service-card">
+            <h3>
+              <span class="english">Cloud Computing & DevOps</span>
+              <span class="hindi">क्लाउड कंप्यूटिंग और DevOps</span>
+              <span class="marathi">क्लाउड कॉम्प्युटिंग आणि DevOps</span>
+            </h3>
+            <p>
+              <span class="english">Designing, deploying, and managing applications on scalable, virtualized cloud infrastructure (AWS, Azure, GCP). Automation is key.</span>
+              <span class="hindi">स्केलेबल, वर्चुअलाइज़्ड क्लाउड इंफ्रास्ट्रक्चर (AWS, Azure, GCP) पर एप्लिकेशन डिजाइन करना, डिप्लॉय करना और प्रबंधित करना। स्वचालन महत्वपूर्ण है।</span>
+              <span class="marathi">स्केलेबल, व्हर्च्युअलाइझ्ड क्लाउड इन्फ्रास्ट्रक्चर (AWS, Azure, GCP) वर ॲप्लिकेशन्स डिझाइन करणे, डिप्लॉय करणे आणि व्यवस्थापित करणे. ऑटोमेशन महत्त्वाचे आहे.</span>
+            </p>
+            <ul>
+              <li>
+                <strong><span class="english">Platforms:</span><span class="hindi">प्लेटफॉर्म:</span><span class="marathi">प्लॅटफॉर्म्स:</span></strong>
+                <span class="english"> AWS, Microsoft Azure, Google Cloud Platform (GCP).</span>
+                <span class="hindi"> AWS, Microsoft Azure, Google Cloud Platform (GCP)।</span>
+                <span class="marathi"> AWS, Microsoft Azure, Google Cloud Platform (GCP).</span>
+              </li>
+              <li>
+                <strong><span class="english">Tools:</span><span class="hindi">उपकरण:</span><span class="marathi">साधने:</span></strong>
+                <span class="english"> Docker, Kubernetes, Terraform, Jenkins (CI/CD).</span>
+                <span class="hindi"> डॉकर, कुबेरनेट्स, टेराफॉर्म, जेनकिंस (CI/CD)।</span>
+                <span class="marathi"> डॉकर, कुबेरनेट्स, टेराफॉर्म, जेनकिन्स (CI/CD).</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="service-card">
+            <h3>
+              <span class="english">Blockchain & Web3 Development</span>
+              <span class="hindi">ब्लॉकचेन और Web3 विकास</span>
+              <span class="marathi">ब्लॉकचेन आणि Web3 डेव्हलपमेंट</span>
+            </h3>
+            <p>
+              <span class="english">Building decentralized applications (dApps) and smart contracts on distributed ledger technology, focusing on security and transparency.</span>
+              <span class="hindi">सुरक्षा और पारदर्शिता पर ध्यान केंद्रित करते हुए, वितरित लेजर प्रौद्योगिकी पर विकेन्द्रीकृत एप्लिकेशन (dApps) और स्मार्ट अनुबंधों का निर्माण।</span>
+              <span class="marathi">सुरक्षा आणि पारदर्शकतेवर लक्ष केंद्रित करून, वितरित लेजर तंत्रज्ञानावर विकेंद्रीकृत ॲप्लिकेशन्स (dApps) आणि स्मार्ट कॉन्ट्रॅक्ट्स विकसित करणे.</span>
+            </p>
+            <ul>
+              <li>
+                <strong><span class="english">Languages:</span><span class="hindi">भाषाएँ:</span><span class="marathi">भाषा:</span></strong>
+                <span class="english"> Solidity (for Ethereum), Rust (for Solana/Polkadot).</span>
+                <span class="hindi"> सॉलिडिटी (एथेरियम के लिए), रस्ट (सोलाना/पोल्काडॉट के लिए)।</span>
+                <span class="marathi"> सॉलिडिटी (इथेरियमसाठी), रस्ट (सोलाना/पोल्काडॉटसाठी).</span>
+              </li>
+              <li>
+                <strong><span class="english">Concepts:</span><span class="hindi">अवधारणाएँ:</span><span class="marathi">संकल्पना:</span></strong>
+                <span class="english"> Smart Contracts, Decentralized Finance (DeFi), Cryptography.</span>
+                <span class="hindi"> स्मार्ट अनुबंध, विकेन्द्रीकृत वित्त (DeFi), क्रिप्टोग्राफी।</span>
+                <span class="marathi"> स्मार्ट कॉन्ट्रॅक्ट्स, विकेन्द्रीकृत वित्त (DeFi), क्रिप्टोग्राफी.</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="service-card">
+            <h3>
+              <span class="english">Modern Manufacturing & Design</span>
+              <span class="hindi">आधुनिक विनिर्माण और डिजाइन</span>
+              <span class="marathi">आधुनिक उत्पादन आणि डिझाइन</span>
+            </h3>
+            <p>
+              <span class="english">Integrating digital design tools and additive/subtractive manufacturing techniques (**3D Printing, Laser Cutting**) to create complex physical objects quickly and efficiently.</span>
+              <span class="hindi">जटिल भौतिक वस्तुओं को तेज़ी से और कुशलता से बनाने के लिए डिजिटल डिजाइन उपकरण और योगात्मक/घटाव विनिर्माण तकनीकों (**3डी प्रिंटिंग, लेजर कटिंग**) का एकीकरण।</span>
+              <span class="marathi">जटिल भौतिक वस्तू जलद आणि कार्यक्षमतेने तयार करण्यासाठी डिजिटल डिझाइन साधने आणि ॲडिटिव्ह/सब्स्ट्रॅक्टिव्ह उत्पादन तंत्रांचे (**3डी प्रिंटिंग, लेझर कटिंग**) एकत्रीकरण.</span>
+            </p>
+            <ul>
+              <li>
+                <strong><span class="english">Key Tools:</span><span class="hindi">प्रमुख उपकरण:</span><span class="marathi">मुख्य साधने:</span></strong>
+                <span class="english"> **AutoCAD**, SolidWorks, Fusion 360, 3D Printers (FDM/SLA), Laser Cutters.</span>
+                <span class="hindi"> **ऑटोकेड**, सॉलिडवर्क्स, फ्यूजन 360, 3डी प्रिंटर (FDM/SLA), लेजर कटर।</span>
+                <span class="marathi"> **ऑटोकेड**, सॉलिडवर्क्स, फ्यूजन 360, 3डी प्रिंटर्स (FDM/SLA), लेझर कटर.</span>
+              </li>
+              <li>
+                <strong><span class="english">Careers:</span><span class="hindi">करियर:</span><span class="marathi">करिअर:</span></strong>
+                <span class="english"> Design Engineer, Manufacturing Specialist, CAD Designer.</span>
+                <span class="hindi"> डिजाइन इंजीनियर, विनिर्माण विशेषज्ञ, CAD डिजाइनर।</span>
+                <span class="marathi"> डिझाइन इंजिनियर, उत्पादन विशेषज्ञ, CAD डिझायनर.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Core IT Infrastructure & Networking</span>
+              <span class="hindi">कोर आईटी इन्फ्रास्ट्रक्चर और नेटवर्किंग</span>
+              <span class="marathi">कोअर आयटी इन्फ्रास्ट्रक्चर आणि नेटवर्किंग</span>
+            </h3>
+            <p>
+              <span class="english">Building and maintaining the foundational communication systems (**Networking** - local and wide-area networks) that connect devices and ensure reliable data flow.</span>
+              <span class="hindi">बुनियादी संचार प्रणालियों (**नेटवर्किंग** - स्थानीय और विस्तृत क्षेत्र नेटवर्क) का निर्माण और रखरखाव जो उपकरणों को जोड़ते हैं और विश्वसनीय डेटा प्रवाह सुनिश्चित करते हैं।</span>
+              <span class="marathi">मूलभूत संवाद प्रणाली (**नेटवर्किंग** - स्थानिक आणि विस्तृत क्षेत्र नेटवर्क) तयार करणे आणि देखरेख करणे जे उपकरणांना जोडतात आणि विश्वसनीय डेटा प्रवाह सुनिश्चित करतात.</span>
+            </p>
+            <ul>
+              <li>
+                <strong><span class="english">Core Skills:</span><span class="hindi">मुख्य कौशल्य:</span><span class="marathi">मुख्य कौशल्ये:</span></strong>
+                <span class="english"> TCP/IP, OSI Model, Routing & Switching (Cisco/Juniper), Network Security.</span>
+                <span class="hindi"> TCP/IP, OSI मॉडल, रूटिंग और स्विचिंग (सिस्को/जूनिपर), नेटवर्क सुरक्षा।</span>
+                <span class="marathi"> TCP/IP, OSI मॉडेल, राउटिंग आणि स्विचिंग (सिस्को/जुनिपर), नेटवर्क सुरक्षा.</span>
+              </li>
+              <li>
+                <strong><span class="english">Certifications:</span><span class="hindi">प्रमाणन:</span><span class="marathi">प्रमाणपत्रे:</span></strong>
+                <span class="english"> CompTIA Network+, CCNA, JNCIA, ITIL.</span>
+                <span class="hindi"> CompTIA Network+, CCNA, JNCIA, ITIL।</span>
+                <span class="marathi"> CompTIA Network+, CCNA, JNCIA, ITIL.</span>
+              </li>
+            </ul>
+          </div>
+
+        </div> </div>
+    </section>
+
+    <section id="strategy" class="strategy-section">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="english">Career Path Strategy</span>
+          <span class="hindi">करियर मार्ग रणनीति</span>
+          <span class="marathi">करिअर मार्ग धोरण</span>
+        </h2>
+        <div class="strategy-grid">
+            
+            <div class="strategy-card">
+                <span class="strategy-icon">🛠️</span>
+                <h4>
+                    <span class="english">Phase 1: Foundational Skills</span>
+                    <span class="hindi">चरण 1: मूलभूत कौशल्य</span>
+                    <span class="marathi">टप्पा 1: मूलभूत कौशल्ये</span>
+                </h4>
+                <p>
+                    <span class="english">Master **one primary programming language** (Python, JavaScript, or C++). Understand basic **Data Structures & Algorithms (DSA)**. Solid grasp of Linux/Command line is essential for all domains.</span>
+                    <span class="hindi">**एक प्राथमिक प्रोग्रामिंग भाषा** (पायथन, जावास्क्रिप्ट, या C++) में महारत हासिल करें। बुनियादी **डेटा संरचना और एल्गोरिदम (DSA)** को समझें। सभी डोमेन के लिए लिनक्स/कमांड लाइन की ठोस समझ आवश्यक है।</span>
+                    <span class="marathi">**एक प्राथमिक प्रोग्रामिंग भाषा** (पायथन, जावास्क्रिप्ट, किंवा C++) मध्ये प्रभुत्व मिळवा आणि मूलभूत **डेटा स्ट्रक्चर्स आणि अल्गोरिदम (DSA)** समजून घ्या. सर्व डोमेनसाठी लिनक्स/कमांड लाइनची चांगली माहिती असणे आवश्यक आहे.</span>
+                </p>
+            </div>
+
+            <div class="strategy-card">
+                <span class="strategy-icon">🏗️</span>
+                <h4>
+                    <span class="english">Phase 2: Build a Project Portfolio</span>
+                    <span class="hindi">चरण 2: एक परियोजना पोर्टफोलियो बनाएं</span>
+                    <span class="marathi">टप्पा 2: प्रकल्प पोर्टफोलिओ तयार करा</span>
+                </h4>
+                <p>
+                    <span class="english">Create **3-5 significant, end-to-end projects** demonstrating your skills in your chosen domain (e.g., a Full Stack app, a ML model, or an AutoCAD design project). Use Git/GitHub effectively.</span>
+                    <span class="hindi">अपने चुने हुए डोमेन में अपने कौशल को प्रदर्शित करने वाली **3-5 महत्वपूर्ण, एंड-टू-एंड परियोजनाएँ** बनाएं (उदाहरण के लिए, एक फुल स्टैक ऐप, एक ML मॉडल, या एक ऑटोकेड डिजाइन परियोजना)। Git/GitHub का प्रभावी ढंग से उपयोग करें।</span>
+                    <span class="marathi">आपल्या निवडलेल्या डोमेनमध्ये आपली कौशल्ये दर्शवणारे **3-5 महत्त्वाचे, एंड-टू-एंड प्रकल्प** तयार करा (उदा. फुल स्टॅक ॲप, ML मॉडेल, किंवा ऑटोकेड डिझाइन प्रकल्प). Git/GitHub प्रभावीपणे वापरा.</span>
+                </p>
+            </div>
+
+            <div class="strategy-card">
+                <span class="strategy-icon">🏅</span>
+                <h4>
+                    <span class="english">Phase 3: Industry Certifications</span>
+                    <span class="hindi">चरण 3: उद्योग प्रमाणन</span>
+                    <span class="marathi">टप्पा 3: उद्योग प्रमाणपत्रे</span>
+                </h4>
+                <p>
+                    <span class="english">Validate expertise with vendor-specific Certifications: **Cloud (AWS/Azure/GCP)**, **Security (CEH/CISSP)**, or **Networking (CCNA)**. These help land specialized roles quickly.</span>
+                    <span class="hindi">विक्रेता-विशिष्ट प्रमाणन के साथ विशेषज्ञता को मान्य करें: **क्लाउड (AWS/Azure/GCP)**, **सुरक्षा (CEH/CISSP)**, या **नेटवर्किंग (CCNA)**। ये विशेष भूमिकाओं को जल्दी दिलाने में मदद करते हैं।</span>
+                    <span class="marathi">विक्रेता-विशिष्ट प्रमाणपत्रांसह आपली कौशल्ये सिद्ध करा: **क्लाउड (AWS/Azure/GCP)**, **सुरक्षा (CEH/CISSP)**, किंवा **नेटवर्किंग (CCNA)**. ही प्रमाणपत्रे विशेष भूमिकेसाठी लवकर मदत करतात.</span>
+                </p>
+            </div>
+
+            <div class="strategy-card">
+                <span class="strategy-icon">📈</span>
+                <h4>
+                    <span class="english">Phase 4: Continuous Learning</span>
+                    <span class="hindi">चरण 4: निरंतर सीखना</span>
+                    <span class="marathi">टप्पा 4: सतत शिकणे</span>
+                </h4>
+                <p>
+                    <span class="english">The tech landscape changes constantly. Dedicate time weekly to learning new frameworks, following industry news, contributing to open-source projects, and participating in tech communities.</span>
+                    <span class="hindi">तकनीकी परिदृश्य लगातार बदलता रहता है। नए फ्रेमवर्क सीखने, उद्योग समाचारों का अनुसरण करने, ओपन-सोर्स परियोजनाओं में योगदान करने और तकनीकी समुदायों में भाग लेने के लिए साप्ताहिक रूप से समय समर्पित करें।</span>
+                    <span class="marathi">तंत्रज्ञान क्षेत्र सतत बदलत असते. नवीन फ्रेमवर्क शिकण्यासाठी, उद्योग बातम्यांचे अनुसरण करण्यासाठी, ओपन-सोर्स प्रकल्पांमध्ये योगदान देण्यासाठी आणि तंत्रज्ञान समुदायांमध्ये भाग घेण्यासाठी दर आठवड्याला वेळ द्या.</span>
+                </p>
+            </div>
+
+        </div>
+      </div>
+    </section>
+    
+    <section id="links" class="services" style="border: 1px solid var(--card-border-cyan);">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="english">Useful Links & Resources</span>
+          <span class="hindi">उपयोगी लिंक और संसाधन</span>
+          <span class="marathi">उपयुक्त दुवे व संसाधने</span>
+        </h2>
+        <div class="services-grid">
+            
+            <div class="service-card" style="min-height: auto;">
+                <h3>
+                  <span class="english">Learning Platforms (MOOCs)</span>
+                  <span class="hindi">सीखने के प्लेटफॉर्म (MOOCs)</span>
+                  <span class="marathi">शिकण्याचे प्लॅटफॉर्म (MOOCs)</span>
+                </h3>
+                <ul>
+                  <li><a href="https://www.coursera.org" target="_blank" rel="noopener">Coursera</a> (Specializations in AI/ML, Data Science)</li>
+                  <li><a href="https://www.edx.org" target="_blank" rel="noopener">edX</a> (University-backed Tech Courses)</li>
+                  <li><a href="https://www.udemy.com" target="_blank" rel="noopener">Udemy</a> (Skills-based Web Dev/Cybersecurity)</li>
+                  <li><a href="https://www.freecodecamp.org" target="_blank" rel="noopener">FreeCodeCamp</a> (Full Stack Learning)</li>
+                </ul>
+            </div>
+            
+            <div class="service-card" style="min-height: auto;">
+                <h3>
+                  <span class="english">Tools & Community</span>
+                  <span class="hindi">उपकरण और समुदाय</span>
+                  <span class="marathi">साधने आणि समुदाय</span>
+                </h3>
+                <ul>
+                  <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> (Portfolio and Open-Source Collaboration)</li>
+                  <li><a href="https://www.kaggle.com" target="_blank" rel="noopener">Kaggle</a> (Data Science Competitions and Datasets)</li>
+                  <li><a href="https://stackoverflow.com" target="_blank" rel="noopener">Stack Overflow</a> (Developer Q&A)</li>
+                  <li><a href="https://owasp.org" target="_blank" rel="noopener">OWASP</a> (Cybersecurity Standards & Projects)</li>
+                </ul>
+            </div>
+
+
+            <div class="service-card" style="min-height: auto; grid-column: span 2; display: flex; flex-direction: column; align-items: center;">
+                <h3>
+                  <span class="english">Design & Manufacturing Foundation - Free Lecture (Sample)</span>
+                  <span class="hindi">डिजाइन और विनिर्माण फाउंडेशन - मुफ्त व्याख्यान (नमूना)</span>
+                  <span class="marathi">डिझाइन आणि उत्पादन पायाभूत - मुक्त व्याख्यान (नमुना)</span>
+                </h3>
+                <div style="margin-top: 10px; border-radius: 10px; overflow: hidden; width: 100%; max-width: 600px;">
+                  <iframe width="100%" height="315" src="https://www.youtube.com/embed/aircAapS_wM" title="Sample Lecture: Introduction to CAD & Manufacturing" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <p style="text-align: center; margin-top: 15px; color: var(--accent-green);">
+                  <span class="english">**Note:** Start your journey with hands-on projects. Software like **AutoCAD** and Fusion 360 offer free student licenses for learning.</span>
+                  <span class="hindi">**नोट:** हैंड्स-ऑन प्रोजेक्ट के साथ अपनी यात्रा शुरू करें। **ऑटोकेड** और फ्यूजन 360 जैसे सॉफ्टवेयर सीखने के लिए मुफ्त छात्र लाइसेंस प्रदान करते हैं।</span>
+                  <span class="marathi">**सूचना:** हँड्स-ऑन प्रकल्पांसह आपला प्रवास सुरू करा. **ऑटोकेड** आणि फ्यूजन 360 सारखे सॉफ्टवेअर शिकण्यासाठी विनामूल्य विद्यार्थी परवाने देतात.</span>
+                </p>
+            </div>
+            
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>
+            <span class="english">Contact Info</span>
+            <span class="hindi">संपर्क जानकारी</span>
+            <span class="marathi">संपर्क माहिती</span>
+          </h3>
+          <p><span class="english">Email: info@xshala.tech</span><span class="hindi">ईमेल: info@xshala.tech</span><span class="marathi">ईमेल: info@xshala.tech</span></p>
+          <p><span class="english">Phone: +91 98765 43210</span><span class="hindi">फ़ोन: +91 98765 43210</span><span class="marathi">फोन: +91 98765 43210</span></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p><span class="english">© 2025 XShala. Emerging Technologies Guidance.</span><span class="hindi">© 2025 XShala. उभरती प्रौद्योगिकियाँ मार्गदर्शन।</span><span class="marathi">© 2025 XShala. उदयोन्मुख तंत्रज्ञान मार्गदर्शन.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // language + theme with persistence (localStorage) so pages can be synced if other pages use same keys
+    const MODE_KEY = 'xshala-mode';     // 'day' or 'night'
+    const LANG_KEY = 'xshala-lang';     // 'english'|'hindi'|'marathi'
+
+    let currentMode = 'night';
+    let currentLanguage = 'english';
+
+    function applyMode(mode) {
+      const root = document.documentElement;
+      if (mode === 'day') {
+        root.classList.add('theme-day');
+        document.body.classList.add('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '☀️';
+        currentMode = 'day';
+      } else {
+        root.classList.remove('theme-day');
+        document.body.classList.remove('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '🌙';
+        currentMode = 'night';
+      }
+      try { localStorage.setItem(MODE_KEY, currentMode); } catch (e) {}
+    }
+
+    function toggleMode() {
+      applyMode(currentMode === 'night' ? 'day' : 'night');
+    }
+
+    function setLanguage(lang) {
+      // remove any existing lang-* classes
+      document.body.className = document.body.className.replace(/\blang-\w+\b/g, '').trim();
+      if (lang && lang !== 'english') {
+        document.body.classList.add('lang-' + lang);
+      }
+      currentLanguage = lang || 'english';
+
+      // update active state of buttons
+      document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+      const selector = `.language-btn[data-lang="${lang}"]`;
+      const btn = document.querySelector(selector);
+      if (btn) btn.classList.add('active');
+
+      try { localStorage.setItem(LANG_KEY, currentLanguage); } catch (e) {}
+    }
+
+    // Smooth scroll for anchors beginning with #
+    function enableSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          // If href is only "#", let it be
+          const href = this.getAttribute('href');
+          if (href === '#' || href === '') return;
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            // If it links to another page fragment (like index.html#something), navigate normally
+            const parts = href.split('#');
+            if (parts.length === 2 && parts[0] !== '') {
+              window.location.href = href;
+            }
+          }
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // apply saved settings from localStorage (if any)
+      try {
+        const savedMode = localStorage.getItem(MODE_KEY);
+        const savedLang = localStorage.getItem(LANG_KEY);
+        if (savedMode) applyMode(savedMode);
+        else applyMode('night');
+
+        if (savedLang) setLanguage(savedLang);
+        else setLanguage('english');
+
+      } catch (e) {
+        // fallback defaults
+        applyMode('night');
+        setLanguage('english');
+      }
+
+      // Bind language buttons to allow keyboard activation as well
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = btn.dataset.lang;
+          setLanguage(lang);
+        });
+      });
+
+      // Bind toggle button
+      const modeBtn = document.getElementById('mode-toggle-btn');
+      modeBtn.addEventListener('click', toggleMode);
+
+      enableSmoothScroll();
+
+    });
+
+  </script>
+</body>
+</html>

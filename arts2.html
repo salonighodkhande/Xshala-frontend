@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XShala - Arts & Design Guidance</title>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Default Dark Mode Variables */
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent-cyan: #00ffff;
+            --accent-magenta: #ff00ff;
+            --accent-green: #00ff00;
+            --card-bg: rgba(0, 0, 0, 0.7);
+            --card-border-cyan: rgba(0, 255, 255, 0.3);
+            --card-border-magenta: rgba(255, 0, 255, 0.3);
+            --card-border-green: rgba(0, 255, 0, 0.3);
+            --card-hover-bg-cyan: rgba(0, 255, 255, 0.15);
+            --card-hover-bg-magenta: rgba(255, 0, 255, 0.15);
+            --card-hover-bg-green: rgba(0, 255, 0, 0.15);
+            --logo-text-shadow: 0 0 20px var(--accent-cyan);
+            --logo-accent-color: var(--accent-cyan);
+            --header-bg: rgba(10, 10, 10, 0.95);
+            --header-border: 2px solid var(--accent-cyan);
+            --footer-bg: rgba(0, 0, 0, 0.95);
+        }
+
+        /* Day Mode Variables */
+        :root.theme-day {
+            --primary-bg: #f0f2f5;
+            --secondary-bg: #e2e4e8;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --accent-cyan: #0080ff;
+            --accent-magenta: #ff6600;
+            --accent-green: #008800;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border-cyan: rgba(0, 128, 255, 0.3);
+            --card-border-magenta: rgba(255, 102, 0, 0.3);
+            --card-border-green: rgba(0, 136, 0, 0.3);
+            --card-hover-bg-cyan: rgba(0, 128, 255, 0.1);
+            --card-hover-bg-magenta: rgba(255, 102, 0, 0.1);
+            --card-hover-bg-green: rgba(0, 136, 0, 0.1);
+            --logo-text-shadow: none;
+            --logo-accent-color: var(--text-primary);
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --header-border: 2px solid var(--accent-cyan);
+            --footer-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* Animated Dark STEM Background */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        /* This animation is intentionally tied to the dark theme for visual consistency */
+        .theme-day .animated-background {
+            background: linear-gradient(135deg, #f0f2f5 0%, #e2e4e8 25%, #d1d4d8 50%, #c1c4c8 75%, #b1b4b8 100%);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Enhanced Floating STEM Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(0, 255, 255, 0.3);
+            font-size: 4rem;
+            animation: float 25s infinite linear;
+            text-shadow: 0 0 20px currentColor;
+        }
+        
+        /* Day Mode Floating Elements */
+        .theme-day .floating-element {
+            color: rgba(0, 128, 255, 0.3);
+            text-shadow: none;
+        }
+
+        .floating-element:nth-child(odd) {
+            animation-direction: reverse;
+            color: rgba(255, 0, 255, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(odd) {
+            color: rgba(255, 102, 0, 0.3);
+        }
+
+        .floating-element:nth-child(3n) {
+            color: rgba(0, 255, 0, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(3n) {
+            color: rgba(0, 136, 0, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(0.7);
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) rotate(324deg) scale(0.7);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Neon Circuit Lines */
+        .circuit-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            height: 2px;
+            animation: circuitFlow 8s infinite;
+        }
+
+        .circuit-line:nth-child(1) {
+            top: 20%;
+            width: 100%;
+            animation-delay: 0s;
+        }
+
+        .circuit-line:nth-child(2) {
+            top: 60%;
+            width: 100%;
+            animation-delay: -2s;
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent);
+        }
+
+        .circuit-line:nth-child(3) {
+            top: 80%;
+            width: 100%;
+            animation-delay: -4s;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+
+        @keyframes circuitFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* DNA Helix Enhanced */
+        .dna-helix {
+            position: fixed;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 400px;
+            z-index: -1;
+        }
+
+        .dna-strand {
+            position: absolute;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+            border-radius: 3px;
+            animation: dnaRotate 12s infinite linear;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        .theme-day .dna-strand {
+            box-shadow: none;
+        }
+
+        .dna-strand:nth-child(1) {
+            left: 30px;
+            transform-origin: center;
+        }
+
+        .dna-strand:nth-child(2) {
+            right: 30px;
+            animation-delay: -6s;
+            background: linear-gradient(180deg, var(--accent-magenta), var(--accent-green));
+        }
+
+        @keyframes dnaRotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            background: var(--header-bg);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: var(--header-border);
+            transition: background-color 0.5s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            text-decoration: none;
+            position: relative;
+            text-shadow: var(--logo-text-shadow);
+        }
+
+        .logo span {
+            color: var(--logo-accent-color);
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+        
+        .theme-day .logo span {
+            animation: none;
+        }
+
+        @keyframes neonPulse {
+            0% { text-shadow: 0 0 20px var(--accent-cyan); }
+            100% { text-shadow: 0 0 30px var(--accent-cyan), 0 0 40px var(--accent-cyan); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .language-btn, .mode-toggle-btn {
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            color: #000;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mode-toggle-btn {
+            font-size: 1.2rem;
+            padding: 0.4rem;
+            border-radius: 50%;
+        }
+
+        .language-btn:hover, .mode-toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
+        }
+
+        .language-btn.active {
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.3); text-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
+        }
+        
+        .theme-day .hero h1 {
+            animation: none;
+            -webkit-text-fill-color: initial;
+            background: none;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-secondary);
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .btn {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-cyan), #0080ff);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-cyan);
+            color: var(--text-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+        }
+
+        /* STEM Info Section */
+        .stem-info {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border: 1px solid var(--card-border-cyan);
+        }
+
+        .stem-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-card {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--card-border-cyan);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .theme-day .benefit-card {
+            background: rgba(0, 128, 255, 0.1);
+        }
+
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+            background: var(--card-hover-bg-cyan);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+        }
+
+        /* Services Section */
+        .services {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border: 1px solid var(--card-border-magenta);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+        
+        .theme-day .section-title {
+            -webkit-text-fill-color: initial;
+            background: none;
+            color: var(--text-primary);
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        
+        .theme-day .section-title:after {
+            box-shadow: none;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid var(--card-border-cyan);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-day .service-card {
+            background: linear-gradient(135deg, rgba(0, 128, 255, 0.1), rgba(255, 102, 0, 0.1));
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 255, 255, 0.2);
+            border-color: var(--accent-cyan);
+        }
+
+        .service-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+            animation: bounce 2s infinite;
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-cyan);
+        }
+
+        .service-card ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        .service-card li {
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+            transition: transform 0.2s ease;
+            font-size: 1.1rem;
+        }
+
+        .service-card li:hover {
+            transform: translateX(5px);
+            color: var(--accent-cyan);
+        }
+
+        .service-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border: 1px solid var(--card-border-green);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 15px;
+            border: 1px solid var(--card-border-green);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-day .feature-item {
+            background: rgba(0, 136, 0, 0.1);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 0, 0.2);
+            background: var(--card-hover-bg-green);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--footer-bg);
+            backdrop-filter: blur(10px);
+            padding: 3rem 0 1rem;
+            margin-top: 2rem;
+            border-top: 2px solid var(--accent-cyan);
+            transition: background-color 0.5s ease;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+            font-size: 1.3rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--accent-cyan);
+            transform: translateX(5px);
+        }
+        
+        .theme-day .footer-section a:hover {
+            text-shadow: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border-cyan);
+            color: var(--text-secondary);
+        }
+
+        /* Chatbot Styles - not used on this page, kept for parity */
+        .chatbot-container { display:none; }
+
+        /* Language Toggle Styles */
+        .hindi, .marathi {
+            display: none;
+        }
+
+        body.lang-hindi .english {
+            display: none;
+        }
+
+        body.lang-hindi .hindi {
+            display: block;
+        }
+
+        body.lang-marathi .english {
+            display: none;
+        }
+
+        body.lang-marathi .marathi {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 80%;
+                max-width: 300px;
+            }
+
+            .floating-element {
+                font-size: 3rem;
+            }
+
+            .chatbot-window {
+                width: 300px;
+                height: 400px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+  </style>
+</head>
+<body>
+
+  <div class="animated-background"></div>
+
+  <div class="circuit-lines">
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+  </div>
+
+  <div class="floating-elements" aria-hidden="true">
+    <div class="floating-element" style="left: 5%; animation-delay: 0s;">🎨</div>
+    <div class="floating-element" style="left: 25%; animation-delay: -4s;">✂️</div>
+    <div class="floating-element" style="left: 45%; animation-delay: -8s;">🖋️</div>
+    <div class="floating-element" style="left: 65%; animation-delay: -12s;">💡</div>
+    <div class="floating-element" style="left: 85%; animation-delay: -16s;">🎥</div>
+  </div>
+
+  <div class="dna-helix" aria-hidden="true">
+    <div class="dna-strand"></div>
+    <div class="dna-strand"></div>
+  </div>
+
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo" aria-label="XShala Home"><span>X</span>Shala</a>
+
+      <ul class="nav-links" role="navigation" aria-label="Main navigation">
+        <li>
+          <a href="index.html" class="english">Home</a>
+          <a href="index.html" class="hindi">होम</a>
+          <a href="index.html" class="marathi">होम</a>
+        </li>
+        <li>
+          <a href="#info" class="english">Arts & Design</a>
+          <a href="#info" class="hindi">कला और डिजाइन</a>
+          <a href="#info" class="marathi">कला आणि डिझाइन</a>
+        </li>
+        <li>
+          <a href="#contact" class="english">Contact</a>
+          <a href="#contact" class="hindi">संपर्क</a>
+          <a href="#contact" class="marathi">संपर्क</a>
+        </li>
+      </ul>
+
+      <div class="language-selector" aria-label="Language and theme controls">
+        <button id="mode-toggle-btn" class="mode-toggle-btn" aria-label="Toggle day night">🌙</button>
+        <button class="language-btn active" data-lang="english" onclick="setLanguage('english')">EN</button>
+        <button class="language-btn" data-lang="hindi" onclick="setLanguage('hindi')">हि</button>
+        <button class="language-btn" data-lang="marathi" onclick="setLanguage('marathi')">म</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container">
+        <h1>
+          <span class="english">Arts, Design & Media Guidance</span>
+          <span class="hindi">कला, डिज़ाइन और मीडिया मार्गदर्शन</span>
+          <span class="marathi">कला, डिझाइन आणि मीडिया मार्गदर्शन</span>
+        </h1>
+        <p>
+          <span class="english">Your creative career path: Detailed information and resources for Interior Design, Fashion, and Journalism aspirants.</span>
+          <span class="hindi">आपका रचनात्मक करियर पथ: इंटीरियर डिज़ाइन, फैशन और पत्रकारिता के अभ्यर्थियों के लिए विस्तृत जानकारी और संसाधन।</span>
+          <span class="marathi">तुमचा सर्जनशील करिअर मार्ग: इंटीरियर डिझाइन, फॅशन आणि पत्रकारिताच्या विद्यार्थ्यांसाठी सविस्तर माहिती आणि साधने.</span>
+        </p>
+      </div>
+    </section>
+
+    <section id="info" class="services">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="english">Creative Fields - Complete Information</span>
+          <span class="hindi">रचनात्मक क्षेत्र - संपूर्ण जानकारी</span>
+          <span class="marathi">सर्जनशील क्षेत्र - संपूर्ण माहिती</span>
+        </h2>
+
+        <div class="services-grid">
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Disclaimer</span>
+              <span class="hindi">अस्वीकरण</span>
+              <span class="marathi">अस्वीकरण</span>
+            </h3>
+            <p>
+              <span class="english">This information is for general guidance only. Always refer to the official websites of colleges and entrance exams (like NIFT, NID, CEED, etc.) for the most current and accurate information.</span>
+              <span class="hindi">यह जानकारी केवल सामान्य मार्गदर्शन के लिए है। सबसे अद्यतन और सही जानकारी के लिए हमेशा कॉलेजों और प्रवेश परीक्षाओं (जैसे निफ्ट, एनआईडी, सीईईडी, आदि) की आधिकारिक वेबसाइट देखें।</span>
+              <span class="marathi">ही माहिती फक्त सामान्य मार्गदर्शनासाठी आहे. सर्वात अद्ययावत आणि अचूक माहितीसाठी नेहमी महाविद्यालये आणि प्रवेश परीक्षांच्या (जसे की निफ्ट, एनआयडी, सीईईडी इ.) अधिकृत वेबसाइट्स तपासा.</span>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Overview</span>
+              <span class="hindi">ओवरव्यू</span>
+              <span class="marathi">सारांश</span>
+            </h3>
+            <p>
+              <span class="english">The Arts field offers diverse career paths in **Design, Visual Arts, and Communication**. Key entrance exams include **NIFT (Fashion), NID (Design), CEED/UCEED, and various university-specific entrance tests** for Journalism and Interior Design.</span>
+              <span class="hindi">कला क्षेत्र डिजाइन, विजुअल आर्ट्स और संचार में विभिन्न करियर विकल्प प्रदान करता है। प्रमुख प्रवेश परीक्षाओं में **निफ्ट (फैशन), एनआईडी (डिज़ाइन), सीईईडी/यूसीईईडी, और पत्रकारिता और इंटीरियर डिज़ाइन के लिए विभिन्न विश्वविद्यालय-विशिष्ट प्रवेश परीक्षाएँ** शामिल हैं।</span>
+              <span class="marathi">कला क्षेत्रात **डिझाइन, व्हिज्युअल आर्ट्स आणि कम्युनिकेशन** मध्ये विविध करिअरचे मार्ग आहेत. प्रमुख प्रवेश परीक्षांमध्ये **निफ्ट (फॅशन), एनआयडी (डिझाइन), सीईईडी/यूसीईईडी आणि पत्रकारिता व इंटीरियर डिझाइनसाठी विविध विद्यापीठ-विशिष्ट प्रवेश परीक्षा** यांचा समावेश आहे.</span>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Interior Designing</span>
+              <span class="hindi">इंटीरियर डिजाइनिंग</span>
+              <span class="marathi">इंटीरियर डिझाइनिंग</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">Courses:</span><span class="hindi">कोर्स:</span><span class="marathi">कोर्सेस:</span></strong>
+                <span class="english"> B.Des in Interior Design, B.Arch (with specialization), Diploma/Certificate courses.</span>
+                <span class="hindi"> इंटीरियर डिज़ाइन में बी.डेस, बी.आर्क (विशेषज्ञता के साथ), डिप्लोमा/सर्टिफिकेट कोर्स।</span>
+                <span class="marathi"> इंटीरियर डिझाइनमध्ये बी.डेस, बी.आर्क (विशेषज्ञानासह), डिप्लोमा/प्रमाणपत्र कोर्सेस.</span>
+              </li>
+              <li>
+                <strong><span class="english">Key Skills:</span><span class="hindi">मुख्य कौशल:</span><span class="marathi">मुख्य कौशल्ये:</span></strong>
+                <span class="english"> Space planning, color theory, 3D visualization, CAD software proficiency.</span>
+                <span class="hindi"> स्पेस प्लानिंग, रंग सिद्धांत, 3डी विज़ुअलाइज़ेशन, सीएडी सॉफ्टवेयर में दक्षता।</span>
+                <span class="marathi"> जागा नियोजन, रंग सिद्धांत, 3D व्हिज्युअलायझेशन, CAD सॉफ्टवेअरमध्ये प्राविण्य.</span>
+              </li>
+              <li>
+                <strong><span class="english">Top Exams:</span><span class="hindi">प्रमुख परीक्षा:</span><span class="marathi">शीर्ष परीक्षा:</span></strong>
+                <span class="english"> NID, CEED/UCEED, JEE Paper-2 (for B.Arch related courses), private college entrance tests.</span>
+                <span class="hindi"> एनआईडी, सीईईडी/यूसीईईडी, जेईई पेपर-2 (बी.आर्क संबंधित कोर्स के लिए), निजी कॉलेज प्रवेश परीक्षाएँ।</span>
+                <span class="marathi"> एनआयडी, सीईईडी/यूसीईईडी, जेईई पेपर-2 (बी.आर्क संबंधित कोर्सेससाठी), खासगी महाविद्यालयीन प्रवेश परीक्षा.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Fashion Designing</span>
+              <span class="hindi">फैशन डिजाइनिंग</span>
+              <span class="marathi">फॅशन डिझाइनिंग</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">Courses:</span><span class="hindi">कोर्स:</span><span class="marathi">कोर्सेस:</span></strong>
+                <span class="english"> B.Des in Fashion Design, B.FTech (Apparel Production), Diploma in Accessory Design.</span>
+                <span class="hindi"> फैशन डिज़ाइन में बी.डेस, बी.एफटेक (परिधान उत्पादन), एक्सेसरी डिज़ाइन में डिप्लोमा।</span>
+                <span class="marathi"> फॅशन डिझाइनमध्ये बी.डेस, बी.एफटेक (पोशाख उत्पादन), ॲक्सेसरी डिझाइनमध्ये डिप्लोमा.</span>
+              </li>
+              <li>
+                <strong><span class="english">Key Skills:</span><span class="hindi">मुख्य कौशल:</span><span class="marathi">मुख्य कौशल्ये:</span></strong>
+                <span class="english"> Sketching, pattern making, draping, textile knowledge, trend forecasting.</span>
+                <span class="hindi"> स्केचिंग, पैटर्न मेकिंग, ड्रेपिंग, वस्त्र ज्ञान, ट्रेंड फोरकास्टिंग।</span>
+                <span class="marathi"> स्केचिंग, नमुना बनवणे, ड्रेपिंग, वस्त्रज्ञान, ट्रेंड अंदाज.</span>
+              </li>
+              <li>
+                <strong><span class="english">Top Exams:</span><span class="hindi">प्रमुख परीक्षा:</span><span class="marathi">शीर्ष परीक्षा:</span></strong>
+                <span class="english"> NIFT Entrance Exam (GAT & CAT), Pearl Academy Entrance Exam, Symbiosis Entrance Exam for Design (SEED).</span>
+                <span class="hindi"> निफ्ट प्रवेश परीक्षा (जीएटी और सीएटी), पर्ल एकेडमी प्रवेश परीक्षा, सिम्बायोसिस डिज़ाइन प्रवेश परीक्षा (SEED)।</span>
+                <span class="marathi"> निफ्ट प्रवेश परीक्षा (GAT आणि CAT), पर्ल ॲकॅडमी प्रवेश परीक्षा, डिझाइनसाठी सिम्बायोसिस प्रवेश परीक्षा (SEED).</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Media & Journalism</span>
+              <span class="hindi">मीडिया और पत्रकारिता</span>
+              <span class="marathi">मीडिया आणि पत्रकारिता</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">Courses:</span><span class="hindi">कोर्स:</span><span class="marathi">कोर्सेस:</span></strong>
+                <span class="english"> BA (Journalism & Mass Communication), MA in Journalism, PGD in Public Relations/Advertising.</span>
+                <span class="hindi"> बीए (पत्रकारिता और जन संचार), पत्रकारिता में एमए, जन संपर्क/विज्ञापन में पीजीडी।</span>
+                <span class="marathi"> बीए (पत्रकारिता आणि जनसंवाद), पत्रकारितेत एमए, जनसंपर्क/जाहिरातीत पीजीडी.</span>
+              </li>
+              <li>
+                <strong><span class="english">Key Skills:</span><span class="hindi">मुख्य कौशल:</span><span class="marathi">मुख्य कौशल्ये:</span></strong>
+                <span class="english"> Writing/Reporting, interviewing, critical thinking, digital content creation, ethics.</span>
+                <span class="hindi"> लेखन/रिपोर्टिंग, साक्षात्कार, आलोचनात्मक सोच, डिजिटल सामग्री निर्माण, नैतिकता।</span>
+                <span class="marathi"> लेखन/रिपोर्टिंग, मुलाखत, गंभीर विचार, डिजिटल सामग्री निर्मिती, नीतिमत्ता.</span>
+              </li>
+              <li>
+                <strong><span class="english">Top Exams:</span><span class="hindi">प्रमुख परीक्षा:</span><span class="marathi">शीर्ष परीक्षा:</span></strong>
+                <span class="english"> IIMC Entrance Exam, CUET (for central universities), university-level tests (e.g., JMI, MU).</span>
+                <span class="hindi"> आईआईएमसी प्रवेश परीक्षा, सीयूईटी (केंद्रीय विश्वविद्यालयों के लिए), विश्वविद्यालय-स्तरीय परीक्षाएँ (जैसे जेएमआई, एमयू)।</span>
+                <span class="marathi"> IIMC प्रवेश परीक्षा, CUET (केंद्रीय विद्यापीठांसाठी), विद्यापीठ-स्तरीय परीक्षा (उदा. JMI, MU).</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">General Preparation</span>
+              <span class="hindi">सामान्य तैयारी</span>
+              <span class="marathi">सामान्य तयारी</span>
+            </h3>
+            <p>
+              <span class="english"><strong>All Fields:</strong> Focus on **Portfolio Development** and general aptitude, including reasoning, English comprehension, and creative ability. Practice sketching and mock tests are essential.</span>
+              <span class="hindi"><strong>सभी क्षेत्र:</strong> **पोर्टफोलियो विकास** और सामान्य योग्यता पर ध्यान केंद्रित करें, जिसमें तर्कशक्ति, अंग्रेजी समझ और रचनात्मक क्षमता शामिल है। स्केचिंग और मॉक टेस्ट का अभ्यास आवश्यक है।</span>
+              <span class="marathi"><strong>सर्व क्षेत्र:</strong> **पोर्टफोलियो विकास** आणि सामान्य योग्यता यावर लक्ष केंद्रित करा, ज्यात तर्कशक्ती, इंग्रजी आकलन आणि सर्जनशील क्षमता यांचा समावेश आहे. स्केचिंग आणि मॉक टेस्टचा सराव आवश्यक आहे.</span>
+            </p>
+            <p>
+              <span class="english">For Media, keep up-to-date with **Current Affairs** and practice clear, concise writing. For Design, observe and analyze the **design elements** in your surroundings.</span>
+              <span class="hindi">मीडिया के लिए, **समसामयिक घटनाओं** से अपडेट रहें और स्पष्ट, संक्षिप्त लेखन का अभ्यास करें। डिज़ाइन के लिए, अपने आस-पास के **डिज़ाइन तत्वों** का निरीक्षण और विश्लेषण करें।</span>
+              <span class="marathi">मीडियासाठी, **सध्याच्या घडामोडीं** सह अद्ययावत रहा आणि स्पष्ट, संक्षिप्त लेखनाचा सराव करा. डिझाइनसाठी, तुमच्या आजूबाजूच्या **डिझाइन घटकांचे** निरीक्षण आणि विश्लेषण करा.</span>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Useful Links</span>
+              <span class="hindi">उपयोगी लिंक</span>
+              <span class="marathi">उपयुक्त दुवे</span>
+            </h3>
+            <ul>
+              <li><a href="https://www.nift.ac.in" target="_blank" rel="noopener">NIFT Official Website</a></li>
+              <li><a href="https://nid.edu" target="_blank" rel="noopener">NID Official Website</a></li>
+              <li><a href="https://www.iimc.nic.in" target="_blank" rel="noopener">IIMC Official Website</a></li>
+              <li><a href="https://www.admissions.nic.in" target="_blank" rel="noopener">Design Entrance Updates (General)</a></li>
+            </ul>
+            <p>
+              <span class="english">(Open links in a new tab for official notifications and application details.)</span>
+              <span class="hindi"> (आधिकारिक सूचनाओं और आवेदन विवरण के लिए नए टैब में लिंक खोलें।)</span>
+              <span class="marathi"> (अधिकृत सूचना व अर्ज तपशीलांसाठी नवीन टॅबमध्ये दुवा उघडा.)</span>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Resources & Mentorship</span>
+              <span class="hindi">संसाधन और मार्गदर्शन</span>
+              <span class="marathi">संसाधने व मार्गदर्शन</span>
+            </h3>
+            <ul>
+              <li><span class="english">Specialized portfolio guidance</span><span class="hindi">विशेष पोर्टफोलियो मार्गदर्शन</span><span class="marathi">विशेष पोर्टफोलिओ मार्गदर्शन</span></li>
+              <li><span class="english">Mock interviews & GD practice</span><span class="hindi">मॉक साक्षात्कार और समूह चर्चा अभ्यास</span><span class="marathi">मॉक मुलाखती आणि जीडी सराव</span></li>
+              <li><span class="english">Workshops on software (CAD, Adobe Suite)</span><span class="hindi">सॉफ्टवेयर (सीएडी, एडोब सूट) पर कार्यशालाएँ</span><span class="marathi">सॉफ्टवेअरवर कार्यशाळा (CAD, Adobe Suite)</span></li>
+              <li><span class="english">Access to alumni network & industry experts</span><span class="hindi">पूर्व छात्रों के नेटवर्क और उद्योग विशेषज्ञों तक पहुंच</span><span class="marathi">माजी विद्यार्थी नेटवर्क आणि उद्योग तज्ञांपर्यंत पोहोच</span></li>
+            </ul>
+            <p>
+              <span class="english">Example: Check out online platforms like Coursera/edX for free introductory courses on design principles and creative writing.</span>
+              <span class="hindi">उदाहरण: डिज़ाइन सिद्धांत और रचनात्मक लेखन पर मुफ्त परिचयात्मक पाठ्यक्रमों के लिए Coursera/edX जैसे ऑनलाइन प्लेटफ़ॉर्म देखें।</span>
+              <span class="marathi">उदाहरण: डिझाइन तत्त्वे आणि सर्जनशील लेखनावरील विनामूल्य प्रास्ताविक कोर्सेससाठी Coursera/edX सारखे ऑनलाईन प्लॅटफॉर्म तपासा.</span>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Intro to Design Thinking - Free Lecture</span>
+              <span class="hindi">डिज़ाइन थिंकिंग का परिचय - मुफ्त व्याख्यान</span>
+              <span class="marathi">डिझाइन थिंकिंगची ओळख - मुक्त व्याख्यान</span>
+            </h3>
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY" title="Sample Design Lecture" frameborder="0" allowfullscreen></iframe>
+          </div>
+
+        </div> </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>
+            <span class="english">Contact Info</span>
+            <span class="hindi">संपर्क जानकारी</span>
+            <span class="marathi">संपर्क माहिती</span>
+          </h3>
+          <p><span class="english">Email: info@xshala.edu</span><span class="hindi">ईमेल: info@xshala.edu</span><span class="marathi">ईमेल: info@xshala.edu</span></p>
+          <p><span class="english">Phone: +91 98765 43210</span><span class="hindi">फ़ोन: +91 98765 43210</span><span class="marathi">फोन: +91 98765 43210</span></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p><span class="english">© 2025 XShala. Arts & Design Guidance.</span><span class="hindi">© 2025 XShala. कला और डिज़ाइन मार्गदर्शन।</span><span class="marathi">© 2025 XShala. कला आणि डिझाइन मार्गदर्शन.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // language + theme with persistence (localStorage) so pages can be synced if other pages use same keys
+    const MODE_KEY = 'xshala-mode';     // 'day' or 'night'
+    const LANG_KEY = 'xshala-lang';     // 'english'|'hindi'|'marathi'
+
+    let currentMode = 'night';
+    let currentLanguage = 'english';
+
+    function applyMode(mode) {
+      const root = document.documentElement;
+      if (mode === 'day') {
+        root.classList.add('theme-day');
+        document.body.classList.add('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '☀️';
+        currentMode = 'day';
+      } else {
+        root.classList.remove('theme-day');
+        document.body.classList.remove('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '🌙';
+        currentMode = 'night';
+      }
+      try { localStorage.setItem(MODE_KEY, currentMode); } catch (e) {}
+    }
+
+    function toggleMode() {
+      applyMode(currentMode === 'night' ? 'day' : 'night');
+    }
+
+    function setLanguage(lang) {
+      // remove any existing lang-* classes
+      document.body.className = document.body.className.replace(/\blang-\w+\b/g, '').trim();
+      if (lang && lang !== 'english') {
+        document.body.classList.add('lang-' + lang);
+      }
+      currentLanguage = lang || 'english';
+
+      // update active state of buttons
+      document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+      const selector = `.language-btn[data-lang="${lang}"]`;
+      const btn = document.querySelector(selector);
+      if (btn) btn.classList.add('active');
+
+      try { localStorage.setItem(LANG_KEY, currentLanguage); } catch (e) {}
+    }
+
+    // Smooth scroll for anchors beginning with #
+    function enableSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          // If href is only "#", let it be
+          const href = this.getAttribute('href');
+          if (href === '#' || href === '') return;
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            // If it links to another page fragment (like index.html#something), navigate normally
+            const parts = href.split('#');
+            if (parts.length === 2 && parts[0] !== '') {
+              window.location.href = href;
+            }
+          }
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // apply saved settings from localStorage (if any)
+      try {
+        const savedMode = localStorage.getItem(MODE_KEY);
+        const savedLang = localStorage.getItem(LANG_KEY);
+        if (savedMode) applyMode(savedMode);
+        else applyMode('night');
+
+        if (savedLang) setLanguage(savedLang);
+        else setLanguage('english');
+
+      } catch (e) {
+        // fallback defaults
+        applyMode('night');
+        setLanguage('english');
+      }
+
+      // Bind language buttons to allow keyboard activation as well
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = btn.dataset.lang;
+          setLanguage(lang);
+        });
+      });
+
+      // Bind toggle button
+      const modeBtn = document.getElementById('mode-toggle-btn');
+      modeBtn.addEventListener('click', toggleMode);
+
+      enableSmoothScroll();
+
+      // small accessibility: allow Enter on focused nav links (native) - no extra code needed
+
+    });
+
+    // NOTE: If you want index.html to instantly reflect the same theme/language changes,
+    // copy these two lines into index.html's load code (it will then read localStorage):
+    // const savedMode = localStorage.getItem('xshala-mode'); if (savedMode) applyMode(savedMode);
+    // const savedLang = localStorage.getItem('xshala-lang'); if (savedLang) setLanguage(savedLang);
+  </script>
+</body>
+</html>

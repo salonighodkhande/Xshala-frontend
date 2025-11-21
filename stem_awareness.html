@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEM Awareness Programs | Xshala</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Your CSS Theme */
+        :root {
+            /* Color Palette - Day & Night */
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent-cyan: #00ffff;
+            --accent-magenta: #ff00ff;
+            --accent-green: #00ff00;
+            --card-bg: rgba(0, 0, 0, 0.7);
+            --card-border-cyan: rgba(0, 255, 255, 0.3);
+            --card-border-magenta: rgba(255, 0, 255, 0.3);
+            --card-border-green: rgba(0, 255, 0, 0.3);
+            --logo-text-shadow: 0 0 20px var(--accent-cyan);
+            --logo-accent-color: var(--accent-cyan);
+            --header-bg: rgba(10, 10, 10, 0.95);
+            --header-border: 2px solid var(--accent-cyan);
+            --footer-bg: rgba(0, 0, 0, 0.95);
+            --btn-primary-start: #00ffff;
+            --btn-primary-end: #0080ff;
+        }
+
+        /* Day Theme */
+        :root.theme-day {
+            --primary-bg: #f0f2f5;
+            --secondary-bg: #e2e4e8;
+            --text-primary: #1a1a1a;
+            --text-secondary: #444444;
+            --accent-cyan: #0080ff;
+            --accent-magenta: #cc00cc;
+            --accent-green: #008800;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border-cyan: rgba(0, 128, 255, 0.5);
+            --card-border-magenta: rgba(204, 0, 204, 0.5);
+            --card-border-green: rgba(0, 136, 0, 0.5);
+            --logo-text-shadow: none;
+            --logo-accent-color: #0080ff;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --header-border: 2px solid var(--accent-cyan);
+            --footer-bg: rgba(255, 255, 255, 0.95);
+            --btn-primary-start: #0080ff;
+            --btn-primary-end: #0055aa;
+        }
+
+        /* ===================================
+            Global & Utility
+            ===================================
+        */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--primary-bg);
+            transition: background 0.5s ease, color 0.5s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            padding: 80px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-secondary);
+            opacity: 0.9;
+        }
+        ul.list-style-none {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul.list-style-none li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--btn-primary-start), var(--btn-primary-end));
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+        }
+        
+        .theme-day .btn-primary:hover {
+            box-shadow: 0 15px 35px rgba(0, 128, 255, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 2px solid var(--accent-cyan);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-cyan);
+            color: #000;
+            transform: translateY(-5px);
+        }
+
+        .mode-toggle-btn, .language-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-toggle-btn {
+            font-size: 1.2rem;
+            padding: 0.4rem;
+            border-radius: 50%;
+            box-shadow: none;
+        }
+
+        .mode-toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .language-btn.active {
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            color: #000;
+        }
+        
+        .theme-day .language-btn.active {
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+        }
+
+        .theme-day .language-btn {
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+
+        /* ===================================
+            Header & Navigation
+            ===================================
+        */
+        header {
+            background: var(--header-bg);
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 2px solid var(--header-border);
+            transition: background-color 0.5s ease, border-bottom 0.5s ease;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            text-shadow: var(--logo-text-shadow);
+        }
+
+        .logo span {
+            color: var(--logo-accent-color);
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+        
+        .theme-day .logo span {
+            animation: none;
+        }
+
+        @keyframes neonPulse {
+            0% { text-shadow: 0 0 20px var(--accent-cyan); }
+            100% { text-shadow: 0 0 30px var(--accent-cyan), 0 0 40px var(--accent-cyan); }
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* ===================================
+            Animated Background & Effects
+            ===================================
+        */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        .theme-day .animated-background {
+            background: linear-gradient(135deg, #f0f2f5 0%, #e2e4e8 25%, #d1d4d8 50%, #c1c4c8 75%, #b1b4b8 100%);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Floating Elements */
+            /* Enhanced Floating STEM Elements */
+            .floating-elements {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: -1;
+            }
+
+            .floating-element {
+                position: absolute;
+                color: rgba(0, 255, 255, 0.3);
+                font-size: 4rem;
+                animation: float 25s infinite linear;
+                text-shadow: 0 0 20px currentColor;
+            }
+            
+            /* Day Mode Floating Elements */
+            .theme-day .floating-element {
+                color: rgba(0, 128, 255, 0.3);
+                text-shadow: none;
+            }
+
+            .floating-element:nth-child(odd) {
+                animation-direction: reverse;
+                color: rgba(255, 0, 255, 0.3);
+            }
+
+            .theme-day .floating-element:nth-child(odd) {
+                color: rgba(204, 0, 204, 0.3);
+            }
+
+            .floating-element:nth-child(3n) {
+                color: rgba(0, 255, 0, 0.3);
+            }
+
+            .theme-day .floating-element:nth-child(3n) {
+                color: rgba(0, 136, 0, 0.3);
+            }
+
+            @keyframes float {
+                0% {
+                    transform: translateY(100vh) rotate(0deg) scale(0.5);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 1;
+                    transform: translateY(90vh) rotate(36deg) scale(0.7);
+                }
+                50% {
+                    transform: translateY(50vh) rotate(180deg) scale(1);
+                }
+                90% {
+                    opacity: 1;
+                    transform: translateY(10vh) rotate(324deg) scale(0.7);
+                }
+                100% {
+                    transform: translateY(-10vh) rotate(360deg) scale(0.5);
+                    opacity: 0;
+                }
+            }
+
+            /* Neon Circuit Lines */
+            .circuit-lines {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: -1;
+            }
+
+            .circuit-line {
+                position: absolute;
+                background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+                height: 2px;
+                animation: circuitFlow 8s infinite;
+            }
+
+            .circuit-line:nth-child(1) {
+                top: 20%;
+                width: 100%;
+                animation-delay: 0s;
+            }
+
+            .circuit-line:nth-child(2) {
+                top: 60%;
+                width: 100%;
+                animation-delay: -2s;
+                background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent);
+            }
+
+            .circuit-line:nth-child(3) {
+                top: 80%;
+                width: 100%;
+                animation-delay: -4s;
+                background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            }
+
+            @keyframes circuitFlow {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(100%); }
+            }
+
+            /* DNA Helix Enhanced */
+            .dna-helix {
+                position: fixed;
+                right: -50px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 150px;
+                height: 400px;
+                z-index: -1;
+            }
+
+            .dna-strand {
+                position: absolute;
+                width: 6px;
+                height: 100%;
+                background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+                border-radius: 3px;
+                animation: dnaRotate 12s infinite linear;
+                box-shadow: 0 0 20px currentColor;
+            }
+
+            .theme-day .dna-strand {
+                box-shadow: none;
+            }
+
+            .dna-strand:nth-child(1) {
+                left: 30px;
+                transform-origin: center;
+            }
+
+            .dna-strand:nth-child(2) {
+                right: 30px;
+                animation-delay: -6s;
+                background: linear-gradient(180deg, var(--accent-magenta), var(--accent-green));
+            }
+
+            @keyframes dnaRotate {
+                0% { transform: rotateY(0deg); }
+                100% { transform: rotateY(360deg); }
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+                position: relative;
+                z-index: 1;
+            }
+        /* ===================================
+            Hero Section - FIXED TEXT VISIBILITY
+            ===================================
+        */
+        .hero {
+            text-align: center;
+            padding: 150px 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            /* FIXED: Proper text visibility in both modes */
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        .theme-day .hero h1 {
+            animation: none;
+            /* FIXED: Reset gradient text properties for light mode */
+            background: none;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: initial;
+            background-clip: initial;
+            color: var(--text-primary); /* Use theme variable for day mode text color */
+        }
+
+        @keyframes titleGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.3); text-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+            color: var(--text-secondary); /* Use theme variable */
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border: 1px solid var(--accent-cyan);
+            border-radius: 10px;
+            text-align: center;
+            transition: .3s;
+        }
+
+        .card:hover {
+            background: rgba(0,255,255,0.1);
+            transform: translateY(-8px);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            color: var(--text-primary);
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===================================
+            Services/Programs Section
+            ===================================
+        */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease, border 0.5s ease;
+            border: 1px solid var(--card-border-cyan);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+        }
+        
+        .theme-day .service-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 128, 255, 0.2);
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            /* FIXED: Proper text visibility in both modes */
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .theme-day .service-card h3 {
+            /* Ensure text is visible in day mode */
+            -webkit-text-fill-color: initial;
+            background: none;
+            color: var(--text-primary);
+        }
+
+        .service-card p {
+            margin-bottom: 25px;
+            color: var(--text-secondary);
+        }
+        .service-card ul {
+            text-align: left;
+        }
+
+        /* ===================================
+            About/Features Section
+            ===================================
+        */
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            /* FIXED: Proper text visibility in both modes */
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        .theme-day .section-title {
+            animation: none;
+            /* Ensure text is visible in day mode */
+            -webkit-text-fill-color: initial;
+            background: none;
+            color: var(--text-primary);
+        }
+
+        .features p {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+        
+        /* ===================================
+            STEM Program Specific Styles
+            ===================================
+        */
+        .program-highlight {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border: 1px solid var(--card-border-green);
+        }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .program-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 15px;
+            border: 1px solid var(--card-border-green);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-day .program-item {
+            background: rgba(0, 136, 0, 0.1);
+        }
+
+        .program-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 0, 0.2);
+            background: rgba(0, 255, 0, 0.2);
+        }
+        
+        .theme-day .program-item:hover {
+            box-shadow: 0 20px 40px rgba(0, 136, 0, 0.2);
+            background: rgba(0, 136, 0, 0.2);
+        }
+
+        .program-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+        
+        /* Form Styling */
+        .participation-form-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid var(--accent-cyan);
+        }
+
+        .participation-form-container input,
+        .participation-form-container textarea,
+        .participation-form-container select {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border-cyan);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-day .participation-form-container input,
+        .theme-day .participation-form-container textarea,
+        .theme-day .participation-form-container select {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--card-border-cyan);
+            color: var(--text-primary);
+        }
+        
+        /* Dropdown specific for day mode to fix text color */
+        .theme-day .participation-form-container select {
+            color: var(--text-primary); 
+        }
+
+        .participation-form-container input:focus,
+        .participation-form-container textarea:focus,
+        .participation-form-container select:focus {
+            outline: none;
+            box-shadow: 0 0 10px var(--accent-cyan);
+            border-color: var(--accent-magenta);
+        }
+
+        .participation-form-container ::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        /* ===================================
+            Footer
+            ===================================
+        */
+        footer {
+            background: var(--footer-bg);
+            backdrop-filter: blur(10px);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 2px solid var(--accent-cyan);
+            transition: background-color 0.5s ease, border-top 0.5s ease;
+        }
+
+        footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            opacity: 0.7;
+            color: var(--text-secondary);
+        }
+
+        .footer-bottom {
+            margin-top: 30px;
+            border-top: 1px solid var(--card-border-cyan);
+            padding-top: 20px;
+        }
+
+        /* ===================================
+            Language-specific visibility
+            ===================================
+        */
+        .hindi, .marathi { display: none; }
+        body.lang-hindi .english, body.lang-hindi .marathi { display: none; }
+        body.lang-hindi .hindi { display: inline; }
+
+        body.lang-marathi .english, body.lang-marathi .hindi { display: none; }
+        body.lang-marathi .marathi { display: inline; }
+
+        body.lang-hindi .hindi-block { display: block; }
+        body.lang-marathi .marathi-block { display: block; }
+        .hindi-block, .marathi-block { display: none; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* STEM Program Specific Styles */
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid var(--card-border-magenta);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .theme-day .stat-number {
+            background: none;
+            -webkit-text-fill-color: initial;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        .kit-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .kit-item {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--card-border-cyan);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .kit-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .kit-image {
+            width: 100%;
+            height: 200px;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--accent-cyan);
+        }
+        
+        .kit-item a.btn {
+            margin-top: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .impact-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .language-selector {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .impact-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="theme-dark lang-english">
+    <div class="animated-background"></div>
+
+    <div class="circuit-lines">
+        <div class="circuit-line"></div>
+        <div class="circuit-line"></div>
+        <div class="circuit-line"></div>
+    </div>
+
+    <div class="floating-elements">
+        <div class="floating-element" style="left: 5%; animation-delay: 0s;">🧬</div>
+        <div class="floating-element" style="left: 15%; animation-delay: -2s;">⚛️</div>
+        <div class="floating-element" style="left: 25%; animation-delay: -4s;">🔬</div>
+        <div class="floating-element" style="left: 35%; animation-delay: -6s;">🧪</div>
+        <div class="floating-element" style="left: 45%; animation-delay: -8s;">⚙️</div>
+        <div class="floating-element" style="left: 55%; animation-delay: -10s;">💡</div>
+        <div class="floating-element" style="left: 65%; animation-delay: -12s;">🔭</div>
+        <div class="floating-element" style="left: 75%; animation-delay: -14s;">📐</div>
+        <div class="floating-element" style="left: 85%; animation-delay: -16s;">∑</div>
+        <div class="floating-element" style="left: 95%; animation-delay: -18s;">π</div>
+    </div>
+
+    <div class="dna-helix">
+        <div class="dna-strand"></div>
+        <div class="dna-strand"></div>
+    </div>
+
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <span>X</span>Shala
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="career-guidance.html">Career Guidance</a></li>
+                <li><a href="#" class="active">STEM Programs</a></li>
+                <li><a href="#">Mentorship</a></li>
+                <li><a href="#">Workshops</a></li>
+            </ul>
+            <div class="language-selector">
+                <button class="language-btn active" data-lang="english">EN</button>
+                <button class="language-btn" data-lang="hindi">हिंदी</button>
+                <button class="language-btn" data-lang="marathi">मराठी</button>
+                <button id="mode-toggle-btn" class="mode-toggle-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="hero">
+        <div class="container">
+            <h1>
+                <span class="english">STEM Awareness Programs</span>
+                <span class="hindi">एसटीईएम जागरूकता कार्यक्रम</span>
+                <span class="marathi">स्टेम जागरूकता कार्यक्रम</span>
+            </h1>
+            <p>
+                <span class="english">Inspiring the next generation of innovators through hands-on STEM education and cutting-edge technology experiences in rural and underserved communities.</span>
+                <span class="hindi">ग्रामीण और वंचित समुदायों में हाथों-हाथ एसटीईएम शिक्षा और अत्याधुनिक प्रौद्योगिकी अनुभवों के माध्यम से नवप्रवर्तकों की अगली पीढ़ी को प्रेरित करना।</span>
+                <span class="marathi">ग्रामीण आणि वंचित समुदायांमध्ये व्यावहारिक स्टेम शिक्षण आणि अत्याधुनिक तंत्रज्ञानाच्या अनुभवांद्वारे नवीन शोधकांची पुढील पिढी प्रेरित करणे.</span>
+            </p>
+            <div class="cta-buttons">
+                <a href="#programs" class="btn btn-primary">
+                    <span class="english">Explore Programs</span>
+                    <span class="hindi">कार्यक्रम देखें</span>
+                    <span class="marathi">कार्यक्रम एक्सप्लोर करा</span>
+                </a>
+                <a href="#participate" class="btn btn-secondary">
+                    <span class="english">Get Involved</span>
+                    <span class="hindi">शामिल हों</span>
+                    <span class="marathi">सहभागी व्हा</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+   
+          
+
+    <section id="programs" style="background: var(--secondary-bg);">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="english">Our Core Programs</span>
+                <span class="hindi">हमारे मुख्य कार्यक्रम</span>
+                <span class="marathi">आमचे मुख्य कार्यक्रम</span>
+            </h2>
+            <p class="features">
+                <span class="english">Comprehensive STEM education initiatives designed to inspire and equip students with future-ready skills.</span>
+                <span class="hindi">छात्रों को प्रेरित करने और भविष्य के लिए तैयार कौशल से लैस करने के लिए डिज़ाइन किए गए व्यापक एसटीईएम शिक्षा पहल।</span>
+                <span class="marathi">विद्यार्थ्यांना प्रेरित करण्यासाठी आणि भविष्यातील कौशल्यांसह सुसज्ज करण्यासाठी डिझाइन केलेल्या व्यापक स्टेम शिक्षण उपक्रम.</span>
+            </p>
+           <div class="services-grid">
+    <a href="/workshop.html" class="service-card clickable-card">
+        <div class="program-icon">🏫</div>
+        <h3>
+            <span class="english">Interactive Rural Workshops</span>
+            <span class="hindi">इंटरएक्टिव ग्रामीण कार्यशालाएं</span>
+            <span class="marathi">इंटरएक्टिव ग्रामीण कार्यशाळा</span>
+        </h3>
+        <p>
+            <span class="english">Engaging hands-on sessions in rural schools covering robotics, electronics, coding, and scientific experiments.</span>
+            <span class="hindi">ग्रामीण स्कूलों में रोबोटिक्स, इलेक्ट्रॉनिक्स, कोडिंग और वैज्ञानिक प्रयोगों को कवर करने वाले आकर्षक हाथों-हाथ सत्र।</span>
+            <span class="marathi">ग्रामीण शाळांमध्ये रोबोटिक्स, इलेक्ट्रॉनिक्स, कोडिंग आणि वैज्ञानिक प्रयोगांचा समावेश असलेले आकर्षक व्यावहारिक सत्र.</span>
+        </p>
+        <ul class="list-style-none">
+            <li>
+                <span class="english">✓ Basic electronics & circuit design</span>
+                <span class="hindi">✓ बेसिक इलेक्ट्रॉनिक्स और सर्किट डिजाइन</span>
+                <span class="marathi">✓ मूलभूत इलेक्ट्रॉनिक्स आणि सर्किट डिझाइन</span>
+            </li>
+            <li>
+                <span class="english">✓ Introduction to programming</span>
+                <span class="hindi">✓ प्रोग्रामिंग का परिचय</span>
+                <span class="marathi">✓ प्रोग्रामिंगचा परिचय</span>
+            </li>
+            <li>
+                <span class="english">✓ Robotics fundamentals</span>
+                <span class="hindi">✓ रोबोटिक्स के मूल सिद्धांत</span>
+                <span class="marathi">✓ रोबोटिक्सची मूलभूत तत्त्वे</span>
+            </li>
+        </ul>
+    </a>
+
+    <a href="#container" class="service-card clickable-card">
+        <div class="program-icon">🎒</div>
+        <h3>
+            <span class="english">STEM Learning Kits</span>
+            <span class="hindi">एसटीईएम लर्निंग किट</span>
+            <span class="marathi">स्टेम लर्निंग किट</span>
+        </h3>
+        <p>
+            <span class="english">Portable, affordable learning kits containing materials for multiple experiments and projects.</span>
+            <span class="hindi">पोर्टेबल, किफायती लर्निंग किट जिनमें कई प्रयोगों और प्रोजेक्ट्स के लिए सामग्री होती है।</span>
+            <span class="marathi">वहन करण्यायोग्य, किफायतशीर शिक्षण किट ज्यामध्ये अनेक प्रयोग आणि प्रकल्पांसाठी साहित्य असते.</span>
+        </p>
+        <ul class="list-style-none">
+            <li>
+                <span class="english">✓ Electronic components kit</span>
+                <span class="hindi">✓ इलेक्ट्रॉनिक कंपोनेंट्स किट</span>
+                <span class="marathi">✓ इलेक्ट्रॉनिक घटक किट</span>
+            </li>
+            <li>
+                <span class="english">✓ Microcontroller boards</span>
+                <span class="hindi">✓ माइक्रोकंट्रोलर बोर्ड</span>
+                <span class="marathi">✓ मायक्रोकंट्रोलर बोर्ड</span>
+            </li>
+            <li>
+                <span class="english">✓ Sensors and actuators</span>
+                <span class="hindi">✓ सेंसर और एक्चुएटर्स</span>
+                <span class="marathi">✓ सेन्सर आणि अॅक्युएटर्स</span>
+            </li>
+        </ul>
+    </a>
+
+    <a href="/CAD.html" class="service-card clickable-card">
+        <div class="program-icon">🖨️</div>
+        <h3>
+            <span class="english">3D Printing & CAD Training</span>
+            <span class="hindi">3D प्रिंटिंग और CAD प्रशिक्षण</span>
+            <span class="marathi">3D प्रिंटिंग आणि CAD प्रशिक्षण</span>
+        </h3>
+        <p>
+            <span class="english">Introduction to 3D design and printing technology with hands-on project development.</span>
+            <span class="hindi">हाथों-हाथ प्रोजेक्ट डेवलपमेंट के साथ 3D डिजाइन और प्रिंटिंग तकनीक का परिचय।</span>
+            <span class="marathi">व्यावहारिक प्रकल्प विकासासह 3D डिझाइन आणि प्रिंटिंग तंत्रज्ञानाचा परिचय.</span>
+        </p>
+        <ul class="list-style-none">
+            <li>
+                <span class="english">✓ 3D modeling software training</span>
+                <span class="hindi">✓ 3D मॉडलिंग सॉफ्टवेयर प्रशिक्षण</span>
+                <span class="marathi">✓ 3D मॉडेलिंग सॉफ्टवेअर प्रशिक्षण</span>
+            </li>
+            <li>
+                <span class="english">✓ 3D printer operation</span>
+                <span class="hindi">✓ 3D प्रिंटर ऑपरेशन</span>
+                <span class="marathi">✓ 3D प्रिंटर ऑपरेशन</span>
+            </li>
+            <li>
+                <span class="english">✓ Prototype development</span>
+                <span class="hindi">✓ प्रोटोटाइप डेवलपमेंट</span>
+                <span class="marathi">✓ प्रोटोटाइप विकास</span>
+            </li>
+        </ul>
+    </a>
+</div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">
+                <span class="english">Hands-on Learning Kits</span>
+                <span class="hindi">हाथों-हाथ सीखने की किट</span>
+                <span class="marathi">व्यावहारिक शिक्षण किट</span>
+            </h2>
+            <p class="features">
+                <span class="english">Our specially designed kits make STEM education accessible and engaging for students with limited resources.</span>
+                <span class="hindi">हमारे विशेष रूप से डिज़ाइन किए गए किट सीमित संसाधनों वाले छात्रों के लिए एसटीईएम शिक्षा को सुलभ और आकर्षक बनाते हैं।</span>
+                <span class="marathi">आमचे विशेषतः डिझाइन केलेले किट मर्यादित संसाधनांसह विद्यार्थ्यांसाठी स्टेम शिक्षण सुलभ आणि आकर्षक बनवतात.</span>
+            </p>
+            
+            <div class="kit-showcase">
+                <div class="kit-item">
+                    <div class="kit-image">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>
+                        <span class="english">Electronics Explorer Kit</span>
+                        <span class="hindi">इलेक्ट्रॉनिक्स एक्सप्लोरर किट</span>
+                        <span class="marathi">इलेक्ट्रॉनिक्स एक्सप्लोरर किट</span>
+                    </h3>
+                    <p>
+                        <span class="english">Complete set with breadboard, resistors, LEDs, sensors, and microcontroller for learning electronics fundamentals.</span>
+                        <span class="hindi">इलेक्ट्रॉनिक्स की मूल बातें सीखने के लिए ब्रेडबोर्ड, रेसिस्टर्स, एलईडी, सेंसर और माइक्रोकंट्रोलर के साथ पूरा सेट।</span>
+                        <span class="marathi">इलेक्ट्रॉनिक्सची मूलभूत तत्त्वे शिकण्यासाठी ब्रेडबोर्ड, रेझिस्टर्स, एलईडी, सेन्सर आणि मायक्रोकंट्रोलरसह संपूर्ण संच.</span>
+                    </p>
+                    <a href="#" class="btn btn-secondary">
+                        <span class="english">Learn More</span>
+                        <span class="hindi">और जानें</span>
+                        <span class="marathi">अधिक जाणून घ्या</span>
+                    </a>
+                </div>
+                <div class="kit-item">
+                    <div class="kit-image">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>
+                        <span class="english">Robotics Starter Kit</span>
+                        <span class="hindi">रोबोटिक्स स्टार्टर किट</span>
+                        <span class="marathi">रोबोटिक्स स्टार्टर किट</span>
+                    </h3>
+                    <p>
+                        <span class="english">Build and program simple robots with motors, sensors, and programmable controllers.</span>
+                        <span class="hindi">मोटर्स, सेंसर और प्रोग्राम करने योग्य कंट्रोलर के साथ सरल रोबोट बनाएं और प्रोग्राम करें।</span>
+                        <span class="marathi">मोटर्स, सेन्सर आणि प्रोग्राम करण्यायोग्य कंट्रोलरसह साधे रोबोट तयार करा आणि प्रोग्राम करा.</span>
+                    </p>
+                    <a href="#" class="btn btn-secondary">
+                        <span class="english">Learn More</span>
+                        <span class="hindi">और जानें</span>
+                        <span class="marathi">अधिक जाणून घ्या</span>
+                    </a>
+                </div>
+                <div class="kit-item">
+                    <div class="kit-image">
+                        <i class="fas fa-vial"></i>
+                    </div>
+                    <h3>
+                        <span class="english">Science Experiment Kit</span>
+                        <span class="hindi">साइंस एक्सपेरिमेंट किट</span>
+                        <span class="marathi">सायन्स एक्सपेरिमेंट किट</span>
+                    </h3>
+                    <p>
+                        <span class="english">Hands-on materials for chemistry, physics, and biology experiments with detailed guides.</span>
+                        <span class="hindi">विस्तृत मार्गदर्शिकाओं के साथ रसायन विज्ञान, भौतिकी और जीव विज्ञान के प्रयोगों के लिए हाथों-हाथ सामग्री।</span>
+                        <span class="marathi">तपशीलवार मार्गदर्शकांसह रसायनशास्त्र, भौतिकशास्त्र आणि जीवशास्त्र प्रयोगांसाठी व्यावहारिक साहित्य.</span>
+                    </p>
+                    <a href="#" class="btn btn-secondary">
+                        <span class="english">Learn More</span>
+                        <span class="hindi">और जानें</span>
+                        <span class="marathi">अधिक जाणून घ्या</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="participate" style="background: var(--secondary-bg);">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="english">Register Your School</span>
+                <span class="hindi">अपने स्कूल को पंजीकृत करें</span>
+                <span class="marathi">तुमची शाळा नोंदणी करा</span>
+            </h2>
+            <p class="features">
+                <span class="english">Join our mission to bring STEM education to every corner of the country. Fill the form below to request a workshop for your school/community.</span>
+                <span class="hindi">देश के हर कोने में एसटीईएम शिक्षा लाने के हमारे मिशन में शामिल हों। अपने स्कूल/समुदाय के लिए कार्यशाला का अनुरोध करने के लिए नीचे दिया गया फॉर्म भरें।</span>
+                <span class="marathi">देशाच्या प्रत्येक कोपऱ्यात स्टेम शिक्षण आणण्याच्या आमच्या मोहिमेत सामील व्हा. तुमच्या शाळा/समुदायासाठी कार्यशाळेची विनंती करण्यासाठी खालील फॉर्म भरा.</span>
+            </p>
+            
+            <div class="participation-form-container">
+                <form id="stemForm">
+
+                    <input type="text" data-placeholder-en="School Name" data-placeholder-hi="स्कूल का नाम" data-placeholder-mr="शाळेचे नाव" placeholder="School Name" required>
+                    <input type="text" data-placeholder-en="Contact Person" data-placeholder-hi="संपर्क व्यक्ति" data-placeholder-mr="संपर्क व्यक्ती" placeholder="Contact Person" required>
+                    <input type="email" data-placeholder-en="Email Address" data-placeholder-hi="ईमेल पता" data-placeholder-mr="ईमेल पत्ता" placeholder="Email Address" required>
+                    <input type="tel" data-placeholder-en="Phone Number" data-placeholder-hi="फ़ोन नंबर" data-placeholder-mr="फोन नंबर" placeholder="Phone Number" required>
+                    
+                    <select id="district-select" required>
+                        <option value="" disabled selected>Select District / जिला चुनें / जिल्हा निवडा</option>
+                        <option value="pune">Pune / पुणे / पुणे</option>
+                        <option value="mumbai">Mumbai / मुंबई / मुंबई</option>
+                        <option value="nagpur">Nagpur / नागपुर / नागपूर</option>
+                        <option value="delhi">Delhi / दिल्ली / दिल्ली</option>
+                        <option value="other">Other / अन्य / इतर</option>
+                    </select>
+
+                    <textarea data-placeholder-en="Additional Information/Request" data-placeholder-hi="अतिरिक्त जानकारी/अनुरोध" data-placeholder-mr="अतिरिक्त माहिती/विनंती" placeholder="Additional Information/Request" rows="4"></textarea>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <span class="english">Submit Registration</span>
+                        <span class="hindi">पंजीकरण जमा करें</span>
+                        <span class="marathi">नोंदणी सबमिट करा</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="services-grid">
+                <div>
+                    <h3>Xshala</h3>
+                    <p>
+                        <span class="english">Empowering students through innovative STEM education and career guidance.</span>
+                        <span class="hindi">नवीन एसटीईएम शिक्षा और करियर मार्गदर्शन के माध्यम से छात्रों को सशक्त बनाना।</span>
+                        <span class="marathi">नावीन्यपूर्ण स्टेम शिक्षण आणि करिअर मार्गदर्शनाद्वारे विद्यार्थ्यांना सक्षम करणे.</span>
+                    </p>
+                </div>
+                <div>
+                    <h3>
+                        <span class="english">Quick Links</span>
+                        <span class="hindi">त्वरित लिंक</span>
+                        <span class="marathi">द्रुत दुवे</span>
+                    </h3>
+                    <ul class="list-style-none">
+                        <li><a href="index.html">
+                            <span class="english">Home</span>
+                            <span class="hindi">होम</span>
+                            <span class="marathi">मुखपृष्ठ</span>
+                        </a></li>
+                        <li><a href="career-guidance.html">
+                            <span class="english">Career Guidance</span>
+                            <span class="hindi">करियर गाइडेंस</span>
+                            <span class="marathi">करिअर मार्गदर्शन</span>
+                        </a></li>
+                        <li><a href="#programs">
+                            <span class="english">STEM Programs</span>
+                            <span class="hindi">एसटीईएम कार्यक्रम</span>
+                            <span class="marathi">स्टेम कार्यक्रम</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>
+                        <span class="english">Contact Us</span>
+                        <span class="hindi">संपर्क करें</span>
+                        <span class="marathi">आमच्याशी संपर्क साधा</span>
+                    </h3>
+                    <ul class="list-style-none">
+                        <li>Email: info@xshala.com</li>
+                        <li>Phone: +91 98765 43210</li>
+                        <li>
+                            <span class="english">Address: 123 Education Street, Learning City</span>
+                            <span class="hindi">पता: 123 एजुकेशन स्ट्रीट, लर्निंग सिटी</span>
+                            <span class="marathi">पत्ता: 123 एज्युकेशन स्ट्रीट, लर्निंग सिटी</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>
+                    <span class="english">&copy; 2023 Xshala. All Rights Reserved. | Designed for Student Success</span>
+                    <span class="hindi">&copy; 2023 Xshala. सर्व अधिकार सुरक्षित। | छात्र सफलता के लिए डिज़ाइन किया गया</span>
+                    <span class="marathi">&copy; 2023 Xshala. सर्व हक्क राखीव. | विद्यार्थी यशासाठी डिझाइन केले</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        
+        const MODE_KEY = 'xshala-mode-stem';
+        const LANG_KEY = 'xshala-lang-stem';
+
+        let currentMode = 'dark';
+        let currentLanguage = 'english';
+
+        function applyMode(mode) {
+            const root = document.documentElement;
+            const body = document.body;
+            const themeIcon = document.querySelector('#mode-toggle-btn i');
+            
+            if (mode === 'day') {
+                root.classList.add('theme-day');
+                body.classList.remove('theme-dark');
+                body.classList.add('theme-day');
+                if (themeIcon) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                }
+                currentMode = 'day';
+            } else {
+                root.classList.remove('theme-day');
+                body.classList.remove('theme-day');
+                body.classList.add('theme-dark');
+                if (themeIcon) {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+                currentMode = 'dark';
+            }
+            localStorage.setItem(MODE_KEY, currentMode);
+        }
+
+        function toggleTheme() {
+            applyMode(currentMode === 'dark' ? 'day' : 'dark');
+        }
+
+        function setLanguage(lang) {
+            document.body.className = document.body.className.replace(/\blang-\w+\b/g, '').trim();
+            if (lang !== 'english') {
+                document.body.classList.add('lang-' + lang);
+            }
+            currentLanguage = lang;
+            localStorage.setItem(LANG_KEY, currentLanguage);
+
+            document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+            const btn = document.querySelector(`.language-btn[data-lang="${lang}"]`);
+            if (btn) btn.classList.add('active');
+
+            // --- FIX FOR MULTILINGUAL PLACEHOLDERS ---
+            const placeholderLang = lang === 'english' ? 'en' : (lang === 'hindi' ? 'hi' : 'mr');
+            const formFields = document.querySelectorAll('.participation-form-container input[data-placeholder-en], .participation-form-container textarea[data-placeholder-en]');
+
+            formFields.forEach(field => {
+                const placeholderText = field.getAttribute(`data-placeholder-${placeholderLang}`);
+                if (placeholderText) {
+                    field.placeholder = placeholderText;
+                }
+            });
+
+            // FIX FOR SELECT OPTION TEXT: Since <option> doesn't support placeholders, 
+            // we update the text of the selected option, but keep the value.
+            const selectElement = document.getElementById('district-select');
+            if (selectElement) {
+                const defaultOption = selectElement.querySelector('option[disabled][selected]');
+                if (defaultOption) {
+                    let defaultText = "Select District";
+                    if (lang === 'hindi') defaultText = "जिला चुनें";
+                    if (lang === 'marathi') defaultText = "जिल्हा निवडा";
+                    defaultOption.textContent = defaultText;
+                }
+                
+                // For regular options, we update the display text based on the selected language
+                selectElement.querySelectorAll('option:not([disabled])').forEach(option => {
+                    const originalText = option.textContent.split(' / ');
+                    const enText = originalText[0];
+                    const hiText = originalText.length > 1 ? originalText[1] : enText;
+                    const mrText = originalText.length > 2 ? originalText[2] : enText;
+                    
+                    if (lang === 'english') option.textContent = enText;
+                    else if (lang === 'hindi') option.textContent = hiText;
+                    else if (lang === 'marathi') option.textContent = mrText;
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // restore saved preferences or default to dark/english
+            const savedMode = localStorage.getItem(MODE_KEY);
+            const savedLang = localStorage.getItem(LANG_KEY);
+
+            applyMode(savedMode || 'dark');
+            setLanguage(savedLang || 'english');
+
+            document.getElementById('mode-toggle-btn').addEventListener('click', toggleTheme);
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+            });
+
+            // smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+            
+            // Re-run setLanguage once on load to correctly apply form placeholders and select text
+            setLanguage(currentLanguage);
+        });
+
+
+        document.getElementById("stemForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+  const data = {
+    schoolName: form[0].value,
+    contactPerson: form[1].value,
+    email: form[2].value,
+    phone: form[3].value,
+    district: form[4].value,
+    message: form[5].value,
+  };
+
+  try {
+    const response = await fetch("http://localhost:5000/api/stem", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+    alert(result.message || "Form submitted successfully!");
+    form.reset();
+  } catch (error) {
+    console.error("Error:", error);
+    alert("❌ Error submitting form. Please check your server connection.");
+  }
+});
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XShala - Medical Entrance Guidance</title>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Default Dark Mode Variables - RESTORED TO CIVIL THEME */
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent-cyan: #00ffff; /* Bright Cyan */
+            --accent-magenta: #ff00ff; /* Bright Magenta */
+            --accent-green: #00ff00; /* Bright Green */
+            --card-bg: rgba(0, 0, 0, 0.7);
+            --card-border-cyan: rgba(0, 255, 255, 0.3);
+            --card-border-magenta: rgba(255, 0, 255, 0.3);
+            --card-border-green: rgba(0, 255, 0, 0.3);
+            --card-hover-bg-cyan: rgba(0, 255, 255, 0.15);
+            --card-hover-bg-magenta: rgba(255, 0, 255, 0.15);
+            --card-hover-bg-green: rgba(0, 255, 0, 0.15);
+            --logo-text-shadow: 0 0 20px var(--accent-cyan);
+            --logo-accent-color: var(--accent-cyan);
+            --header-bg: rgba(10, 10, 10, 0.95);
+            --header-border: 2px solid var(--accent-cyan);
+            --footer-bg: rgba(0, 0, 0, 0.95);
+        }
+
+        /* Day Mode Variables - RESTORED TO CIVIL THEME */
+        :root.theme-day {
+            --primary-bg: #f0f2f5;
+            --secondary-bg: #e2e4e8;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --accent-cyan: #0080ff;
+            --accent-magenta: #ff6600;
+            --accent-green: #008800;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border-cyan: rgba(0, 128, 255, 0.3);
+            --card-border-magenta: rgba(255, 102, 0, 0.3);
+            --card-border-green: rgba(0, 136, 0, 0.3);
+            --card-hover-bg-cyan: rgba(0, 128, 255, 0.1);
+            --card-hover-bg-magenta: rgba(255, 102, 0, 0.1);
+            --card-hover-bg-green: rgba(0, 136, 0, 0.1);
+            --logo-text-shadow: none;
+            --logo-accent-color: var(--text-primary);
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --header-border: 2px solid var(--accent-cyan);
+            --footer-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* Animated Dark STEM Background (Kept for visual style) */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* Gradient adapted to the new colors */
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        .theme-day .animated-background {
+            background: linear-gradient(135deg, #f0f2f5 0%, #e2e4e8 25%, #d1d4d8 50%, #c1c4c8 75%, #b1b4b8 100%);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Enhanced Floating STEM Elements (Kept for visual style) */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(0, 255, 255, 0.3); /* Cyan */
+            font-size: 4rem;
+            animation: float 25s infinite linear;
+            text-shadow: 0 0 20px currentColor;
+        }
+        
+        .theme-day .floating-element {
+            color: rgba(0, 128, 255, 0.3);
+            text-shadow: none;
+        }
+
+        .floating-element:nth-child(odd) {
+            animation-direction: reverse;
+            color: rgba(255, 0, 255, 0.3); /* Magenta */
+        }
+
+        .theme-day .floating-element:nth-child(odd) {
+            color: rgba(255, 102, 0, 0.3);
+        }
+
+        .floating-element:nth-child(3n) {
+            color: rgba(0, 255, 0, 0.3); /* Green */
+        }
+
+        .theme-day .floating-element:nth-child(3n) {
+            color: rgba(0, 136, 0, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(0.7);
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) rotate(324deg) scale(0.7);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Neon Circuit Lines */
+        .circuit-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .circuit-line {
+            position: absolute;
+            /* Changed back to cyan/magenta/green */
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            height: 2px;
+            animation: circuitFlow 8s infinite;
+        }
+
+        .circuit-line:nth-child(2) {
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent);
+        }
+
+        .circuit-line:nth-child(3) {
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+
+        @keyframes circuitFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* DNA Helix Enhanced */
+        .dna-helix {
+            position: fixed;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 400px;
+            z-index: -1;
+        }
+
+        .dna-strand {
+            position: absolute;
+            width: 6px;
+            height: 100%;
+            /* Changed back to cyan/magenta gradient */
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+            border-radius: 3px;
+            animation: dnaRotate 12s infinite linear;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        .theme-day .dna-strand {
+            box-shadow: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            background: var(--header-bg);
+            backdrop-filter: blur(15px);
+            /* Changed back to cyan shadow/border */
+            box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: var(--header-border);
+            transition: background-color 0.5s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            text-decoration: none;
+            position: relative;
+            text-shadow: var(--logo-text-shadow);
+        }
+
+        .logo span {
+            color: var(--logo-accent-color);
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+        
+        .theme-day .logo span {
+            animation: none;
+        }
+
+        @keyframes neonPulse {
+            0% { text-shadow: 0 0 20px var(--accent-cyan); }
+            100% { text-shadow: 0 0 30px var(--accent-cyan), 0 0 40px var(--accent-cyan); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .language-btn, .mode-toggle-btn {
+            /* Changed back to cyan/magenta gradient */
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            color: #000;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mode-toggle-btn {
+            font-size: 1.2rem;
+            padding: 0.4rem;
+            border-radius: 50%;
+        }
+
+        .language-btn:hover, .mode-toggle-btn:hover {
+            /* Changed back to cyan shadow */
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
+        }
+
+        .language-btn.active {
+            /* Changed back to magenta/green gradient */
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            /* Changed back to cyan/magenta/green gradient */
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.3); text-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
+        }
+        
+        .theme-day .hero h1 {
+            animation: none;
+            -webkit-text-fill-color: initial;
+            background: none;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-secondary);
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .btn {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            /* Changed back to cyan primary theme */
+            background: linear-gradient(45deg, var(--accent-cyan), #0080ff);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-cyan);
+            color: var(--text-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+        }
+
+        /* Services Section - Main content blocks */
+        .services {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            /* Changed border back to magenta */
+            border: 1px solid var(--card-border-magenta);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            /* Changed back to cyan/magenta gradient */
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            padding: 2rem;
+            border-radius: 20px;
+            /* Changed border back to cyan */
+            border: 2px solid var(--card-border-cyan);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 280px; 
+        }
+        
+        .theme-day .service-card {
+            background: linear-gradient(135deg, rgba(0, 128, 255, 0.1), rgba(255, 102, 0, 0.1));
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            /* Changed back to cyan shadow */
+            box-shadow: 0 25px 50px rgba(0, 255, 255, 0.2);
+            /* Changed border back to cyan */
+            border-color: var(--accent-cyan);
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            /* Changed back to cyan */
+            color: var(--accent-cyan);
+        }
+
+        .service-card ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        .service-card li {
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+            transition: transform 0.2s ease;
+            font-size: 1.1rem;
+        }
+
+        .service-card li:hover {
+            transform: translateX(5px);
+            /* Changed back to cyan */
+            color: var(--accent-cyan);
+        }
+
+        .service-card li:before {
+            content: "⚕️";
+            position: absolute;
+            left: 0;
+            /* Changed back to green */
+            color: var(--accent-green);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Strategy Section Styles */
+        .strategy-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            /* Changed back to green border */
+            border: 1px solid var(--card-border-green);
+        }
+        
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .strategy-card {
+            /* Changed back to green background */
+            background: rgba(0, 255, 0, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            /* Changed back to green border */
+            border: 1px solid var(--card-border-green);
+            transition: all 0.3s ease;
+            text-align: left;
+            min-height: 220px;
+        }
+        
+        .theme-day .strategy-card {
+            background: rgba(0, 136, 0, 0.1);
+        }
+
+        .strategy-card:hover {
+            transform: translateY(-10px);
+            /* Changed back to green shadow */
+            box-shadow: 0 20px 40px rgba(0, 255, 0, 0.2);
+            /* Changed back to green hover bg */
+            background: var(--card-hover-bg-green);
+        }
+
+        .strategy-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            /* Changed back to green */
+            color: var(--accent-green);
+        }
+
+        .strategy-card p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .strategy-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            /* Changed back to green */
+            color: var(--accent-green);
+            float: right;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--footer-bg);
+            backdrop-filter: blur(10px);
+            padding: 3rem 0 1rem;
+            margin-top: 2rem;
+            /* Changed back to cyan border */
+            border-top: 2px solid var(--accent-cyan);
+            transition: background-color 0.5s ease;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            /* Changed back to cyan */
+            color: var(--accent-cyan);
+            font-size: 1.3rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            /* Changed back to cyan hover color/shadow */
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--accent-cyan);
+            transform: translateX(5px);
+        }
+        
+        .theme-day .footer-section a:hover {
+            text-shadow: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            /* Changed back to cyan border */
+            border-top: 1px solid var(--card-border-cyan);
+            color: var(--text-secondary);
+        }
+
+        /* Language Toggle Styles */
+        .hindi, .marathi {
+            display: none;
+        }
+
+        body.lang-hindi .english {
+            display: none;
+        }
+
+        body.lang-hindi .hindi {
+            display: block;
+        }
+
+        body.lang-marathi .english {
+            display: none;
+        }
+
+        body.lang-marathi .marathi {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 80%;
+                max-width: 300px;
+            }
+
+            .floating-element {
+                font-size: 3rem;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+  </style>
+</head>
+<body>
+
+  <div class="animated-background"></div>
+
+  <div class="circuit-lines">
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+  </div>
+
+  <div class="floating-elements" aria-hidden="true">
+    <div class="floating-element" style="left: 5%; animation-delay: 0s;">⚕️</div>
+    <div class="floating-element" style="left: 25%; animation-delay: -4s;">🧬</div>
+    <div class="floating-element" style="left: 45%; animation-delay: -8s;">🔬</div>
+    <div class="floating-element" style="left: 65%; animation-delay: -12s;">🧠</div>
+    <div class="floating-element" style="left: 85%; animation-delay: -16s;">🧪</div>
+  </div>
+
+  <div class="dna-helix" aria-hidden="true">
+    <div class="dna-strand"></div>
+    <div class="dna-strand"></div>
+  </div>
+
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo" aria-label="XShala Home"><span>X</span>Shala</a>
+
+      <ul class="nav-links" role="navigation" aria-label="Main navigation">
+        <li>
+          <a href="index.html" class="english">Home</a>
+          <a href="index.html" class="hindi">होम</a>
+          <a href="index.html" class="marathi">होम</a>
+        </li>
+        <li>
+          <a href="#info" class="english">Medical Entrance</a>
+          <a href="#info" class="hindi">चिकित्सा प्रवेश</a>
+          <a href="#info" class="marathi">वैद्यकीय प्रवेश</a>
+        </li>
+        <li>
+          <a href="#strategy" class="english">Preparation Strategy</a>
+          <a href="#strategy" class="hindi">तैयारी की रणनीति</a>
+          <a href="#strategy" class="marathi">तयारीचे धोरण</a>
+        </li>
+        <li>
+          <a href="#contact" class="english">Contact</a>
+          <a href="#contact" class="hindi">संपर्क</a>
+          <a href="#contact" class="marathi">संपर्क</a>
+        </li>
+      </ul>
+
+      <div class="language-selector" aria-label="Language and theme controls">
+        <button id="mode-toggle-btn" class="mode-toggle-btn" aria-label="Toggle day night">🌙</button>
+        <button class="language-btn active" data-lang="english" onclick="setLanguage('english')">EN</button>
+        <button class="language-btn" data-lang="hindi" onclick="setLanguage('hindi')">हि</button>
+        <button class="language-btn" data-lang="marathi" onclick="setLanguage('marathi')">म</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container">
+        <h1>
+          <span class="english">Medical Entrance Guidance</span>
+          <span class="hindi">चिकित्सा प्रवेश मार्गदर्शन</span>
+          <span class="marathi">वैद्यकीय प्रवेश मार्गदर्शन</span>
+        </h1>
+        <p>
+          <span class="english">Comprehensive preparation for **NEET-UG**, **AIIMS PG**, **INI-CET**, **JIPMER**, and other top national and state-level medical entrance examinations.</span>
+          <span class="hindi">**NEET-UG**, **AIIMS PG**, **INI-CET**, **JIPMER**, और अन्य शीर्ष राष्ट्रीय और राज्य-स्तरीय चिकित्सा प्रवेश परीक्षाओं के लिए व्यापक तैयारी।</span>
+          <span class="marathi">**NEET-UG**, **AIIMS PG**, **INI-CET**, **JIPMER**, आणि इतर शीर्ष राष्ट्रीय आणि राज्य-स्तरीय वैद्यकीय प्रवेश परीक्षांसाठी सर्वसमावेशक तयारी.</span>
+        </p>
+        <div class="cta-buttons">
+          <a href="#info" class="btn btn-primary">
+            <span class="english">Explore Exams</span>
+            <span class="hindi">परीक्षाएँ देखें</span>
+            <span class="marathi">परीक्षा शोधा</span>
+          </a>
+          <a href="#strategy" class="btn btn-secondary">
+            <span class="english">Preparation Strategy</span>
+            <span class="hindi">तैयारी की रणनीति</span>
+            <span class="marathi">तयारीचे धोरण</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="info" class="services">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="english">Medical Entrance Exams</span>
+          <span class="hindi">चिकित्सा प्रवेश परीक्षाएँ</span>
+          <span class="marathi">वैद्यकीय प्रवेश परीक्षा</span>
+        </h2>
+
+        <div class="services-grid">
+
+          <div class="service-card">
+            <h3>
+              <span class="english">NEET-UG: The MBBS Gateway</span>
+              <span class="hindi">NEET-UG: MBBS प्रवेश द्वार</span>
+              <span class="marathi">NEET-UG: MBBS प्रवेशद्वार</span>
+            </h3>
+            <p>
+              <span class="english">NEET-UG is the sole entrance exam for admission to **MBBS, BDS, BAMS, and BHMS** courses across India, including admissions to AIIMS and JIPMER undergraduate programs.</span>
+              <span class="hindi">NEET-UG पूरे भारत में **MBBS, BDS, BAMS, और BHMS** पाठ्यक्रमों में प्रवेश के लिए एकमात्र प्रवेश परीक्षा है, जिसमें AIIMS और JIPMER स्नातक कार्यक्रम भी शामिल हैं।</span>
+              <span class="marathi">NEET-UG ही देशभरातील **MBBS, BDS, BAMS, आणि BHMS** अभ्यासक्रमांच्या प्रवेशासाठीची एकमेव प्रवेश परीक्षा आहे, ज्यात AIIMS आणि JIPMER पदवीपूर्व कार्यक्रम समाविष्ट आहेत.</span>
+            </p>
+            <ul>
+              <li><span class="english"><strong>Subjects:</strong> Physics (45 Ques), Chemistry (45 Ques), Biology (Zoology + Botany - 90 Ques).</span><span class="hindi"><strong>विषय:</strong> भौतिकी (45 प्रश्न), रसायन विज्ञान (45 प्रश्न), जीव विज्ञान (प्राणी विज्ञान + वनस्पति विज्ञान - 90 प्रश्न)।</span><span class="marathi"><strong>विषय:</strong> भौतिकशास्त्र (45 प्रश्न), रसायनशास्त्र (45 प्रश्न), जीवशास्त्र (प्राणीशास्त्र + वनस्पतीशास्त्र - 90 प्रश्न).</span></li>
+              <li><span class="english"><strong>Marking:</strong> +4 for correct, -1 for incorrect. Focus on speed and accuracy.</span><span class="hindi"><strong>अंकन:</strong> सही के लिए +4, गलत के लिए -1। गति और सटीकता पर ध्यान दें।</span><span class="marathi"><strong>गुण:</strong> बरोबरसाठी +4, चुकीसाठी -1. वेग आणि अचूकतेवर लक्ष केंद्रित करा.</span></li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">PG & Specialty Exams (AIIMS, INI-CET)</span>
+              <span class="hindi">PG और विशेषता परीक्षाएँ (AIIMS, INI-CET)</span>
+              <span class="marathi">PG आणि विशेष परीक्षा (AIIMS, INI-CET)</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">INI-CET (AIIMS/JIPMER PG):</span><span class="hindi">INI-CET (AIIMS/JIPMER PG):</span><span class="marathi">INI-CET (AIIMS/JIPMER PG):</span></strong>
+                <span class="english"> The combined entrance test for **MD/MS/M.Ch** admissions at Institutes of National Importance (AIIMS, JIPMER, PGIMER, NIMHANS).</span>
+                <span class="hindi"> राष्ट्रीय महत्व के संस्थानों (AIIMS, JIPMER, PGIMER, NIMHANS) में **MD/MS/M.Ch** प्रवेश के लिए संयुक्त प्रवेश परीक्षा।</span>
+                <span class="marathi"> राष्ट्रीय महत्त्वाच्या संस्थांमधील (AIIMS, JIPMER, PGIMER, NIMHANS) **MD/MS/M.Ch** प्रवेशांसाठीची संयुक्त प्रवेश परीक्षा.</span>
+              </li>
+              <li>
+                <strong><span class="english">AIIMS B.Sc./Paramedical:</span><span class="hindi">AIIMS B.Sc./पैरामेडिकल:</span><span class="marathi">AIIMS B.Sc./पॅरामेडिकल:</span></strong>
+                <span class="english"> AIIMS conducts a **separate entrance test** for its various B.Sc. Nursing and Paramedical courses. Requires Physics, Chemistry, and Biology.</span>
+                <span class="hindi"> AIIMS अपने विभिन्न B.Sc. नर्सिंग और पैरामेडिकल पाठ्यक्रमों के लिए **अलग प्रवेश परीक्षा** आयोजित करता है। इसके लिए भौतिकी, रसायन विज्ञान और जीव विज्ञान की आवश्यकता होती है।</span>
+                <span class="marathi"> AIIMS त्यांच्या विविध B.Sc. नर्सिंग आणि पॅरामेडिकल अभ्यासक्रमांसाठी **स्वतंत्र प्रवेश परीक्षा** आयोजित करते. यासाठी भौतिकशास्त्र, रसायनशास्त्र आणि जीवशास्त्र आवश्यक आहे.</span>
+              </li>
+              <li>
+                <strong><span class="english">State CETs:</span><span class="hindi">राज्य CET:</span><span class="marathi">राज्य CET:</span></strong>
+                <span class="english"> Exams like **MHT-CET (for non-MBBS/BDS courses)** and state-specific PG-CETs may be used for various allied health science admissions.</span>
+                <span class="hindi"> **MHT-CET (गैर-MBBS/BDS पाठ्यक्रमों के लिए)** और राज्य-विशिष्ट PG-CET जैसी परीक्षाओं का उपयोग विभिन्न संबद्ध स्वास्थ्य विज्ञान प्रवेशों के लिए किया जा सकता है।</span>
+                <span class="marathi"> **MHT-CET (गैर-MBBS/BDS अभ्यासक्रमांसाठी)** आणि राज्य-विशिष्ट PG-CET सारख्या परीक्षांचा वापर विविध संलग्न आरोग्य विज्ञान प्रवेशांसाठी केला जाऊ शकतो.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">NEET Core Subject Mastery</span>
+              <span class="hindi">NEET मुख्य विषय में महारत</span>
+              <span class="marathi">NEET मुख्य विषयावर प्रभुत्व</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">Biology (Zoology/Botany):</span><span class="hindi">जीव विज्ञान (प्राणी विज्ञान/वनस्पति विज्ञान):</span><span class="marathi">जीवशास्त्र (प्राणीशास्त्र/वनस्पतीशास्त्र):</span></strong>
+                <span class="english"> The highest-scoring and most critical section. **NCERT** is the Bible. Focus on diagrams, examples, and the underlying concepts.</span>
+                <span class="hindi"> सबसे अधिक स्कोरिंग और सबसे महत्वपूर्ण खंड। **NCERT** बाइबिल है। आरेख, उदाहरण और अंतर्निहित अवधारणाओं पर ध्यान दें।</span>
+                <span class="marathi"> सर्वाधिक गुण मिळवून देणारा आणि सर्वात महत्त्वाचा विभाग. **NCERT** हे मूलभूत आहे. आकृत्या, उदाहरणे आणि मूलभूत संकल्पनांवर लक्ष केंद्रित करा.</span>
+              </li>
+              <li>
+                <strong><span class="english">Physics:</span><span class="hindi">भौतिकी:</span><span class="marathi">भौतिकशास्त्र:</span></strong>
+                <span class="english"> Requires consistent **problem-solving practice**. Master Class 11 mechanics and Class 12 Electrostatics/Modern Physics for maximum return.</span>
+                <span class="hindi"> लगातार **समस्या-समाधान अभ्यास** की आवश्यकता है। अधिकतम परिणाम के लिए कक्षा 11 यांत्रिकी और कक्षा 12 इलेक्ट्रोस्टैटिक्स/आधुनिक भौतिकी में महारत हासिल करें।</span>
+                <span class="marathi"> सातत्याने **समस्या सोडवण्याचा सराव** आवश्यक. जास्तीत जास्त परिणामांसाठी 11 वीची यांत्रिकी आणि 12 वीचे इलेक्ट्रोस्टॅटिक्स/आधुनिक भौतिकशास्त्र यावर प्रभुत्व मिळवा.</span>
+              </li>
+              <li>
+                <strong><span class="english">Chemistry:</span><span class="hindi">रसायन विज्ञान:</span><span class="marathi">रसायनशास्त्र:</span></strong>
+                <span class="english"> Balance between memory (Inorganic/Organic) and calculation (Physical). Treat Organic Chemistry reactions as a memory chain.</span>
+                <span class="hindi"> स्मृति (अकार्बनिक/कार्बनिक) और गणना (भौतिक) के बीच संतुलन। कार्बनिक रसायन विज्ञान की प्रतिक्रियाओं को एक स्मृति श्रृंखला के रूप में मानें।</span>
+                <span class="marathi"> स्मरणशक्ती (अजैविक/सेंद्रिय) आणि गणना (भौतिक) यांचा समन्वय साधा. सेंद्रिय रसायनशास्त्रातील प्रतिक्रियांना स्मरणशक्ती साखळीप्रमाणे हाताळा.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Essential Study Material</span>
+              <span class="hindi">आवश्यक अध्ययन सामग्री</span>
+              <span class="marathi">आवश्यक अभ्यास साहित्य</span>
+            </h3>
+            <p>
+              <span class="english">**Foundation:** **NCERT Textbooks (Class 11 & 12)** are the undisputed primary source for NEET-UG. Most questions directly align with NCERT lines or concepts.</span>
+              <span class="hindi">**आधार:** **NCERT पाठ्यपुस्तकें (कक्षा 11 और 12)** NEET-UG के लिए निर्विवाद प्राथमिक स्रोत हैं। अधिकांश प्रश्न सीधे NCERT की पंक्तियों या अवधारणाओं से मेल खाते हैं।</span>
+              <span class="marathi">**पाया:** NEET-UG साठी **NCERT पाठ्यपुस्तके (इयत्ता 11 आणि 12)** हे निर्विवाद प्राथमिक स्रोत आहेत. बहुतेक प्रश्न थेट NCERT च्या ओळींशी किंवा संकल्पनांशी जुळतात.</span>
+            </p>
+            <p>
+              <span class="english">**Practice:** Use reliable MCQs books. For **Physics**, practice numericals from a standard NEET guide. For **Biology**, use high-quality question banks that stick strictly to the NCERT syllabus.</span>
+              <span class="hindi">**अभ्यास:** विश्वसनीय MCQs पुस्तकों का उपयोग करें। **भौतिकी** के लिए, एक मानक NEET गाइड से संख्यात्मक अभ्यास करें। **जीव विज्ञान** के लिए, उच्च-गुणवत्ता वाले प्रश्न बैंकों का उपयोग करें जो NCERT पाठ्यक्रम का सख्ती से पालन करते हैं।</span>
+              <span class="marathi">**सराव:** विश्वसनीय MCQs पुस्तके वापरा. **भौतिकशास्त्रासाठी**, प्रमाणित NEET मार्गदर्शिकेतून संख्यात्मक प्रश्न सोडवा. **जीवशास्त्रासाठी**, NCERT अभ्यासक्रमाचे काटेकोरपणे पालन करणाऱ्या उच्च-गुणवत्तेच्या प्रश्नपेढ्या वापरा.</span>
+            </p>
+          </div>
+
+        </div> </div>
+    </section>
+
+    <section id="strategy" class="strategy-section">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="english">Preparation Strategy</span>
+          <span class="hindi">तैयारी की रणनीति</span>
+          <span class="marathi">तयारीचे धोरण</span>
+        </h2>
+        <div class="strategy-grid">
+            
+            <div class="strategy-card">
+                <span class="strategy-icon">🧬</span>
+                <h4>
+                    <span class="english">Phase 1: Concept Building & NCERT</span>
+                    <span class="hindi">चरण 1: अवधारणा निर्माण और NCERT</span>
+                    <span class="marathi">टप्पा 1: संकल्पना निर्मिती आणि NCERT</span>
+                </h4>
+                <p>
+                    <span class="english">Prioritize deep understanding over rote memorization. Cover the entire **NCERT syllabus** for all three subjects (PCB) meticulously in the first year (Class 11/12). Build concise notes.</span>
+                    <span class="hindi">रटने के बजाय गहन समझ को प्राथमिकता दें। पहले वर्ष में (कक्षा 11/12) सभी तीन विषयों (PCB) के लिए पूरे **NCERT पाठ्यक्रम** को सावधानीपूर्वक कवर करें। संक्षिप्त नोट्स बनाएं।</span>
+                    <span class="marathi">पाठ करण्याऐवजी सखोल समजूतदारपणाला प्राधान्य द्या. पहिल्या वर्षात (इयत्ता 11/12) तिन्ही विषयांचा (PCB) संपूर्ण **NCERT अभ्यासक्रम** काळजीपूर्वक पूर्ण करा. संक्षिप्त नोट्स तयार करा.</span>
+                </p>
+            </div>
+
+            <div class="strategy-card">
+                <span class="strategy-icon">🧪</span>
+                <h4>
+                    <span class="english">Phase 2: Practice & Analysis</span>
+                    <span class="hindi">चरण 2: अभ्यास और विश्लेषण</span>
+                    <span class="marathi">टप्पा 2: सराव आणि विश्लेषण</span>
+                </h4>
+                <p>
+                    <span class="english">Solve high-volume, timed **MCQ practice** daily. After every mock test, dedicate an equal amount of time to analysis. Identify "silly mistakes" and conceptual gaps to track improvement.</span>
+                    <span class="hindi">प्रतिदिन उच्च मात्रा में, समयबद्ध **MCQ अभ्यास** हल करें। प्रत्येक मॉक टेस्ट के बाद, विश्लेषण के लिए उतना ही समय समर्पित करें। सुधार को ट्रैक करने के लिए "छोटी गलतियों" और वैचारिक कमियों की पहचान करें।</span>
+                    <span class="marathi">दररोज मोठ्या प्रमाणात, वेळेनुसार **MCQ सराव** करा. प्रत्येक मॉक टेस्टनंतर, विश्लेषणासाठी तेवढाच वेळ द्या. सुधारणा ट्रॅक करण्यासाठी "क्षुल्लक चुका" आणि वैचारिक त्रुटी ओळखा.</span>
+                </p>
+            </div>
+
+            <div class="strategy-card">
+                <span class="strategy-icon">🔬</span>
+                <h4>
+                    <span class="english">Phase 3: Revision & High Yield</span>
+                    <span class="hindi">चरण 3: पुनरीक्षण और उच्च उपज</span>
+                    <span class="marathi">टप्पा 3: पुनरावृत्ती आणि उच्च उत्पन्न</span>
+                </h4>
+                <p>
+                    <span class="english">Focus the final months on **repeated revision**. Use flashcards and mnemonic techniques for Biology facts and Chemistry reactions. Regularly revise Physics formulas and constants.</span>
+                    <span class="hindi">अंतिम महीनों को **बार-बार पुनरीक्षण** पर केंद्रित करें। जीव विज्ञान के तथ्यों और रसायन विज्ञान की प्रतिक्रियाओं के लिए फ्लैशकार्ड और स्मरक तकनीकों का उपयोग करें। भौतिकी के सूत्र और स्थिरांकों को नियमित रूप से दोहराएं।</span>
+                    <span class="marathi">अंतिम महिने **वारंवार पुनरावृत्ती** वर केंद्रित करा. जीवशास्त्र तथ्ये आणि रसायनशास्त्र प्रतिक्रियांसाठी फ्लॅशकार्ड आणि स्मृती तंत्रे वापरा. भौतिकशास्त्राचे सूत्र आणि स्थिरांक नियमितपणे तपासा.</span>
+                </p>
+            </div>
+
+            <div class="strategy-card">
+                <span class="strategy-icon">🏥</span>
+                <h4>
+                    <span class="english">Phase 4: Counseling and Seat Strategy</span>
+                    <span class="hindi">चरण 4: काउंसलिंग और सीट रणनीति</span>
+                    <span class="marathi">टप्पा 4: समुपदेशन आणि जागा धोरण</span>
+                </h4>
+                <p>
+                    <span class="english">Be aware of the **All India Quota (AIQ)** vs. **State Quota** merit lists. Research previous year cutoffs for your desired colleges (AIIMS, State Medical Colleges, Deemed). Plan your college preference list in advance.</span>
+                    <span class="hindi">**अखिल भारतीय कोटा (AIQ)** बनाम **राज्य कोटा** योग्यता सूचियों के बारे में जागरूक रहें। अपने वांछित कॉलेजों (AIIMS, राज्य मेडिकल कॉलेज, डीम्ड) के लिए पिछले वर्ष के कटऑफ पर शोध करें। अपनी कॉलेज वरीयता सूची पहले से योजना बनाएं।</span>
+                    <span class="marathi">**अखिल भारतीय कोटा (AIQ)** विरुद्ध **राज्य कोटा** गुणवत्ता यादीबद्दल जागरूक रहा. आपल्या इच्छित महाविद्यालयांसाठी (AIIMS, राज्य वैद्यकीय महाविद्यालये, डीम्ड) मागील वर्षाचे कटऑफ तपासा. आपल्या कॉलेजच्या पसंतीची यादी आगाऊ योजना करा.</span>
+                </p>
+            </div>
+
+        </div>
+      </div>
+    </section>
+    
+    <section id="links" class="services" style="border: 1px solid var(--card-border-cyan);">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="english">Useful Links & Resources</span>
+          <span class="hindi">उपयोगी लिंक और संसाधन</span>
+          <span class="marathi">उपयुक्त दुवे व संसाधने</span>
+        </h2>
+        <div class="services-grid">
+            
+            <div class="service-card" style="min-height: auto;">
+                <h3>
+                  <span class="english">Medical Entrance Portals</span>
+                  <span class="hindi">चिकित्सा प्रवेश पोर्टल</span>
+                  <span class="marathi">वैद्यकीय प्रवेश पोर्टल्स</span>
+                </h3>
+                <ul>
+                  <li><a href="https://neet.nta.nic.in" target="_blank" rel="noopener">NEET Official Website (NTA)</a></li>
+                  <li><a href="https://aiimsexams.ac.in/info/ini-cet.html" target="_blank" rel="noopener">INI-CET (AIIMS PG) Official Page</a></li>
+                  <li><a href="https://mcc.nic.in" target="_blank" rel="noopener">MCC Official Website (Counseling)</a></li>
+                  <li><a href="https://www.nmc.org.in" target="_blank" rel="noopener">National Medical Commission (NMC)</a></li>
+                </ul>
+            </div>
+            
+            <div class="service-card" style="min-height: auto;">
+                <h3>
+                  <span class="english">State & Other Links</span>
+                  <span class="hindi">राज्य और अन्य लिंक</span>
+                  <span class="marathi">राज्य व इतर दुवे</span>
+                </h3>
+                <ul>
+                  <li><a href="https://www.cetcell.mahacet.org" target="_blank" rel="noopener">Maharashtra State CET Cell (for state quota)</a></li>
+                  <li><a href="https://jipmer.edu.in" target="_blank" rel="noopener">JIPMER Official Website</a> (For institutional updates)</li>
+                  <li><a href="https://aiimsexams.ac.in/info/bsc-courses.html" target="_blank" rel="noopener">AIIMS B.Sc./Paramedical Admission</a></li>
+                  <li><a href="https://www.digilocker.gov.in" target="_blank" rel="noopener">DigiLocker</a> (For documents)</li>
+                </ul>
+            </div>
+
+
+            <div class="service-card" style="min-height: auto; grid-column: span 2; display: flex; flex-direction: column; align-items: center;">
+                <h3>
+                  <span class="english">NEET Biology - Free Lecture (Sample)</span>
+                  <span class="hindi">NEET जीव विज्ञान - मुफ्त व्याख्यान (नमूना)</span>
+                  <span class="marathi">NEET जीवशास्त्र - मुक्त व्याख्यान (नमुना)</span>
+                </h3>
+                <div style="margin-top: 10px; border-radius: 10px; overflow: hidden; width: 100%; max-width: 600px;">
+                  <iframe width="100%" height="315" src="https://www.youtube.com/embed/t0q2l62X62k" title="Sample Lecture: Human Reproduction for NEET" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <p style="text-align: center; margin-top: 15px; color: var(--accent-green);">
+                  <span class="english">**Note:** Utilize free online resources like YouTube channels and free lecture series for conceptual clarity and quick revision for all medical exams.</span>
+                  <span class="hindi">**नोट:** सभी चिकित्सा परीक्षाओं के लिए वैचारिक स्पष्टता और त्वरित पुनरीक्षण के लिए YouTube चैनलों और मुफ्त व्याख्यान श्रृंखला जैसे ऑनलाइन संसाधनों का उपयोग करें।</span>
+                  <span class="marathi">**सूचना:** सर्व वैद्यकीय परीक्षांसाठी वैचारिक स्पष्टता आणि त्वरित पुनरावृत्तीसाठी YouTube चॅनेल आणि विनामूल्य व्याख्यान मालिकांसारख्या ऑनलाइन संसाधनांचा वापर करा.</span>
+                </p>
+            </div>
+            
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>
+            <span class="english">Contact Info</span>
+            <span class="hindi">संपर्क जानकारी</span>
+            <span class="marathi">संपर्क माहिती</span>
+          </h3>
+          <p><span class="english">Email: info@xshala.edu</span><span class="hindi">ईमेल: info@xshala.edu</span><span class="marathi">ईमेल: info@xshala.edu</span></p>
+          <p><span class="english">Phone: +91 98765 43210</span><span class="hindi">फ़ोन: +91 98765 43210</span><span class="marathi">फोन: +91 98765 43210</span></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p><span class="english">© 2025 XShala. Medical Entrance Guidance.</span><span class="hindi">© 2025 XShala. चिकित्सा प्रवेश मार्गदर्शन।</span><span class="marathi">© 2025 XShala. वैद्यकीय प्रवेश मार्गदर्शन.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // language + theme with persistence (localStorage) so pages can be synced if other pages use same keys
+    const MODE_KEY = 'xshala-mode';     // 'day' or 'night'
+    const LANG_KEY = 'xshala-lang';     // 'english'|'hindi'|'marathi'
+
+    let currentMode = 'night';
+    let currentLanguage = 'english';
+
+    function applyMode(mode) {
+      const root = document.documentElement;
+      if (mode === 'day') {
+        root.classList.add('theme-day');
+        document.body.classList.add('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '☀️';
+        currentMode = 'day';
+      } else {
+        root.classList.remove('theme-day');
+        document.body.classList.remove('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '🌙';
+        currentMode = 'night';
+      }
+      try { localStorage.setItem(MODE_KEY, currentMode); } catch (e) {}
+    }
+
+    function toggleMode() {
+      applyMode(currentMode === 'night' ? 'day' : 'night');
+    }
+
+    function setLanguage(lang) {
+      // remove any existing lang-* classes
+      document.body.className = document.body.className.replace(/\blang-\w+\b/g, '').trim();
+      if (lang && lang !== 'english') {
+        document.body.classList.add('lang-' + lang);
+      }
+      currentLanguage = lang || 'english';
+
+      // update active state of buttons
+      document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+      const selector = `.language-btn[data-lang="${lang}"]`;
+      const btn = document.querySelector(selector);
+      if (btn) btn.classList.add('active');
+
+      try { localStorage.setItem(LANG_KEY, currentLanguage); } catch (e) {}
+    }
+
+    // Smooth scroll for anchors beginning with #
+    function enableSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          // If href is only "#", let it be
+          const href = this.getAttribute('href');
+          if (href === '#' || href === '') return;
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            // If it links to another page fragment (like index.html#something), navigate normally
+            const parts = href.split('#');
+            if (parts.length === 2 && parts[0] !== '') {
+              window.location.href = href;
+            }
+          }
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // apply saved settings from localStorage (if any)
+      try {
+        const savedMode = localStorage.getItem(MODE_KEY);
+        const savedLang = localStorage.getItem(LANG_KEY);
+        if (savedMode) applyMode(savedMode);
+        else applyMode('night');
+
+        if (savedLang) setLanguage(savedLang);
+        else setLanguage('english');
+
+      } catch (e) {
+        // fallback defaults
+        applyMode('night');
+        setLanguage('english');
+      }
+
+      // Bind language buttons to allow keyboard activation as well
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = btn.dataset.lang;
+          setLanguage(lang);
+        });
+      });
+
+      // Bind toggle button
+      const modeBtn = document.getElementById('mode-toggle-btn');
+      modeBtn.addEventListener('click', toggleMode);
+
+      enableSmoothScroll();
+
+    });
+
+  </script>
+</body>
+</html>

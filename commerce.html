@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XShala - Commerce, Finance & Law Guidance</title>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Default Dark Mode Variables */
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent-cyan: #00ffff;
+            --accent-magenta: #ff00ff;
+            --accent-green: #00ff00;
+            --card-bg: rgba(0, 0, 0, 0.7);
+            --card-border-cyan: rgba(0, 255, 255, 0.3);
+            --card-border-magenta: rgba(255, 0, 255, 0.3);
+            --card-border-green: rgba(0, 255, 0, 0.3);
+            --card-hover-bg-cyan: rgba(0, 255, 255, 0.15);
+            --card-hover-bg-magenta: rgba(255, 0, 255, 0.15);
+            --card-hover-bg-green: rgba(0, 255, 0, 0.15);
+            --logo-text-shadow: 0 0 20px var(--accent-cyan);
+            --logo-accent-color: var(--accent-cyan);
+            --header-bg: rgba(10, 10, 10, 0.95);
+            --header-border: 2px solid var(--accent-cyan);
+            --footer-bg: rgba(0, 0, 0, 0.95);
+        }
+
+        /* Day Mode Variables */
+        :root.theme-day {
+            --primary-bg: #f0f2f5;
+            --secondary-bg: #e2e4e8;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --accent-cyan: #0080ff;
+            --accent-magenta: #ff6600;
+            --accent-green: #008800;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border-cyan: rgba(0, 128, 255, 0.3);
+            --card-border-magenta: rgba(255, 102, 0, 0.3);
+            --card-border-green: rgba(0, 136, 0, 0.3);
+            --card-hover-bg-cyan: rgba(0, 128, 255, 0.1);
+            --card-hover-bg-magenta: rgba(255, 102, 0, 0.1);
+            --card-hover-bg-green: rgba(0, 136, 0, 0.1);
+            --logo-text-shadow: none;
+            --logo-accent-color: var(--text-primary);
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --header-border: 2px solid var(--accent-cyan);
+            --footer-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* Animated Dark STEM Background */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        /* This animation is intentionally tied to the dark theme for visual consistency */
+        .theme-day .animated-background {
+            background: linear-gradient(135deg, #f0f2f5 0%, #e2e4e8 25%, #d1d4d8 50%, #c1c4c8 75%, #b1b4b8 100%);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Enhanced Floating Commerce Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(0, 255, 255, 0.3);
+            font-size: 4rem;
+            animation: float 25s infinite linear;
+            text-shadow: 0 0 20px currentColor;
+        }
+        
+        /* Day Mode Floating Elements */
+        .theme-day .floating-element {
+            color: rgba(0, 128, 255, 0.3);
+            text-shadow: none;
+        }
+
+        .floating-element:nth-child(odd) {
+            animation-direction: reverse;
+            color: rgba(255, 0, 255, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(odd) {
+            color: rgba(255, 102, 0, 0.3);
+        }
+
+        .floating-element:nth-child(3n) {
+            color: rgba(0, 255, 0, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(3n) {
+            color: rgba(0, 136, 0, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(0.7);
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) rotate(324deg) scale(0.7);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Neon Circuit Lines */
+        .circuit-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            height: 2px;
+            animation: circuitFlow 8s infinite;
+        }
+
+        .circuit-line:nth-child(1) {
+            top: 20%;
+            width: 100%;
+            animation-delay: 0s;
+        }
+
+        .circuit-line:nth-child(2) {
+            top: 60%;
+            width: 100%;
+            animation-delay: -2s;
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent);
+        }
+
+        .circuit-line:nth-child(3) {
+            top: 80%;
+            width: 100%;
+            animation-delay: -4s;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+
+        @keyframes circuitFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* DNA Helix Enhanced */
+        .dna-helix {
+            position: fixed;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 400px;
+            z-index: -1;
+        }
+
+        .dna-strand {
+            position: absolute;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+            border-radius: 3px;
+            animation: dnaRotate 12s infinite linear;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        .theme-day .dna-strand {
+            box-shadow: none;
+        }
+
+        .dna-strand:nth-child(1) {
+            left: 30px;
+            transform-origin: center;
+        }
+
+        .dna-strand:nth-child(2) {
+            right: 30px;
+            animation-delay: -6s;
+            background: linear-gradient(180deg, var(--accent-magenta), var(--accent-green));
+        }
+
+        @keyframes dnaRotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            background: var(--header-bg);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: var(--header-border);
+            transition: background-color 0.5s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            text-decoration: none;
+            position: relative;
+            text-shadow: var(--logo-text-shadow);
+        }
+
+        .logo span {
+            color: var(--logo-accent-color);
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+        
+        .theme-day .logo span {
+            animation: none;
+        }
+
+        @keyframes neonPulse {
+            0% { text-shadow: 0 0 20px var(--accent-cyan); }
+            100% { text-shadow: 0 0 30px var(--accent-cyan), 0 0 40px var(--accent-cyan); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .language-btn, .mode-toggle-btn {
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            color: #000;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mode-toggle-btn {
+            font-size: 1.2rem;
+            padding: 0.4rem;
+            border-radius: 50%;
+        }
+
+        .language-btn:hover, .mode-toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
+        }
+
+        .language-btn.active {
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.3); text-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
+        }
+        
+        .theme-day .hero h1 {
+            animation: none;
+            -webkit-text-fill-color: initial;
+            background: none;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-secondary);
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .btn {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-cyan), #0080ff);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-cyan);
+            color: var(--text-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+        }
+
+        /* STEM Info Section (Used for Commerce) */
+        .stem-info {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border: 1px solid var(--card-border-cyan);
+        }
+
+        .stem-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-card {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--card-border-cyan);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .theme-day .benefit-card {
+            background: rgba(0, 128, 255, 0.1);
+        }
+
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+            background: var(--card-hover-bg-cyan);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+        }
+
+        /* Services Section */
+        .services {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border: 1px solid var(--card-border-magenta);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+        
+        .theme-day .section-title {
+            -webkit-text-fill-color: initial;
+            background: none;
+            color: var(--text-primary);
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        
+        .theme-day .section-title:after {
+            box-shadow: none;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid var(--card-border-cyan);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-day .service-card {
+            background: linear-gradient(135deg, rgba(0, 128, 255, 0.1), rgba(255, 102, 0, 0.1));
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 255, 255, 0.2);
+            border-color: var(--accent-cyan);
+        }
+
+        .service-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+            animation: bounce 2s infinite;
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-cyan);
+        }
+
+        .service-card ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        .service-card li {
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+            transition: transform 0.2s ease;
+            font-size: 1.1rem;
+        }
+
+        .service-card li:hover {
+            transform: translateX(5px);
+            color: var(--accent-cyan);
+        }
+
+        .service-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border: 1px solid var(--card-border-green);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 15px;
+            border: 1px solid var(--card-border-green);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-day .feature-item {
+            background: rgba(0, 136, 0, 0.1);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 0, 0.2);
+            background: var(--card-hover-bg-green);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--footer-bg);
+            backdrop-filter: blur(10px);
+            padding: 3rem 0 1rem;
+            margin-top: 2rem;
+            border-top: 2px solid var(--accent-cyan);
+            transition: background-color 0.5s ease;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+            font-size: 1.3rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--accent-cyan);
+            transform: translateX(5px);
+        }
+        
+        .theme-day .footer-section a:hover {
+            text-shadow: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border-cyan);
+            color: var(--text-secondary);
+        }
+
+        /* Chatbot Styles - not used on this page, kept for parity */
+        .chatbot-container { display:none; }
+
+        /* Multilingual Switching Logic */
+        .hindi, .marathi {
+            display: none;
+        }
+
+        body.lang-hindi .english {
+            display: none;
+        }
+
+        body.lang-hindi .hindi {
+            display: inline; /* Use inline for text spans */
+        }
+
+        body.lang-marathi .english {
+            display: none;
+        }
+
+        body.lang-marathi .marathi {
+            display: inline; /* Use inline for text spans */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 80%;
+                max-width: 300px;
+            }
+
+            .floating-element {
+                font-size: 3rem;
+            }
+
+            .chatbot-window {
+                width: 300px;
+                height: 400px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+  </style>
+</head>
+<body>
+
+  <div class="animated-background"></div>
+
+  <div class="circuit-lines">
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+  </div>
+
+  <div class="floating-elements" aria-hidden="true">
+    <div class="floating-element" style="left: 5%; animation-delay: 0s;">💰</div>
+    <div class="floating-element" style="left: 25%; animation-delay: -4s;">📊</div>
+    <div class="floating-element" style="left: 45%; animation-delay: -8s;"⚖️</div>
+    <div class="floating-element" style="left: 65%; animation-delay: -12s;">📈</div>
+    <div class="floating-element" style="left: 85%; animation-delay: -16s;">🏛️</div>
+  </div>
+
+  <div class="dna-helix" aria-hidden="true">
+    <div class="dna-strand"></div>
+    <div class="dna-strand"></div>
+  </div>
+
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo" aria-label="XShala Home"><span>X</span>Shala</a>
+
+      <ul class="nav-links" role="navigation" aria-label="Main navigation">
+        <li>
+          <a href="index.html" class="english">Home</a>
+          <a href="index.html" class="hindi">होम</a>
+          <a href="index.html" class="marathi">होम</a>
+        </li>
+        <li>
+          <a href="#info" class="english">Commerce & Law</a>
+          <a href="#info" class="hindi">वाणिज्य और कानून</a>
+          <a href="#info" class="marathi">वाणिज्य आणि कायदा</a>
+        </li>
+        <li>
+          <a href="#contact" class="english">Contact</a>
+          <a href="#contact" class="hindi">संपर्क</a>
+          <a href="#contact" class="marathi">संपर्क</a>
+        </li>
+      </ul>
+
+      <div class="language-selector" aria-label="Language and theme controls">
+        <button id="mode-toggle-btn" class="mode-toggle-btn" aria-label="Toggle day night">🌙</button>
+        <button class="language-btn active" data-lang="english" onclick="setLanguage('english')">EN</button>
+        <button class="language-btn" data-lang="hindi" onclick="setLanguage('hindi')">हि</button>
+        <button class="language-btn" data-lang="marathi" onclick="setLanguage('marathi')">म</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container">
+        <h1>
+          <span class="english">Commerce, Finance & Legal Guidance</span>
+          <span class="hindi">वाणिज्य, वित्त और कानूनी मार्गदर्शन</span>
+          <span class="marathi">वाणिज्य, वित्त आणि कायदेशीर मार्गदर्शन</span>
+        </h1>
+        <p>
+          <span class="english">Your path to corporate and financial excellence: Detailed resources for CA, CS, Legal, and Economics aspirants.</span>
+          <span class="hindi">कॉर्पोरेट और वित्तीय उत्कृष्टता का आपका मार्ग: सीए, सीएस, कानूनी और अर्थशास्त्र के अभ्यर्थियों के लिए विस्तृत संसाधन।</span>
+          <span class="marathi">कॉर्पोरेट आणि वित्तीय उत्कृष्टतेचा तुमचा मार्ग: सीए, सीएस, कायदा आणि अर्थशास्त्राच्या विद्यार्थ्यांसाठी सविस्तर साधने.</span>
+        </p>
+      </div>
+    </section>
+
+    <section id="info" class="services">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="english">Commerce Fields - Complete Information</span>
+          <span class="hindi">वाणिज्य क्षेत्र - संपूर्ण जानकारी</span>
+          <span class="marathi">वाणिज्य क्षेत्र - संपूर्ण माहिती</span>
+        </h2>
+
+        <div class="services-grid">
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Disclaimer</span>
+              <span class="hindi">अस्वीकरण</span>
+              <span class="marathi">अस्वीकरण</span>
+            </h3>
+            <p>
+              <span class="english">This information is for general guidance only. Always refer to the official websites of professional bodies (like ICAI, ICSI, BCI) and entrance exams (like CLAT, CUET) for the most current and accurate information.</span>
+              <span class="hindi">यह जानकारी केवल सामान्य मार्गदर्शन के लिए है। सबसे अद्यतन और सही जानकारी के लिए हमेशा पेशेवर निकायों (जैसे आईसीएआई, आईसीएसआई, बीसीआई) और प्रवेश परीक्षाओं (जैसे क्लैट, सीयूईटी) की आधिकारिक वेबसाइट देखें।</span>
+              <span class="marathi">ही माहिती फक्त सामान्य मार्गदर्शनासाठी आहे. सर्वात अद्ययावत आणि अचूक माहितीसाठी नेहमी व्यावसायिक संस्था (जसे की ICAI, ICSI, BCI) आणि प्रवेश परीक्षांच्या (जसे की CLAT, CUET) अधिकृत वेबसाइट्स तपासा.</span>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Overview</span>
+              <span class="hindi">ओवरव्यू</span>
+              <span class="marathi">सारांश</span>
+            </h3>
+            <p>
+              <span class="english">The Commerce field offers diverse paths in **Finance, Accounting, Corporate Governance, and Law**. Core subjects include Accountancy, Economics, Business Studies, and Mathematics/Statistics.</span>
+              <span class="hindi">वाणिज्य क्षेत्र **वित्त, लेखांकन, कॉर्पोरेट प्रशासन और कानून** में विभिन्न मार्ग प्रदान करता है। मुख्य विषयों में लेखांकन, अर्थशास्त्र, व्यावसायिक अध्ययन और गणित/सांख्यिकी शामिल हैं।</span>
+              <span class="marathi">वाणिज्य क्षेत्रात **वित्त, लेखांकन, कॉर्पोरेट प्रशासन आणि कायदा** मध्ये विविध मार्ग उपलब्ध आहेत. मुख्य विषयांमध्ये लेखाशास्त्र, अर्थशास्त्र, व्यवसाय अभ्यास आणि गणित/सांख्यिकी यांचा समावेश होतो.</span>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Chartered Accountancy (CA)</span>
+              <span class="hindi">चार्टर्ड अकाउंटेंसी (CA)</span>
+              <span class="marathi">चार्टर्ड अकाउंटेंसी (CA)</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">Courses:</span><span class="hindi">कोर्स:</span><span class="marathi">कोर्सेस:</span></strong>
+                <span class="english"> CA Foundation -> Intermediate -> Final (conducted by ICAI). Requires 3 years of articleship.</span>
+                <span class="hindi"> सीए फाउंडेशन -> इंटरमीडिएट -> फाइनल (आईसीएआई द्वारा संचालित)। 3 साल की आर्टिकल्सशिप आवश्यक है।</span>
+                <span class="marathi"> सीए फाउंडेशन -> इंटरमीडिएट -> फायनल (ICAI द्वारे आयोजित). 3 वर्षांची आर्टिकल्सशिप आवश्यक आहे.</span>
+              </li>
+              <li>
+                <strong><span class="english">Key Skills:</span><span class="hindi">मुख्य कौशल:</span><span class="marathi">मुख्य कौशल्ये:</span></strong>
+                <span class="english"> Financial accounting, Auditing, Taxation, Attention to detail, Strong ethics.</span>
+                <span class="hindi"> वित्तीय लेखांकन, ऑडिटिंग, कराधान, विस्तार पर ध्यान, मजबूत नैतिकता।</span>
+                <span class="marathi"> वित्तीय लेखांकन, ऑडिटिंग, करप्रणाली, तपशीलाकडे लक्ष, मजबूत नैतिकता.</span>
+              </li>
+              <li>
+                <strong><span class="english">Top Body:</span><span class="hindi">शीर्ष निकाय:</span><span class="marathi">शीर्ष संस्था:</span></strong>
+                <span class="english"> Institute of Chartered Accountants of India (ICAI).</span>
+                <span class="hindi"> इंस्टीट्यूट ऑफ चार्टर्ड अकाउंटेंट्स ऑफ इंडिया (ICAI).</span>
+                <span class="marathi"> इन्स्टिट्यूट ऑफ चार्टर्ड अकाउंटंट्स ऑफ इंडिया (ICAI).</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Company Secretary (CS)</span>
+              <span class="hindi">कंपनी सचिव (CS)</span>
+              <span class="marathi">कंपनी सेक्रेटरी (CS)</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">Courses:</span><span class="hindi">कोर्स:</span><span class="marathi">कोर्सेस:</span></strong>
+                <span class="english"> CS Foundation/Executive Entrance Test (CSEET) -> Executive -> Professional (conducted by ICSI).</span>
+                <span class="hindi"> सीएस फाउंडेशन/एग्जीक्यूटिव एंट्रेंस टेस्ट (CSEET) -> एग्जीक्यूटिव -> प्रोफेशनल (आईसीएसआई द्वारा संचालित)।</span>
+                <span class="marathi"> सीएस फाउंडेशन/एक्झिक्युटिव्ह प्रवेश परीक्षा (CSEET) -> एक्झिक्युटिव्ह -> प्रोफेशनल (ICSI द्वारे आयोजित).</span>
+              </li>
+              <li>
+                <strong><span class="english">Key Skills:</span><span class="hindi">मुख्य कौशल:</span><span class="marathi">मुख्य कौशल्ये:</span></strong>
+                <span class="english"> Corporate Law, Compliance, Governance, Drafting, Communication.</span>
+                <span class="hindi"> कॉर्पोरेट कानून, अनुपालन, प्रशासन, प्रारूपण, संचार।</span>
+                <span class="marathi"> कॉर्पोरेट कायदा, अनुपालन, प्रशासन, मसुदा तयार करणे, संवाद.</span>
+              </li>
+              <li>
+                <strong><span class="english">Top Body:</span><span class="hindi">शीर्ष निकाय:</span><span class="marathi">शीर्ष संस्था:</span></strong>
+                <span class="english"> Institute of Company Secretaries of India (ICSI).</span>
+                <span class="hindi"> इंस्टीट्यूट ऑफ कंपनी सेक्रेटरीज ऑफ इंडिया (ICSI).</span>
+                <span class="marathi"> इन्स्टिट्यूट ऑफ कंपनी सेक्रेटरीज ऑफ इंडिया (ICSI).</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Legal Studies (Lawyer)</span>
+              <span class="hindi">कानूनी अध्ययन (वकील)</span>
+              <span class="marathi">कायदेशीर अभ्यास (वकील)</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">Courses:</span><span class="hindi">कोर्स:</span><span class="marathi">कोर्सेस:</span></span></strong>
+                <span class="english"> 5-year Integrated Law (e.g., BA LLB, BBA LLB) after 12th or 3-year LLB after graduation.</span>
+                <span class="hindi"> 12वीं के बाद 5-वर्षीय एकीकृत कानून (जैसे बीए एलएलबी, बीबीए एलएलबी) या स्नातक के बाद 3-वर्षीय एलएलबी।</span>
+                <span class="marathi"> 12 वी नंतर 5 वर्षांचा एकात्मिक कायदा (उदा. BA LLB, BBA LLB) किंवा पदवीनंतर 3 वर्षांचा LLB.</span>
+              </li>
+              <li>
+                <strong><span class="english">Key Skills:</span><span class="hindi">मुख्य कौशल:</span><span class="marathi">मुख्य कौशल्ये:</span></strong>
+                <span class="english"> Logical reasoning, Advocacy, Research, Public speaking, Integrity.</span>
+                <span class="hindi"> तार्किक तर्क, वकालत, अनुसंधान, सार्वजनिक भाषण, सत्यनिष्ठा।</span>
+                <span class="marathi"> तार्किक तर्क, वकिली, संशोधन, सार्वजनिक बोलणे, सचोटी.</span>
+              </li>
+              <li>
+                <strong><span class="english">Top Exams:</span><span class="hindi">प्रमुख परीक्षा:</span><span class="marathi">शीर्ष परीक्षा:</span></strong>
+                <span class="english"> CLAT, AILET, LSAT India, MHCET Law (for state colleges).</span>
+                <span class="hindi"> क्लैट, AILET, LSAT इंडिया, MHCET लॉ (राज्य कॉलेजों के लिए)।</span>
+                <span class="marathi"> CLAT, AILET, LSAT India, MHCET Law (राज्य महाविद्यालयांसाठी).</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Economics & Finance</span>
+              <span class="hindi">अर्थशास्त्र और वित्त</span>
+              <span class="marathi">अर्थशास्त्र आणि वित्त</span>
+            </h3>
+            <ul>
+              <li>
+                <strong><span class="english">Courses:</span><span class="hindi">कोर्स:</span><span class="marathi">कोर्सेस:</span></strong>
+                <span class="english"> BA/B.Sc Hons Economics, B.Com in Finance, MBA (Finance), CFA (Chartered Financial Analyst).</span>
+                <span class="hindi"> बीए/बी.एससी ऑनर्स अर्थशास्त्र, वित्त में बी.कॉम, एमबीए (वित्त), सीएफए (चार्टर्ड फाइनेंशियल एनालिस्ट)।</span>
+                <span class="marathi"> बीए/बी.एससी ऑनर्स अर्थशास्त्र, फायनान्समध्ये बी.कॉम, एमबीए (फायनान्स), सीएफए (चार्टर्ड फायनान्शियल ॲनॅलिस्ट).</span>
+              </li>
+              <li>
+                <strong><span class="english">Key Skills:</span><span class="hindi">मुख्य कौशल:</span><span class="marathi">मुख्य कौशल्ये:</span></strong>
+                <span class="english"> Quantitative analysis, Data interpretation, Macro/Micro theory, Financial modeling.</span>
+                <span class="hindi"> मात्रात्मक विश्लेषण, डेटा व्याख्या, मैक्रो/माइक्रो सिद्धांत, वित्तीय मॉडलिंग।</span>
+                <span class="marathi"> संख्यात्मक विश्लेषण, डेटा स्पष्टीकरण, मॅक्रो/मायक्रो सिद्धांत, वित्तीय मॉडेलिंग.</span>
+              </li>
+              <li>
+                <strong><span class="english">Top Institutes:</span><span class="hindi">शीर्ष संस्थान:</span><span class="marathi">शीर्ष संस्था:</span></strong>
+                <span class="english"> Delhi University (DU), Gokhale Institute, various IIMs (for MBA).</span>
+                <span class="hindi"> दिल्ली विश्वविद्यालय (DU), गोखले संस्थान, विभिन्न IIM (MBA के लिए)।</span>
+                <span class="marathi"> दिल्ली विद्यापीठ (DU), गोखले संस्था, विविध IIM (MBA साठी).</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">General Preparation</span>
+              <span class="hindi">सामान्य तैयारी</span>
+              <span class="marathi">सामान्य तयारी</span>
+            </h3>
+            <p>
+              <span class="english"><strong>All Fields:</strong> Focus on **Logical Reasoning** and **English Comprehension**. Strengthen your fundamentals in Accountancy and Economics. Reading financial news is vital.</span>
+              <span class="hindi"><strong>सभी क्षेत्र:</strong> **तार्किक तर्क** और **अंग्रेजी समझ** पर ध्यान दें। लेखांकन और अर्थशास्त्र में अपने मूल सिद्धांतों को मजबूत करें। वित्तीय समाचार पढ़ना महत्वपूर्ण है।</span>
+              <span class="marathi"><strong>सर्व क्षेत्र:</strong> **तार्किक तर्क** आणि **इंग्रजी आकलन** यावर लक्ष केंद्रित करा. लेखाशास्त्र आणि अर्थशास्त्रामधील तुमचे मूलभूत ज्ञान मजबूत करा. वित्तीय बातम्या वाचणे महत्त्वाचे आहे.</span>
+            </p>
+            <p>
+              <span class="english">For Professional courses (CA/CS), consistency and disciplined study hours are the keys to success. Join a strong mentorship program early.</span>
+              <span class="hindi">पेशेवर पाठ्यक्रमों (सीए/सीएस) के लिए, निरंतरता और अनुशासित अध्ययन घंटे सफलता की कुंजी हैं। जल्दी ही एक मजबूत मेंटरशिप प्रोग्राम में शामिल हों।</span>
+              <span class="marathi">व्यावसायिक कोर्सेससाठी (CA/CS), सातत्य आणि शिस्तबद्ध अभ्यासाचे तास यशाची गुरुकिल्ली आहेत. लवकरच एका मजबूत मार्गदर्शन कार्यक्रमात सामील व्हा.</span>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Useful Links</span>
+              <span class="hindi">उपयोगी लिंक</span>
+              <span class="marathi">उपयुक्त दुवे</span>
+            </h3>
+            <ul>
+              <li><a href="https://www.icai.org" target="_blank" rel="noopener">ICAI (CA) Official Website</a></li>
+              <li><a href="https://www.icsi.edu" target="_blank" rel="noopener">ICSI (CS) Official Website</a></li>
+              <li><a href="https://consortiumofnlus.ac.in" target="_blank" rel="noopener">CLAT (Law) Consortium</a></li>
+              <li><a href="https://www.rbi.org.in" target="_blank" rel="noopener">RBI (Financial Updates)</a></li>
+            </ul>
+            <p>
+              <span class="english">(Open links in a new tab for official notifications and application details.)</span>
+              <span class="hindi"> (आधिकारिक सूचनाओं और आवेदन विवरण के लिए नए टैब में लिंक खोलें।)</span>
+              <span class="marathi"> (अधिकृत सूचना व अर्ज तपशीलांसाठी नवीन टॅबमध्ये दुवा उघडा.)</span>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Resources & Mentorship</span>
+              <span class="hindi">संसाधन और मार्गदर्शन</span>
+              <span class="marathi">संसाधने व मार्गदर्शन</span>
+            </h3>
+            <ul>
+              <li><span class="english">Structured study plans & test series</span><span class="hindi">संरचित अध्ययन योजनाएँ और टेस्ट सीरीज़</span><span class="marathi">संरचित अभ्यास योजना आणि टेस्ट सिरीज</span></li>
+              <li><span class="english">Mock CLAT/CUET practice tests</span><span class="hindi">मॉक क्लैट/सीयूईटी अभ्यास परीक्षाएँ</span><span class="marathi">मॉक CLAT/CUET सराव परीक्षा</span></li>
+              <li><span class="english">Advanced Excel & financial modeling workshops</span><span class="hindi">उन्नत एक्सेल और वित्तीय मॉडलिंग कार्यशालाएँ</span><span class="marathi">प्रगत एक्सेल आणि वित्तीय मॉडेलिंग कार्यशाळा</span></li>
+              <li><span class="english">Access to practicing CA/CS/Lawyer network</span><span class="hindi">अभ्यास करने वाले CA/CS/वकील नेटवर्क तक पहुंच</span><span class="marathi">सराव करणारे CA/CS/वकील नेटवर्कमध्ये प्रवेश</span></li>
+            </ul>
+            <p>
+              <span class="english">Example: Check out online platforms like NSE Academy or Coursera for free introductory courses on Finance and Accounting basics.</span>
+              <span class="hindi">उदाहरण: वित्त और लेखांकन मूल बातें पर मुफ्त परिचयात्मक पाठ्यक्रमों के लिए NSE एकेडमी या Coursera जैसे ऑनलाइन प्लेटफॉर्म देखें।</span>
+              <span class="marathi">उदाहरण: वित्त आणि लेखांकन मूलभूत गोष्टींवरील विनामूल्य प्रास्ताविक कोर्सेससाठी NSE ॲकॅडमी किंवा Coursera सारखे ऑनलाईन प्लॅटफॉर्म तपासा.</span>
+            </p>
+          </div>
+
+          <div class="service-card">
+            <h3>
+              <span class="english">Intro to Financial Accounting - Free Lecture</span>
+              <span class="hindi">वित्तीय लेखांकन का परिचय - मुफ्त व्याख्यान</span>
+              <span class="marathi">वित्तीय लेखांकनाची ओळख - मुक्त व्याख्यान</span>
+            </h3>
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/z4KxK5hNqVw" title="Introduction to Financial Accounting - Full Course" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+
+        </div> </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>
+            <span class="english">Contact Info</span>
+            <span class="hindi">संपर्क जानकारी</span>
+            <span class="marathi">संपर्क माहिती</span>
+          </h3>
+          <p><span class="english">Email: info@xshala.edu</span><span class="hindi">ईमेल: info@xshala.edu</span><span class="marathi">ईमेल: info@xshala.edu</span></p>
+          <p><span class="english">Phone: +91 98765 43210</span><span class="hindi">फ़ोन: +91 98765 43210</span><span class="marathi">फोन: +91 98765 43210</span></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p><span class="english">© 2025 XShala. Commerce & Law Guidance.</span><span class="hindi">© 2025 XShala. वाणिज्य और कानून मार्गदर्शन।</span><span class="marathi">© 2025 XShala. वाणिज्य आणि कायदा मार्गदर्शन.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // language + theme with persistence (localStorage) so pages can be synced if other pages use same keys
+    const MODE_KEY = 'xshala-mode';     // 'day' or 'night'
+    const LANG_KEY = 'xshala-lang';     // 'english'|'hindi'|'marathi'
+
+    let currentMode = 'night';
+    let currentLanguage = 'english';
+
+    function applyMode(mode) {
+      const root = document.documentElement;
+      if (mode === 'day') {
+        root.classList.add('theme-day');
+        document.body.classList.add('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '☀️';
+        currentMode = 'day';
+      } else {
+        root.classList.remove('theme-day');
+        document.body.classList.remove('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '🌙';
+        currentMode = 'night';
+      }
+      try { localStorage.setItem(MODE_KEY, currentMode); } catch (e) {}
+    }
+
+    function toggleMode() {
+      applyMode(currentMode === 'night' ? 'day' : 'night');
+    }
+
+    function setLanguage(lang) {
+      // **This is the core logic that switches the content via CSS rules**
+      // 1. Remove any existing language class
+      document.body.className = document.body.className.replace(/\blang-\w+\b/g, '').trim();
+      
+      // 2. Add the new language class (if not English)
+      if (lang && lang !== 'english') {
+        document.body.classList.add('lang-' + lang); 
+      }
+      currentLanguage = lang || 'english';
+
+      // 3. Update active state of buttons
+      document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+      const selector = `.language-btn[data-lang="${lang}"]`;
+      const btn = document.querySelector(selector);
+      if (btn) btn.classList.add('active');
+
+      try { localStorage.setItem(LANG_KEY, currentLanguage); } catch (e) {}
+    }
+
+    // Smooth scroll for anchors beginning with #
+    function enableSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          // If href is only "#", let it be
+          const href = this.getAttribute('href');
+          if (href === '#' || href === '') return;
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            // If it links to another page fragment (like index.html#something), navigate normally
+            const parts = href.split('#');
+            if (parts.length === 2 && parts[0] !== '') {
+              window.location.href = href;
+            }
+          }
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // apply saved settings from localStorage (if any)
+      try {
+        const savedMode = localStorage.getItem(MODE_KEY);
+        const savedLang = localStorage.getItem(LANG_KEY);
+        if (savedMode) applyMode(savedMode);
+        else applyMode('night');
+
+        if (savedLang) setLanguage(savedLang);
+        else setLanguage('english');
+
+      } catch (e) {
+        // fallback defaults
+        applyMode('night');
+        setLanguage('english');
+      }
+
+      // Bind language buttons to allow keyboard activation as well
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = btn.dataset.lang;
+          setLanguage(lang);
+        });
+      });
+
+      // Bind toggle button
+      const modeBtn = document.getElementById('mode-toggle-btn');
+      modeBtn.addEventListener('click', toggleMode);
+
+      enableSmoothScroll();
+
+      // small accessibility: allow Enter on focused nav links (native) - no extra code needed
+
+    });
+  </script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XShala – 3D Printing & CAD Training</title>
+  <style>
+    /* ===================================
+        Base Styling & Variables
+        ===================================
+    */
+    :root {
+        /* Color Palette - Day & Night */
+        --primary-bg: #0a0a0a;
+        --secondary-bg: #1a1a2e;
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --accent-cyan: #00ffff;
+        --accent-magenta: #ff00ff;
+        --accent-green: #00ff00;
+        --card-bg: rgba(0, 0, 0, 0.7);
+        --card-border-cyan: rgba(0, 255, 255, 0.3);
+        --card-border-magenta: rgba(255, 0, 255, 0.3);
+        --card-border-green: rgba(0, 255, 0, 0.3);
+        --logo-text-shadow: 0 0 20px var(--accent-cyan);
+        --logo-accent-color: var(--accent-cyan);
+        --header-bg: rgba(10, 10, 10, 0.95);
+        --header-border: 2px solid var(--accent-cyan);
+        --footer-bg: rgba(0, 0, 0, 0.95);
+        --btn-primary-start: #00ffff;
+        --btn-primary-end: #0080ff;
+    }
+
+    /* Day Theme */
+    :root.theme-day {
+        --primary-bg: #f0f2f5;
+        --secondary-bg: #e2e4e8;
+        --text-primary: #1a1a1a;
+        --text-secondary: #555555;
+        --accent-cyan: #0080ff;
+        --accent-magenta: #ff6600;
+        --accent-green: #008800;
+        --card-bg: rgba(255, 255, 255, 0.8);
+        --card-border-cyan: rgba(0, 128, 255, 0.3);
+        --card-border-magenta: rgba(255, 102, 0, 0.3);
+        --card-border-green: rgba(0, 136, 0, 0.3);
+        --logo-text-shadow: none;
+        --logo-accent-color: var(--text-primary);
+        --header-bg: rgba(255, 255, 255, 0.95);
+        --header-border: 2px solid var(--accent-cyan);
+        --footer-bg: rgba(255, 255, 255, 0.95);
+        --btn-primary-start: #0080ff;
+        --btn-primary-end: #0055aa;
+    }
+
+    /* ===================================
+        Global & Utility
+        ===================================
+    */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--primary-bg);
+      transition: background 0.5s ease, color 0.5s ease;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      padding: 80px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    p {
+        line-height: 1.6;
+        color: var(--text-secondary);
+        opacity: 0.9;
+    }
+    ul.list-style-none {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    ul.list-style-none li {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 1.2rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, var(--btn-primary-start), var(--btn-primary-end));
+      color: #000;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+    }
+    
+    .theme-day .btn-primary:hover {
+        box-shadow: 0 15px 35px rgba(0, 128, 255, 0.4);
+    }
+
+    .mode-toggle-btn, .language-btn {
+        background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        color: #000;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .mode-toggle-btn {
+        font-size: 1.2rem;
+        padding: 0.4rem;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+        box-shadow: none;
+    }
+
+    .mode-toggle-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    }
+
+    .language-btn.active {
+        background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+        box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    }
+    
+    .theme-day .language-btn.active {
+        background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+    }
+
+
+    /* ===================================
+        Header & Navigation
+        ===================================
+    */
+    header {
+      background: var(--header-bg);
+      backdrop-filter: blur(15px);
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 15px 0;
+      border-bottom: 2px solid var(--header-border);
+      transition: background-color 0.5s ease, border-bottom 0.5s ease;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      text-shadow: var(--logo-text-shadow);
+    }
+
+    .logo span {
+      color: var(--logo-accent-color);
+      animation: neonPulse 2s ease-in-out infinite alternate;
+    }
+    
+    .theme-day .logo span {
+        animation: none;
+    }
+
+    @keyframes neonPulse {
+        0% { text-shadow: 0 0 20px var(--accent-cyan); }
+        100% { text-shadow: 0 0 30px var(--accent-cyan), 0 0 40px var(--accent-cyan); }
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+
+    .language-selector {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    /* ===================================
+        Animated Background & Effects
+        ===================================
+    */
+    .animated-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+    }
+
+    .theme-day .animated-background {
+        background: linear-gradient(135deg, #f0f2f5 0%, #e2e4e8 25%, #d1d4d8 50%, #c1c4c8 75%, #b1b4b8 100%);
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* Floating Elements */
+      /* Enhanced Floating STEM Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(0, 255, 255, 0.3);
+            font-size: 4rem;
+            animation: float 25s infinite linear;
+            text-shadow: 0 0 20px currentColor;
+        }
+        
+        /* Day Mode Floating Elements */
+        .theme-day .floating-element {
+            color: rgba(0, 128, 255, 0.3);
+            text-shadow: none;
+        }
+
+        .floating-element:nth-child(odd) {
+            animation-direction: reverse;
+            color: rgba(255, 0, 255, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(odd) {
+            color: rgba(255, 102, 0, 0.3);
+        }
+
+        .floating-element:nth-child(3n) {
+            color: rgba(0, 255, 0, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(3n) {
+            color: rgba(0, 136, 0, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(0.7);
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) rotate(324deg) scale(0.7);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Neon Circuit Lines */
+        .circuit-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            height: 2px;
+            animation: circuitFlow 8s infinite;
+        }
+
+        .circuit-line:nth-child(1) {
+            top: 20%;
+            width: 100%;
+            animation-delay: 0s;
+        }
+
+        .circuit-line:nth-child(2) {
+            top: 60%;
+            width: 100%;
+            animation-delay: -2s;
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent);
+        }
+
+        .circuit-line:nth-child(3) {
+            top: 80%;
+            width: 100%;
+            animation-delay: -4s;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+
+        @keyframes circuitFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* DNA Helix Enhanced */
+        .dna-helix {
+            position: fixed;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 400px;
+            z-index: -1;
+        }
+
+        .dna-strand {
+            position: absolute;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+            border-radius: 3px;
+            animation: dnaRotate 12s infinite linear;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        .theme-day .dna-strand {
+            box-shadow: none;
+        }
+
+        .dna-strand:nth-child(1) {
+            left: 30px;
+            transform-origin: center;
+        }
+
+        .dna-strand:nth-child(2) {
+            right: 30px;
+            animation-delay: -6s;
+            background: linear-gradient(180deg, var(--accent-magenta), var(--accent-green));
+        }
+
+        @keyframes dnaRotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+    /* ===================================
+        Hero Section
+        ===================================
+    */
+    .hero {
+      text-align: center;
+      padding: 150px 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+      -webkit-background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+    
+    .theme-day .hero h1 {
+      animation: none;
+      -webkit-text-fill-color: initial;
+      background: none;
+    }
+
+    @keyframes titleGlow {
+        0% { filter: brightness(1); }
+        100% { filter: brightness(1.3); text-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      max-width: 600px;
+      margin: 0 auto;
+      margin-bottom: 3rem;
+      animation: fadeInUp 1s ease-out 0.5s both;
+    }
+    
+    .cta-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        animation: fadeInUp 1s ease-out 1s both;
+    }
+
+    /* ===================================
+        Services/Programs Section
+        ===================================
+    */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 8px 32px 0 rgba(0, 255, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease, border 0.5s ease;
+      border: 1px solid var(--card-border-cyan);
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+    }
+    
+    .theme-day .service-card:hover {
+      box-shadow: 0 20px 40px rgba(0, 128, 255, 0.2);
+    }
+
+    .service-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .theme-day .service-card h3 {
+      background: none;
+      -webkit-text-fill-color: initial;
+      color: var(--text-primary);
+    }
+
+    .service-card p {
+      margin-bottom: 25px;
+    }
+    .service-card ul {
+        text-align: left;
+    }
+
+    /* ===================================
+        About/Features Section
+        ===================================
+    */
+    .section-title {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 20px;
+        background: -webkit-linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+    
+    .theme-day .section-title {
+        animation: none;
+        -webkit-text-fill-color: initial;
+        background: none;
+    }
+
+    .features p {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 1.1rem;
+    }
+    
+    /* ===================================
+        New Section for Index Page
+        ===================================
+    */
+    .new-features {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      padding: 4rem 0;
+      margin: 2rem 0;
+      border-radius: 20px;
+      border: 1px solid var(--card-border-green);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .feature-item {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(0, 255, 0, 0.1);
+        border-radius: 15px;
+        border: 1px solid var(--card-border-green);
+        transition: all 0.3s ease;
+    }
+    
+    .theme-day .feature-item {
+        background: rgba(0, 136, 0, 0.1);
+    }
+
+    .feature-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 255, 0, 0.2);
+        background: rgba(0, 255, 0, 0.2);
+    }
+    
+    .theme-day .feature-item:hover {
+        box-shadow: 0 20px 40px rgba(0, 136, 0, 0.2);
+        background: rgba(0, 136, 0, 0.2);
+    }
+
+    .feature-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        color: var(--accent-green);
+        animation: pulse 2s infinite;
+    }
+
+    /* ===================================
+        Footer
+        ===================================
+    */
+    footer {
+      background: var(--footer-bg);
+      backdrop-filter: blur(10px);
+      padding: 40px 0;
+      text-align: center;
+      border-top: 2px solid var(--accent-cyan);
+      transition: background-color 0.5s ease, border-top 0.5s ease;
+    }
+
+    footer h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: var(--text-primary);
+    }
+
+    footer p {
+        margin-bottom: 10px;
+        opacity: 0.7;
+    }
+
+    .footer-bottom {
+        margin-top: 30px;
+        border-top: 1px solid var(--card-border-cyan);
+        padding-top: 20px;
+    }
+
+    /* ===================================
+        Language-specific visibility
+        ===================================
+    */
+    .hindi, .marathi { display: none; }
+    body.lang-hindi .english, body.lang-hindi .marathi { display: none; }
+    body.lang-hindi .hindi { display: inline; }
+
+    body.lang-marathi .english, body.lang-marathi .hindi { display: none; }
+    body.lang-marathi .marathi { display: inline; }
+
+    body.lang-hindi .hindi-block { display: block; }
+    body.lang-marathi .marathi-block { display: block; }
+    .hindi-block, .marathi-block { display: none; }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 0.9;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="circuit-lines">
+        <div class="circuit-line"></div>
+        <div class="circuit-line"></div>
+        <div class="circuit-line"></div>
+    </div>
+
+    <div class="floating-elements">
+        <div class="floating-element" style="left: 5%; animation-delay: 0s;">🧬</div>
+        <div class="floating-element" style="left: 15%; animation-delay: -2s;">⚛️</div>
+        <div class="floating-element" style="left: 25%; animation-delay: -4s;">🔬</div>
+        <div class="floating-element" style="left: 35%; animation-delay: -6s;">🧪</div>
+        <div class="floating-element" style="left: 45%; animation-delay: -8s;">⚙️</div>
+        <div class="floating-element" style="left: 55%; animation-delay: -10s;">💡</div>
+        <div class="floating-element" style="left: 65%; animation-delay: -12s;">🔭</div>
+        <div class="floating-element" style="left: 75%; animation-delay: -14s;">📐</div>
+        <div class="floating-element" style="left: 85%; animation-delay: -16s;">∑</div>
+        <div class="floating-element" style="left: 95%; animation-delay: -18s;">π</div>
+        <div class="floating-element" style="left: 10%; animation-delay: -1s;">∞</div>
+        <div class="floating-element" style="left: 20%; animation-delay: -3s;">△</div>
+        <div class="floating-element" style="left: 30%; animation-delay: -5s;">∮</div>
+        <div class="floating-element" style="left: 40%; animation-delay: -7s;">∫</div>
+        <div class="floating-element" style="left: 50%; animation-delay: -9s;">🎯</div>
+        <div class="floating-element" style="left: 60%; animation-delay: -11s;">🚀</div>
+        <div class="floating-element" style="left: 70%; animation-delay: -13s;">🔋</div>
+        <div class="floating-element" style="left: 80%; animation-delay: -15s;">💻</div>
+        <div class="floating-element" style="left: 90%; animation-delay: -17s;">🌐</div>
+    </div>
+
+    <div class="dna-helix">
+        <div class="dna-strand"></div>
+        <div class="dna-strand"></div>
+    </div>
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo"><span>X</span>Shala</a>
+      <ul class="nav-links">
+        <li>
+          <a href="index.html" class="english">Home</a>
+          <a href="index.html" class="hindi">होम</a>
+          <a href="index.html" class="marathi">होम</a>
+        </li>
+        <li>
+          <a href="#" class="english">CAD & 3D Printing</a>
+          <a href="#" class="hindi">सीएडी और 3डी प्रिंटिंग</a>
+          <a href="#" class="marathi">CAD आणि 3D प्रिंटिंग</a>
+        </li>
+        <li>
+          <a href="#syllabus" class="english">Modules</a>
+          <a href="#syllabus" class="hindi">मॉड्यूल</a>
+          <a href="#syllabus" class="marathi">मॉड्यूल</a>
+        </li>
+        <li>
+          <a href="#contact" class="english">Contact</a>
+          <a href="#contact" class="hindi">संपर्क</a>
+          <a href="#contact" class="marathi">संपर्क</a>
+        </li>
+      </ul>
+      <div class="language-selector">
+        <button id="mode-toggle-btn" class="mode-toggle-btn">🌙</button>
+        <button class="language-btn" data-lang="english">EN</button>
+        <button class="language-btn" data-lang="hindi">हि</button>
+        <button class="language-btn" data-lang="marathi">म</button>
+      </div>
+    </nav>
+  </header>
+
+  <section id="hero" class="hero">
+    <div class="container">
+      <h1>
+        <span class="english">Shaping the Future: 3D Printing & CAD Training</span>
+        <span class="hindi">भविष्य को आकार देना: 3डी प्रिंटिंग और सीएडी प्रशिक्षण</span>
+        <span class="marathi">भविष्याला आकार देणे: 3D प्रिंटिंग आणि CAD प्रशिक्षण</span>
+      </h1>
+      <p>
+        <span class="english">Introduction to modern technologies that are shaping the future of engineering and design, giving students a competitive edge.</span>
+        <span class="hindi">आधुनिक प्रौद्योगिकियों का परिचय जो इंजीनियरिंग और डिजाइन के भविष्य को आकार दे रही हैं, छात्रों को एक प्रतिस्पर्धात्मक लाभ दे रही हैं।</span>
+        <span class="marathi">आधुनिक तंत्रज्ञानांचा परिचय जे अभियांत्रिकी आणि डिझाइनचे भविष्य घडवत आहेत, ज्यामुळे विद्यार्थ्यांना एक स्पर्धात्मक फायदा मिळत आहे.</span>
+      </p>
+      <div class="cta-buttons">
+        <a href="index.html" class="btn btn-primary">
+          <span class="english">Learn More</span>
+          <span class="hindi">अधिक जानें</span>
+          <span class="marathi">अधिक जाणून घ्या</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="program-details" class="new-features">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="english">Your Pathway to Modern Manufacturing</span>
+        <span class="hindi">आधुनिक विनिर्माण की ओर आपका मार्ग</span>
+        <span class="marathi">आधुनिक उत्पादनाकडे तुमचा मार्ग</span>
+      </h2>
+      <div class="features-grid">
+          <div class="feature-item">
+              <span class="feature-icon">📐</span>
+              <h3>
+                  <span class="english">CAD Software Mastery</span>
+                  <span class="hindi">सीएडी सॉफ्टवेयर में महारत</span>
+                  <span class="marathi">CAD सॉफ्टवेअरमध्ये प्राविण्य</span>
+              </h3>
+              <p>
+                  <span class="english">Our program begins with **Computer-Aided Design (CAD)** fundamentals. You'll learn to create and modify 2D and 3D digital models using industry-standard software like Fusion 360, SolidWorks, and Onshape. This foundational knowledge is crucial for bringing your design concepts to life and is a prerequisite for successful 3D printing.</span>
+                  <span class="hindi">हमारा कार्यक्रम **कंप्यूटर-एडेड डिज़ाइन (सीएडी)** की बुनियादी बातों से शुरू होता है। आप Fusion 360, SolidWorks और Onshape जैसे उद्योग-मानक सॉफ्टवेयर का उपयोग करके 2डी और 3डी डिजिटल मॉडल बनाना और संशोधित करना सीखेंगे। यह आधारभूत ज्ञान आपके डिजाइन अवधारणाओं को जीवंत करने के लिए महत्वपूर्ण है और सफल 3डी प्रिंटिंग के लिए एक पूर्व शर्त है।</span>
+                  <span class="marathi">आमचा कार्यक्रम **कंप्यूटर-एडेड डिझाइन (CAD)** च्या मूलभूत गोष्टींनी सुरू होतो. तुम्ही Fusion 360, SolidWorks, आणि Onshape सारख्या उद्योग-मानक सॉफ्टवेअरचा वापर करून 2D आणि 3D डिजिटल मॉडेल्स तयार करणे आणि सुधारणे शिकाल. हे मूलभूत ज्ञान तुमच्या डिझाइन कल्पनांना प्रत्यक्षात आणण्यासाठी महत्त्वाचे आहे आणि यशस्वी 3D प्रिंटिंगसाठी एक पूर्वअट आहे.</span>
+              </p>
+          </div>
+          <div class="feature-item">
+              <span class="feature-icon">🖨️</span>
+              <h3>
+                  <span class="english">3D Printing Technologies</span>
+                  <span class="hindi">3डी प्रिंटिंग प्रौद्योगिकियाँ</span>
+                  <span class="marathi">3D प्रिंटिंग तंत्रज्ञान</span>
+              </h3>
+              <p>
+                  <span class="english">Dive into the world of **additive manufacturing**. Learn about the different types of 3D printing, including Fused Deposition Modeling (FDM), Stereolithography (SLA), and Selective Laser Sintering (SLS). We cover material selection (PLA, ABS, resin), printer calibration, and troubleshooting common issues to ensure you can produce high-quality physical prototypes from your digital designs.</span>
+                  <span class="hindi">**एडिटिव मैन्युफैक्चरिंग** की दुनिया में गोता लगाएँ। फ्यूज्ड डिपोजिशन मॉडलिंग (FDM), स्टीरियोलिथोग्राफी (SLA), और सेलेक्टिव लेजर सिंटरिंग (SLS) सहित विभिन्न प्रकार की 3डी प्रिंटिंग के बारे में जानें। हम सामग्री चयन (पीएलए, एबीएस, राल), प्रिंटर कैलिब्रेशन, और सामान्य समस्याओं का निवारण कवर करते हैं ताकि आप अपने डिजिटल डिज़ाइनों से उच्च-गुणवत्ता वाले भौतिक प्रोटोटाइप बना सकें।</span>
+                  <span class="marathi">**ॲडिटिव्ह मॅन्युफॅक्चरिंग**च्या जगात डुबकी मारा. फ्यूज्ड डिपोजिशन मॉडेलिंग (FDM), स्टीरिओलिथोग्राफी (SLA), आणि सिलेक्टिव्ह लेझर सिंटरिंग (SLS) यांसारख्या 3D प्रिंटिंगच्या विविध प्रकारांबद्दल जाणून घ्या. आम्ही सामग्रीची निवड (PLA, ABS, रेझिन), प्रिंटर कॅलिब्रेशन, आणि सामान्य समस्यांचे निवारण समाविष्ट करतो जेणेकरून तुम्ही तुमच्या डिजिटल डिझाइन्समधून उच्च-गुणवत्तेचे भौतिक प्रोटोटाइप तयार करू शकाल.</span>
+              </p>
+          </div>
+          <div class="feature-item">
+              <span class="feature-icon">💡</span>
+              <h3>
+                  <span class="english">Real-World Applications</span>
+                  <span class="hindi">वास्तविक-विश्व अनुप्रयोग</span>
+                  <span class="marathi">वास्तविक-जगातील अनुप्रयोग</span>
+              </h3>
+              <p>
+                  <span class="english">Understand how these technologies are used across various industries, from **prototyping in engineering** to **custom parts in aerospace**. You'll explore how companies like Ford use 3D printing to create automotive parts and how medical professionals are using it to design custom prosthetics. Our case studies will connect theory with practice.</span>
+                  <span class="hindi">समझें कि ये प्रौद्योगिकियाँ विभिन्न उद्योगों में कैसे उपयोग की जाती हैं, **इंजीनियरिंग में प्रोटोटाइपिंग** से लेकर **एयरोस्पेस में कस्टम पार्ट्स** तक। आप देखेंगे कि फोर्ड जैसी कंपनियाँ 3डी प्रिंटिंग का उपयोग करके ऑटोमोटिव पार्ट्स कैसे बनाती हैं और कैसे चिकित्सा पेशेवर कस्टम प्रोस्थेटिक्स डिजाइन करने के लिए इसका उपयोग कर रहे हैं। हमारे केस स्टडी सिद्धांत को अभ्यास से जोड़ेंगे।</span>
+                  <span class="marathi">अभियांत्रिकीमधील **प्रोटोटाइपिंग** पासून **एरोस्पेसमध्ये कस्टम पार्ट्स** पर्यंत, हे तंत्रज्ञान विविध उद्योगांमध्ये कसे वापरले जाते हे समजून घ्या. तुम्ही फोर्ड सारख्या कंपन्या 3D प्रिंटिंगचा वापर करून ऑटोमोटिव्ह पार्ट्स कसे तयार करतात आणि वैद्यकीय व्यावसायिक कस्टम प्रोस्थेटिक्स डिझाइन करण्यासाठी त्याचा वापर कसा करत आहेत हे एक्सप्लोर कराल. आमचे केस स्टडी सिद्धांत आणि सराव यांना जोडतील.</span>
+              </p>
+          </div>
+          <div class="feature-item">
+              <span class="feature-icon">✨</span>
+              <h3>
+                  <span class="english">Portfolio & Certification</span>
+                  <span class="hindi">पोर्टफोलियो और प्रमाणन</span>
+                  <span class="marathi">पोर्टफोलिओ आणि प्रमाणपत्र</span>
+              </h3>
+              <p>
+                  <span class="english">Upon completion, you will have a comprehensive portfolio showcasing your CAD models and 3D printed projects. This tangible evidence of your skills will set you apart in the job market. You will also receive an official **Certification of Completion**, validating your expertise in modern engineering and design technologies.</span>
+                  <span class="hindi">पूरा होने पर, आपके पास अपने सीएडी मॉडल और 3डी प्रिंटेड परियोजनाओं को प्रदर्शित करने वाला एक व्यापक पोर्टफोलियो होगा। आपके कौशल का यह ठोस सबूत आपको नौकरी बाजार में अलग खड़ा करेगा। आपको एक आधिकारिक **पूर्णता का प्रमाणन** भी प्राप्त होगा, जो आधुनिक इंजीनियरिंग और डिजाइन प्रौद्योगिकियों में आपकी विशेषज्ञता को मान्य करेगा।</span>
+                  <span class="marathi">पूर्ण झाल्यावर, तुमच्याकडे तुमच्या CAD मॉडेल्स आणि 3D प्रिंटेड प्रोजेक्ट्सचे प्रदर्शन करणारा एक व्यापक पोर्टफोलिओ असेल. तुमच्या कौशल्याचा हा मूर्त पुरावा तुम्हाला नोकरीच्या बाजारात वेगळे करेल. तुम्हाला एक अधिकृत **पूर्णत्वाचे प्रमाणपत्र** देखील मिळेल, जे आधुनिक अभियांत्रिकी आणि डिझाइन तंत्रज्ञानातील तुमच्या कौशल्याची पुष्टी करेल.</span>
+              </p>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="syllabus" class="features">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="english">Course Modules</span>
+        <span class="hindi">पाठ्यक्रम मॉड्यूल</span>
+        <span class="marathi">अभ्यासक्रम मॉड्यूल</span>
+      </h2>
+      <p>
+        <span class="english">Our training is structured into progressive modules, covering foundational CAD skills to advanced 3D printing techniques.</span>
+        <span class="hindi">हमारा प्रशिक्षण प्रगतिशील मॉड्यूलों में संरचित है, जिसमें मूलभूत सीएडी कौशल से लेकर उन्नत 3डी प्रिंटिंग तकनीकों तक शामिल हैं।</span>
+        <span class="marathi">आमचे प्रशिक्षण प्रगतीशील मॉड्यूल्समध्ये संरचित आहे, ज्यात मूलभूत CAD कौशल्यांपासून प्रगत 3D प्रिंटिंग तंत्रांपर्यंतचा समावेश आहे.</span>
+      </p>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="container">
+      <h3>
+        <span class="english">Contact</span>
+        <span class="hindi">संपर्क</span>
+        <span class="marathi">संपर्क</span>
+      </h3>
+      <p>Email: cad@xshala.edu</p>
+      <p>Phone: +91 98765 43210</p>
+      <div class="footer-bottom">
+        <p>
+          <span class="english">© 2025 XShala. All Rights Reserved.</span>
+          <span class="hindi">© 2025 XShala. सर्वाधिकार सुरक्षित।</span>
+          <span class="marathi">© 2025 XShala. सर्व हक्क राखीव.</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const MODE_KEY = 'xshala-mode';
+    const LANG_KEY = 'xshala-lang';
+
+    let currentMode = 'night';
+    let currentLanguage = 'english';
+
+    function applyMode(mode) {
+      const root = document.documentElement;
+      if (mode === 'day') {
+        root.classList.add('theme-day');
+        document.body.classList.add('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '☀️';
+        currentMode = 'day';
+      } else {
+        root.classList.remove('theme-day');
+        document.body.classList.remove('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '🌙';
+        currentMode = 'night';
+      }
+      localStorage.setItem(MODE_KEY, currentMode);
+    }
+
+    function toggleMode() {
+      applyMode(currentMode === 'night' ? 'day' : 'night');
+    }
+
+    function setLanguage(lang) {
+      document.body.className = document.body.className.replace(/\blang-\w+\b/g, '').trim();
+      if (lang !== 'english') {
+        document.body.classList.add('lang-' + lang);
+      }
+      currentLanguage = lang;
+      localStorage.setItem(LANG_KEY, currentLanguage);
+
+      document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+      const btn = document.querySelector(`.language-btn[data-lang="${lang}"]`);
+      if (btn) btn.classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // restore saved preferences
+      const savedMode = localStorage.getItem(MODE_KEY);
+      const savedLang = localStorage.getItem(LANG_KEY);
+
+      applyMode(savedMode || 'night');
+      setLanguage(savedLang || 'english');
+
+      document.getElementById('mode-toggle-btn').addEventListener('click', toggleMode);
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+      });
+
+      // smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

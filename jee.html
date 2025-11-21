@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XShala – Advanced Engineering Entrance Guidance</title>
+  <style>
+    /* ===================================
+        Base Styling & Variables
+        ===================================
+    */
+    :root {
+        /* Color Palette - Day & Night */
+        --primary-bg: #0a0a0a;
+        --secondary-bg: #1a1a2e;
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --accent-cyan: #00ffff;
+        --accent-magenta: #ff00ff;
+        --accent-green: #00ff00;
+        --card-bg: rgba(0, 0, 0, 0.7);
+        --card-border-cyan: rgba(0, 255, 255, 0.3);
+        --card-border-magenta: rgba(255, 0, 255, 0.3);
+        --card-border-green: rgba(0, 255, 0, 0.3);
+        --logo-text-shadow: 0 0 20px var(--accent-cyan);
+        --logo-accent-color: var(--accent-cyan);
+        --header-bg: rgba(10, 10, 10, 0.95);
+        --header-border: 2px solid var(--accent-cyan);
+        --footer-bg: rgba(0, 0, 0, 0.95);
+        --btn-primary-start: #00ffff;
+        --btn-primary-end: #0080ff;
+    }
+
+    /* Day Theme */
+    :root.theme-day {
+        --primary-bg: #f0f2f5;
+        --secondary-bg: #e2e4e8;
+        --text-primary: #1a1a1a;
+        --text-secondary: #555555;
+        --accent-cyan: #0080ff;
+        --accent-magenta: #ff6600;
+        --accent-green: #008800;
+        --card-bg: rgba(255, 255, 255, 0.8);
+        --card-border-cyan: rgba(0, 128, 255, 0.3);
+        --card-border-magenta: rgba(255, 102, 0, 0.3);
+        --card-border-green: rgba(0, 136, 0, 0.3);
+        --logo-text-shadow: none;
+        --logo-accent-color: var(--text-primary);
+        --header-bg: rgba(255, 255, 255, 0.95);
+        --header-border: 2px solid var(--accent-cyan);
+        --footer-bg: rgba(255, 255, 255, 0.95);
+        --btn-primary-start: #0080ff;
+        --btn-primary-end: #0055aa;
+    }
+
+    /* ===================================
+        Global & Utility
+        ===================================
+    */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--primary-bg);
+      transition: background 0.5s ease, color 0.5s ease;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      padding: 80px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    p {
+        line-height: 1.6;
+        color: var(--text-secondary);
+        opacity: 0.9;
+    }
+    ul.list-style-none {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    ul.list-style-none li {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 1.2rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, var(--btn-primary-start), var(--btn-primary-end));
+      color: #000;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+    }
+    
+    .theme-day .btn-primary:hover {
+        box-shadow: 0 15px 35px rgba(0, 128, 255, 0.4);
+    }
+
+    .mode-toggle-btn, .language-btn {
+        background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        color: #000;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .mode-toggle-btn {
+        font-size: 1.2rem;
+        padding: 0.4rem;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+        box-shadow: none;
+    }
+
+    .mode-toggle-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    }
+
+    .language-btn.active {
+        background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+        box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    }
+    
+    .theme-day .language-btn.active {
+        background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+    }
+
+
+    /* ===================================
+        Header & Navigation
+        ===================================
+    */
+    header {
+      background: var(--header-bg);
+      backdrop-filter: blur(15px);
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 15px 0;
+      border-bottom: 2px solid var(--header-border);
+      transition: background-color 0.5s ease, border-bottom 0.5s ease;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      text-shadow: var(--logo-text-shadow);
+    }
+
+    .logo span {
+      color: var(--logo-accent-color);
+      animation: neonPulse 2s ease-in-out infinite alternate;
+    }
+    
+    .theme-day .logo span {
+        animation: none;
+    }
+
+    @keyframes neonPulse {
+        0% { text-shadow: 0 0 20px var(--accent-cyan); }
+        100% { text-shadow: 0 0 30px var(--accent-cyan), 0 0 40px var(--accent-cyan); }
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+
+    .language-selector {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    /* ===================================
+        Animated Background & Effects
+        ===================================
+    */
+    .animated-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+    }
+
+    .theme-day .animated-background {
+        background: linear-gradient(135deg, #f0f2f5 0%, #e2e4e8 25%, #d1d4d8 50%, #c1c4c8 75%, #b1b4b8 100%);
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* Floating Elements */
+      /* Enhanced Floating STEM Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(0, 255, 255, 0.3);
+            font-size: 4rem;
+            animation: float 25s infinite linear;
+            text-shadow: 0 0 20px currentColor;
+        }
+        
+        /* Day Mode Floating Elements */
+        .theme-day .floating-element {
+            color: rgba(0, 128, 255, 0.3);
+            text-shadow: none;
+        }
+
+        .floating-element:nth-child(odd) {
+            animation-direction: reverse;
+            color: rgba(255, 0, 255, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(odd) {
+            color: rgba(255, 102, 0, 0.3);
+        }
+
+        .floating-element:nth-child(3n) {
+            color: rgba(0, 255, 0, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(3n) {
+            color: rgba(0, 136, 0, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(0.7);
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) rotate(324deg) scale(0.7);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Neon Circuit Lines */
+        .circuit-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            height: 2px;
+            animation: circuitFlow 8s infinite;
+        }
+
+        .circuit-line:nth-child(1) {
+            top: 20%;
+            width: 100%;
+            animation-delay: 0s;
+        }
+
+        .circuit-line:nth-child(2) {
+            top: 60%;
+            width: 100%;
+            animation-delay: -2s;
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent);
+        }
+
+        .circuit-line:nth-child(3) {
+            top: 80%;
+            width: 100%;
+            animation-delay: -4s;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+
+        @keyframes circuitFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* DNA Helix Enhanced */
+        .dna-helix {
+            position: fixed;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 400px;
+            z-index: -1;
+        }
+
+        .dna-strand {
+            position: absolute;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+            border-radius: 3px;
+            animation: dnaRotate 12s infinite linear;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        .theme-day .dna-strand {
+            box-shadow: none;
+        }
+
+        .dna-strand:nth-child(1) {
+            left: 30px;
+            transform-origin: center;
+        }
+
+        .dna-strand:nth-child(2) {
+            right: 30px;
+            animation-delay: -6s;
+            background: linear-gradient(180deg, var(--accent-magenta), var(--accent-green));
+        }
+
+        @keyframes dnaRotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+    /* ===================================
+        Hero Section
+        ===================================
+    */
+    .hero {
+      text-align: center;
+      padding: 150px 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+    
+    .theme-day .hero h1 {
+      animation: none;
+      -webkit-text-fill-color: initial;
+      background: none;
+    }
+
+    @keyframes titleGlow {
+        0% { filter: brightness(1); }
+        100% { filter: brightness(1.3); text-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      max-width: 600px;
+      margin: 0 auto;
+      margin-bottom: 3rem;
+      animation: fadeInUp 1s ease-out 0.5s both;
+    }
+    
+    .cta-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        animation: fadeInUp 1s ease-out 1s both;
+    }
+
+    /* ===================================
+        Program Details & Tabs Section
+        ===================================
+    */
+    .new-features {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      padding: 4rem 0;
+      margin: 2rem 0;
+      border-radius: 20px;
+      border: 1px solid var(--card-border-green);
+    }
+    
+    .section-title {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 20px;
+        background: -webkit-linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+    
+    .theme-day .section-title {
+        animation: none;
+        -webkit-text-fill-color: initial;
+        background: none;
+    }
+
+    /* Tab Buttons Styling */
+    .tab-buttons {
+        text-align: center;
+        margin-bottom: 3rem;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .btn-tab {
+        /* Reset default button styles */
+        padding: 0.8rem 2rem;
+        border-radius: 10px;
+        text-transform: none;
+        letter-spacing: normal;
+        font-weight: 500;
+        
+        /* New styles */
+        background: var(--card-bg);
+        color: var(--text-secondary);
+        border: 2px solid var(--text-secondary);
+        transition: all 0.3s ease;
+        box-shadow: none;
+    }
+    .btn-tab:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent-cyan);
+        color: var(--accent-cyan);
+    }
+    .btn-tab.active {
+        background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+        color: #000;
+        border-color: transparent;
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        transform: translateY(-3px);
+    }
+    
+    /* Tab Content Pane Styling */
+    .tab-pane {
+        display: none;
+        animation: fadeIn 0.5s ease-out;
+    }
+    .tab-pane.active {
+        display: block;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Feature Cards Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .feature-item {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(0, 255, 0, 0.1);
+        border-radius: 15px;
+        border: 1px solid var(--card-border-green);
+        transition: all 0.5s ease;
+        
+        /* 3D Tilt Effect Setup */
+        transform-style: preserve-3d;
+        perspective: 1000px;
+    }
+    
+    .theme-day .feature-item {
+        background: rgba(0, 136, 0, 0.1);
+    }
+
+    .feature-item:hover {
+        /* Enhanced hover effect with slight 3D rotation */
+        transform: translateY(-10px) rotateX(1deg) rotateY(1deg) translateZ(10px); 
+        box-shadow: 0 20px 40px rgba(0, 255, 0, 0.2);
+        background: rgba(0, 255, 0, 0.2);
+    }
+    
+    .theme-day .feature-item:hover {
+        box-shadow: 0 20px 40px rgba(0, 136, 0, 0.2);
+        background: rgba(0, 136, 0, 0.2);
+    }
+
+    .feature-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        color: var(--accent-green);
+        animation: pulse 2s infinite;
+    }
+
+    /* ===================================
+        Footer
+        ===================================
+    */
+    footer {
+      background: var(--footer-bg);
+      backdrop-filter: blur(10px);
+      padding: 40px 0;
+      text-align: center;
+      border-top: 2px solid var(--accent-cyan);
+      transition: background-color 0.5s ease, border-top 0.5s ease;
+    }
+
+    footer h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: var(--text-primary);
+    }
+
+    footer p {
+        margin-bottom: 10px;
+        opacity: 0.7;
+    }
+
+    .footer-bottom {
+        margin-top: 30px;
+        border-top: 1px solid var(--card-border-cyan);
+        padding-top: 20px;
+    }
+
+    /* ===================================
+        Language-specific visibility
+        ===================================
+    */
+    .hindi, .marathi { display: none; }
+    body.lang-hindi .english, body.lang-hindi .marathi { display: none; }
+    body.lang-hindi .hindi { display: inline; }
+
+    body.lang-marathi .english, body.lang-marathi .hindi { display: none; }
+    body.lang-marathi .marathi { display: inline; }
+
+    body.lang-hindi .hindi-block { display: block; }
+    body.lang-marathi .marathi-block { display: block; }
+    .hindi-block, .marathi-block { display: none; }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 0.9;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="animated-background"></div>
+  <div class="circuit-lines">
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+  </div>
+  <div class="floating-elements">
+        <div class="floating-element" style="left: 5%; animation-delay: 0s;">🧬</div>
+        <div class="floating-element" style="left: 15%; animation-delay: -2s;">⚛️</div>
+        <div class="floating-element" style="left: 25%; animation-delay: -4s;">🔬</div>
+        <div class="floating-element" style="left: 35%; animation-delay: -6s;">🧪</div>
+        <div class="floating-element" style="left: 45%; animation-delay: -8s;">⚙️</div>
+        <div class="floating-element" style="left: 55%; animation-delay: -10s;">💡</div>
+        <div class="floating-element" style="left: 65%; animation-delay: -12s;">🔭</div>
+        <div class="floating-element" style="left: 75%; animation-delay: -14s;">📐</div>
+        <div class="floating-element" style="left: 85%; animation-delay: -16s;">∑</div>
+        <div class="floating-element" style="left: 95%; animation-delay: -18s;">π</div>
+        <div class="floating-element" style="left: 10%; animation-delay: -1s;">∞</div>
+        <div class="floating-element" style="left: 20%; animation-delay: -3s;">△</div>
+        <div class="floating-element" style="left: 30%; animation-delay: -5s;">∮</div>
+        <div class="floating-element" style="left: 40%; animation-delay: -7s;">∫</div>
+        <div class="floating-element" style="left: 50%; animation-delay: -9s;">🎯</div>
+        <div class="floating-element" style="left: 60%; animation-delay: -11s;">🚀</div>
+        <div class="floating-element" style="left: 70%; animation-delay: -13s;">🔋</div>
+        <div class="floating-element" style="left: 80%; animation-delay: -15s;">💻</div>
+        <div class="floating-element" style="left: 90%; animation-delay: -17s;">🌐</div>
+    </div>
+  <div class="dna-helix" aria-hidden="true">
+    <div class="dna-strand"></div>
+    <div class="dna-strand"></div>
+  </div>
+
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo"><span>X</span>Shala</a>
+      <ul class="nav-links">
+        <li>
+          <a href="index.html" class="english">Home</a>
+          <a href="index.html" class="hindi">होम</a>
+          <a href="index.html" class="marathi">होम</a>
+        </li>
+        <li>
+          <a href="#program-details" class="english">Entrance Programs</a>
+          <a href="#program-details" class="hindi">प्रवेश कार्यक्रम</a>
+          <a href="#program-details" class="marathi">प्रवेश कार्यक्रम</a>
+        </li>
+        <li>
+          <a href="#syllabus" class="english">Syllabus</a>
+          <a href="#syllabus" class="hindi">पाठ्यक्रम</a>
+          <a href="#syllabus" class="marathi">अभ्यासक्रम</a>
+        </li>
+        <li>
+          <a href="#contact" class="english">Contact</a>
+          <a href="#contact" class="hindi">संपर्क</a>
+          <a href="#contact" class="marathi">संपर्क</a>
+        </li>
+      </ul>
+      <div class="language-selector">
+        <button id="mode-toggle-btn" class="mode-toggle-btn">🌙</button>
+        <button class="language-btn" data-lang="english">EN</button>
+        <button class="language-btn" data-lang="hindi">हि</button>
+        <button class="language-btn" data-lang="marathi">म</button>
+      </div>
+    </nav>
+  </header>
+
+  <section id="hero" class="hero">
+    <div class="container">
+      <h1>
+        <span class="english">Your Path to Top Engineering Colleges Starts Here</span>
+        <span class="hindi">शीर्ष इंजीनियरिंग कॉलेजों का आपका मार्ग यहाँ से शुरू होता है</span>
+        <span class="marathi">शीर्ष अभियांत्रिकी महाविद्यालयांचा तुमचा मार्ग इथून सुरू होतो</span>
+      </h1>
+      <p>
+        <span class="english">Comprehensive Guidance for JEE, MHT-CET, GATE, BITSAT and other engineering entrance exams.</span>
+        <span class="hindi">जेईई, एमएचटी-सीईटी, गेट, बिटसैट और अन्य इंजीनियरिंग प्रवेश परीक्षाओं के लिए व्यापक मार्गदर्शन।</span>
+        <span class="marathi">JEE, MHT-CET, GATE, BITSAT आणि इतर अभियांत्रिकी प्रवेश परीक्षांसाठी सर्वसमावेशक मार्गदर्शन.</span>
+      </p>
+      <div class="cta-buttons">
+        <a href="index.html" class="btn btn-primary">
+          <span class="english">Get Started Today</span>
+          <span class="hindi">आज ही शुरू करें</span>
+          <span class="marathi">आजच सुरुवात करा</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="program-details" class="new-features">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="english">Exam-Specific Strategy & Preparation Modules</span>
+        <span class="hindi">परीक्षा-विशेष रणनीति और तैयारी मॉड्यूल</span>
+        <span class="marathi">परीक्षानिहाय रणनीती आणि तयारी मॉड्यूल</span>
+      </h2>
+      
+      <div class="tab-buttons">
+          <button class="btn btn-tab active" data-tab="jee">
+              <span class="english">JEE Main/Advanced</span>
+              <span class="hindi">जेईई मेन/एडवांस्ड</span>
+              <span class="marathi">JEE मुख्य/प्रगत</span>
+          </button>
+          <button class="btn btn-tab" data-tab="mhtcet">
+              <span class="english">MHT-CET (Maharashtra)</span>
+              <span class="hindi">एमएचटी-सीईटी (महाराष्ट्र)</span>
+              <span class="marathi">MHT-CET (महाराष्ट्र)</span>
+          </button>
+          <button class="btn btn-tab" data-tab="other">
+              <span class="english">GATE / BITSAT</span>
+              <span class="hindi">गेट / बिटसैट</span>
+              <span class="marathi">GATE / BITSAT</span>
+          </button>
+      </div>
+
+      <div id="tab-content">
+
+          <div class="tab-pane active" id="jee">
+              <div class="features-grid">
+                  <div class="feature-item">
+                      <span class="feature-icon">🚀</span>
+                      <h3>
+                          <span class="english">Foundation & Core Concepts</span>
+                          <span class="hindi">नींव और मुख्य अवधारणाएं</span>
+                          <span class="marathi">पाया आणि मूळ संकल्पना</span>
+                      </h3>
+                      <p>
+                          <span class="english">Focus on building a strong foundation in Classes 11 and 12, especially **NCERT** books. Allocate dedicated time to each subject and solve NCERT-level problems before moving to complex JEE-level questions.</span>
+                          <span class="hindi">कक्षा 11 और 12 में, विशेष रूप से **एनसीईआरटी** की किताबों पर, एक मजबूत नींव बनाने पर ध्यान दें। प्रत्येक विषय के लिए समर्पित समय आवंटित करें और जटिल जेईई-स्तर के प्रश्नों पर जाने से पहले एनसीईआरटी-स्तरीय समस्याओं को हल करें।</span>
+                          <span class="marathi">11वी आणि 12वी मध्ये, विशेषत: **NCERT** पुस्तकांवर, एक मजबूत पाया तयार करण्यावर लक्ष केंद्रित करा. प्रत्येक विषयासाठी समर्पित वेळ द्या आणि क्लिष्ट JEE-स्तराच्या प्रश्नांकडे जाण्यापूर्वी एनसीईआरटी-स्तरावरील समस्या सोडवा.</span>
+                      </p>
+                  </div>
+                  <div class="feature-item">
+                      <span class="feature-icon">🎓</span>
+                      <h3>
+                          <span class="english">Top Institutions to Target</span>
+                          <span class="hindi">लक्ष्य करने के लिए शीर्ष संस्थान</span>
+                          <span class="marathi">लक्ष्य साधण्यासाठी शीर्ष संस्था</span>
+                      </h3>
+                      <p>
+                          <span class="english">The ultimate goal is securing a seat in premier institutions like **IIT Bombay, IIT Delhi, and IIT Madras** (for JEE Advanced) or top **NITs** such as **NIT Trichy** and **NIT Warangal** (for JEE Main).</span>
+                          <span class="hindi">अंतिम लक्ष्य **आईआईटी बॉम्बे, आईआईटी दिल्ली, और आईआईटी मद्रास** (जेईई एडवांस्ड के लिए) या **एनआईटी त्रिची** और **एनआईटी वारंगल** (जेईई मेन के लिए) जैसे प्रमुख संस्थानों में एक सीट सुरक्षित करना है।</span>
+                          <span class="marathi">अंतिम ध्येय **IIT बॉम्बे, IIT दिल्ली, आणि IIT मद्रास** (JEE प्रगतसाठी) किंवा **NIT त्रिची** आणि **NIT वारंगल** (JEE मुख्यसाठी) सारख्या प्रमुख संस्थांमध्ये जागा मिळवणे आहे.</span>
+                      </p>
+                  </div>
+                  <div class="feature-item">
+                      <span class="feature-icon">✅</span>
+                      <h3>
+                          <span class="english">Mock Tests & Error Analysis</span>
+                          <span class="hindi">मॉक टेस्ट और त्रुटि विश्लेषण</span>
+                          <span class="marathi">मॉक टेस्ट आणि त्रुटी विश्लेषण</span>
+                      </h3>
+                      <p>
+                          <span class="english">Take full-length tests weekly to improve **speed, accuracy, and time management**. After each test, perform a detailed analysis to identify weak areas and revise concepts. This transforms weaknesses into strengths.</span>
+                          <span class="hindi">गति, सटीकता और समय प्रबंधन कौशल में सुधार के लिए साप्ताहिक रूप से पूर्ण-लंबाई वाली टेस्ट दें। प्रत्येक टेस्ट के बाद, कमजोर क्षेत्रों की पहचान करने और अवधारणाओं को संशोधित करने के लिए विस्तृत विश्लेषण करें।</span>
+                          <span class="marathi">वेग, अचूकता आणि वेळ व्यवस्थापन कौशल्ये सुधारण्यासाठी आठवड्यातून पूर्ण-लांबीच्या टेस्ट द्या. प्रत्येक टेस्टनंतर, कमकुवत भागांना ओळखण्यासाठी आणि संकल्पनांची उजळणी करण्यासाठी सविस्तर विश्लेषण करा.</span>
+                      </p>
+                  </div>
+              </div>
+          </div>
+
+          <div class="tab-pane" id="mhtcet">
+              <div class="features-grid">
+                  <div class="feature-item">
+                      <span class="feature-icon">🎯</span>
+                      <h3>
+                          <span class="english">HSC Board Syllabus Priority</span>
+                          <span class="hindi">एचएससी बोर्ड पाठ्यक्रम प्राथमिकता</span>
+                          <span class="marathi">HSC बोर्ड अभ्यासक्रमाला प्राधान्य</span>
+                      </h3>
+                      <p>
+                          <span class="english">MHT-CET gives a high weightage to the **HSC (Class 12th) Syllabus** (approx. 80%). Ensure mastery of the 12th-grade portion, especially the topics unique to the State Board curriculum, for a competitive edge.</span>
+                          <span class="hindi">एमएचटी-सीईटी **एचएससी (कक्षा 12वीं) पाठ्यक्रम** (लगभग 80%) को उच्च महत्व देता है। एक प्रतिस्पर्धी बढ़त के लिए 12वीं कक्षा के हिस्से पर, खासकर राज्य बोर्ड पाठ्यक्रम के लिए अद्वितीय विषयों पर महारत सुनिश्चित करें।</span>
+                          <span class="marathi">MHT-CET **HSC (12वी) अभ्यासक्रमाला** (अंदाजे 80%) अधिक महत्त्व देते. स्पर्धात्मक धार मिळवण्यासाठी 12वीच्या भागावर, विशेषतः राज्य मंडळाच्या अभ्यासक्रमासाठी अद्वितीय असलेल्या विषयांवर प्रभुत्व मिळवा.</span>
+                      </p>
+                  </div>
+                  <div class="feature-item">
+                      <span class="feature-icon">⏱️</span>
+                      <h3>
+                          <span class="english">Speed & Accuracy Focus</span>
+                          <span class="hindi">गति और सटीकता पर ध्यान</span>
+                          <span class="marathi">वेग आणि अचूकतेवर लक्ष</span>
+                      </h3>
+                      <p>
+                          <span class="english">The MHT-CET exam requires you to solve many questions in a limited time (e.g., 50 questions in 90 mins for PCM). Practice short-cut methods and focus heavily on mock tests to maintain **high speed and accuracy**.</span>
+                          <span class="hindi">एमएचटी-सीईटी परीक्षा के लिए आपको सीमित समय में कई प्रश्न हल करने की आवश्यकता होती है। **उच्च गति और सटीकता** बनाए रखने के लिए शॉर्ट-कट तरीकों का अभ्यास करें और मॉक टेस्ट पर अधिक ध्यान दें।</span>
+                          <span class="marathi">MHT-CET परीक्षेसाठी तुम्हाला मर्यादित वेळेत अनेक प्रश्न सोडवावे लागतात. **उच्च वेग आणि अचूकता** राखण्यासाठी शॉर्ट-कट पद्धतींचा सराव करा आणि मॉक टेस्टवर अधिक लक्ष द्या.</span>
+                      </p>
+                  </div>
+                  <div class="feature-item">
+                      <span class="feature-icon">🏛️</span>
+                      <h3>
+                          <span class="english">Target State Colleges</span>
+                          <span class="hindi">राज्य स्तरीय कॉलेजों को लक्षित करें</span>
+                          <span class="marathi">राज्य स्तरीय महाविद्यालयांना लक्ष्य करा</span>
+                      </h3>
+                      <p>
+                          <span class="english">This exam is the gateway to top Maharashtra colleges like **VJTI Mumbai, COEP Pune, and PICT Pune**. A high percentile is required for Computer Science and IT branches in these institutions.</span>
+                          <span class="hindi">यह परीक्षा **वीजेटीआई मुंबई, सीओईपी पुणे और पीआईईसीटी पुणे** जैसे महाराष्ट्र के शीर्ष कॉलेजों का प्रवेश द्वार है। इन संस्थानों में कंप्यूटर साइंस और आईटी शाखाओं के लिए उच्च प्रतिशत की आवश्यकता होती है।</span>
+                          <span class="marathi">ही परीक्षा **VJTI मुंबई, COEP पुणे, आणि PICT पुणे** सारख्या महाराष्ट्रातील शीर्ष महाविद्यालयांचे प्रवेशद्वार आहे. या संस्थांमध्ये संगणक विज्ञान आणि आयटी शाखांसाठी उच्च टक्क्यांची आवश्यकता आहे.</span>
+                      </p>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="tab-pane" id="other">
+              <div class="features-grid">
+                  <div class="feature-item">
+                      <span class="feature-icon">⚙️</span>
+                      <h3>
+                          <span class="english">GATE: Advanced Conceptual Depth</span>
+                          <span class="hindi">गेट: उन्नत वैचारिक गहराई</span>
+                          <span class="marathi">GATE: प्रगत वैचारिक खोली</span>
+                      </h3>
+                      <p>
+                          <span class="english">GATE (Graduate Aptitude Test in Engineering) requires deep knowledge of the **UG Engineering syllabus**. Focus on **Numerical Answer Type (NAT)** questions and prepare for **PSU job interviews** or **M.Tech/Ph.D. admissions** in IITs/NITs.</span>
+                          <span class="hindi">गेट (इंजीनियरिंग में स्नातक योग्यता परीक्षा) के लिए **यूजी इंजीनियरिंग पाठ्यक्रम** के गहन ज्ञान की आवश्यकता होती है। **संख्यात्मक उत्तर प्रकार (NAT)** के प्रश्नों पर ध्यान केंद्रित करें और आईआईटी/एनआईटी में **पीएसयू नौकरी साक्षात्कार** या **एम.टेक/पीएचडी प्रवेश** के लिए तैयारी करें।</span>
+                          <span class="marathi">GATE (अभियांत्रिकीमधील पदवीधर योग्यता चाचणी) साठी **UG अभियांत्रिकी अभ्यासक्रमाच्या** सखोल ज्ञानाची आवश्यकता असते. **संख्यात्मक उत्तर प्रकार (NAT)** प्रश्नांवर लक्ष केंद्रित करा आणि IITs/NITs मध्ये **PSU नोकरी मुलाखती** किंवा **एम.टेक/पीएचडी प्रवेशासाठी** तयारी करा.</span>
+                      </p>
+                  </div>
+                  <div class="feature-item">
+                      <span class="feature-icon">🧠</span>
+                      <h3>
+                          <span class="english">BITSAT: Logic & English Focus</span>
+                          <span class="hindi">बिटसैट: तर्क और अंग्रेजी पर ध्यान दें</span>
+                          <span class="marathi">BITSAT: तर्कशास्त्र आणि इंग्रजीवर लक्ष</span>
+                      </h3>
+                      <p>
+                          <span class="english">BITSAT has a unique section on **English Proficiency and Logical Reasoning**. Since there is no negative marking for unattempted questions, focus on maximizing attempts in the main **PCM** sections along with this key difference.</span>
+                          <span class="hindi">बिटसैट में **अंग्रेजी दक्षता और तार्किक तर्क** पर एक अनूठा खंड है। अनुत्तरित प्रश्नों के लिए कोई नकारात्मक अंकन नहीं है, इसलिए मुख्य **पीसीएम** अनुभागों के साथ इस महत्वपूर्ण अंतर पर ध्यान केंद्रित करें।</span>
+                          <span class="marathi">BITSAT मध्ये **इंग्रजी प्रवीणता आणि तार्किक तर्क** यावर एक अद्वितीय विभाग आहे. अनुत्तरीत प्रश्नांसाठी कोणतेही नकारात्मक अंकन नाही, म्हणून मुख्य **PCM** विभागांमध्ये जास्तीत जास्त प्रयत्नांवर लक्ष केंद्रित करा.</span>
+                      </p>
+                  </div>
+                  <div class="feature-item">
+                      <span class="feature-icon">⭐️</span>
+                      <h3>
+                          <span class="english">BITSAT: Target BITS Pilani</span>
+                          <span class="hindi">बिटसैट: बिट्स पिलानी को लक्षित करें</span>
+                          <span class="marathi">BITSAT: BITS पिलानीला लक्ष्य करा</span>
+                      </h3>
+                      <p>
+                          <span class="english">BITSAT is the exclusive entrance exam for the prestigious **BITS Pilani, BITS Goa, and BITS Hyderabad** campuses. It is entirely computer-based, so rigorous practice on online mock interfaces is essential.</span>
+                          <span class="hindi">बिटसैट प्रतिष्ठित **बिट्स पिलानी, बिट्स गोवा, और बिट्स हैदराबाद** परिसरों के लिए विशेष प्रवेश परीक्षा है। यह पूरी तरह से कंप्यूटर-आधारित है, इसलिए ऑनलाइन मॉक इंटरफेस पर कठोर अभ्यास आवश्यक है।</span>
+                          <span class="marathi">BITSAT ही प्रतिष्ठित **BITS पिलानी, BITS गोवा, आणि BITS हैदराबाद** कॅम्पससाठी खास प्रवेश परीक्षा आहे. ही पूर्णपणे संगणक-आधारित आहे, त्यामुळे ऑनलाइन मॉक इंटरफेसवर कठोर सराव करणे आवश्यक आहे.</span>
+                      </p>
+                  </div>
+              </div>
+          </div>
+          
+      </div> </div>
+  </section>
+
+  <section id="syllabus" class="features">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="english">Syllabus Overview</span>
+        <span class="hindi">पाठ्यक्रम अवलोकन</span>
+        <span class="marathi">अभ्यासक्रम विहंगावलोकन</span>
+      </h2>
+      <p>
+        <span class="english">Access detailed, updated syllabus guides for all major engineering exams: JEE Main/Advanced, MHT-CET, GATE, and BITSAT.</span>
+        <span class="hindi">सभी प्रमुख इंजीनियरिंग परीक्षाओं के लिए विस्तृत, अद्यतन पाठ्यक्रम गाइड तक पहुंचें: जेईई मेन/एडवांस्ड, एमएचटी-सीईटी, गेट, और बिटसैट।</span>
+        <span class="marathi">सर्व प्रमुख अभियांत्रिकी परीक्षांसाठी तपशीलवार, अद्ययावत अभ्यासक्रम मार्गदर्शकांमध्ये प्रवेश करा: JEE मुख्य/प्रगत, MHT-CET, GATE, आणि BITSAT.</span>
+      </p>
+      <div style="text-align: center; margin-top: 40px;">
+         <a href="#" class="btn btn-primary">
+            <span class="english">View Detailed Syllabus Guide</span>
+            <span class="hindi">विस्तृत पाठ्यक्रम गाइड देखें</span>
+            <span class="marathi">तपशीलवार अभ्यासक्रम मार्गदर्शक पहा</span>
+         </a>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="container">
+      <h3>
+        <span class="english">Contact</span>
+        <span class="hindi">संपर्क</span>
+        <span class="marathi">संपर्क</span>
+      </h3>
+      <p>Email: jee@xshala.edu</p>
+      <p>Phone: +91 98765 43210</p>
+      <div class="footer-bottom">
+        <p>
+          <span class="english">© 2025 XShala. All Rights Reserved.</span>
+          <span class="hindi">© 2025 XShala. सर्वाधिकार सुरक्षित।</span>
+          <span class="marathi">© 2025 XShala. सर्व हक्क राखीव.</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const MODE_KEY = 'xshala-mode';
+    const LANG_KEY = 'xshala-lang';
+
+    let currentMode = 'night';
+    let currentLanguage = 'english';
+    
+    // --- New Function: Tab Initialization ---
+    function initTabs() {
+        document.querySelectorAll('.btn-tab').forEach(button => {
+            button.addEventListener('click', function() {
+                // Deactivate all buttons and panes
+                document.querySelectorAll('.btn-tab').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+                // Activate the clicked button
+                this.classList.add('active');
+
+                // Activate the corresponding pane
+                const targetId = this.getAttribute('data-tab');
+                const targetPane = document.getElementById(targetId);
+                if (targetPane) {
+                    targetPane.classList.add('active');
+                }
+            });
+        });
+    }
+    // ----------------------------------------
+
+    function applyMode(mode) {
+      const root = document.documentElement;
+      if (mode === 'day') {
+        root.classList.add('theme-day');
+        document.body.classList.add('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '☀️';
+        currentMode = 'day';
+      } else {
+        root.classList.remove('theme-day');
+        document.body.classList.remove('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '🌙';
+        currentMode = 'night';
+      }
+      localStorage.setItem(MODE_KEY, currentMode);
+    }
+
+    function toggleMode() {
+      applyMode(currentMode === 'night' ? 'day' : 'night');
+    }
+
+    function setLanguage(lang) {
+      document.body.className = document.body.className.replace(/\blang-\w+\b/g, '').trim();
+      if (lang !== 'english') {
+        document.body.classList.add('lang-' + lang);
+      }
+      currentLanguage = lang;
+      localStorage.setItem(LANG_KEY, currentLanguage);
+
+      document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+      const btn = document.querySelector(`.language-btn[data-lang="${lang}"]`);
+      if (btn) btn.classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // restore saved preferences
+      const savedMode = localStorage.getItem(MODE_KEY);
+      const savedLang = localStorage.getItem(LANG_KEY);
+
+      applyMode(savedMode || 'night');
+      setLanguage(savedLang || 'english');
+      
+      initTabs(); // Initialize the new tab functionality
+
+      document.getElementById('mode-toggle-btn').addEventListener('click', toggleMode);
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+      });
+
+      // smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

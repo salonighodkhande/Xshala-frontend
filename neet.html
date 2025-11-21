@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XShala – NEET Guidance</title>
+  <style>
+    /* ===================================
+        Base Styling & Variables
+        =================================== */
+    :root {
+        --primary-bg: #0a0a0a;
+        --secondary-bg: #1a1a2e;
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --accent-cyan: #00ffff;
+        --accent-magenta: #ff00ff;
+        --accent-green: #00ff00;
+        --card-bg: rgba(0, 0, 0, 0.7);
+        --card-border-cyan: rgba(0, 255, 255, 0.3);
+        --card-border-magenta: rgba(255, 0, 255, 0.3);
+        --card-border-green: rgba(0, 255, 0, 0.3);
+        --logo-text-shadow: 0 0 20px var(--accent-cyan);
+        --logo-accent-color: var(--accent-cyan);
+        --header-bg: rgba(10, 10, 10, 0.95);
+        --header-border: 2px solid var(--accent-cyan);
+        --footer-bg: rgba(0, 0, 0, 0.95);
+        --btn-primary-start: #00ffff;
+        --btn-primary-end: #0080ff;
+    }
+
+    :root.theme-day {
+        --primary-bg: #f0f2f5;
+        --secondary-bg: #e2e4e8;
+        --text-primary: #1a1a1a;
+        --text-secondary: #555555;
+        --accent-cyan: #0080ff;
+        --accent-magenta: #ff6600;
+        --accent-green: #008800;
+        --card-bg: rgba(255, 255, 255, 0.8);
+        --card-border-cyan: rgba(0, 128, 255, 0.3);
+        --card-border-magenta: rgba(255, 102, 0, 0.3);
+        --card-border-green: rgba(0, 136, 0, 0.3);
+        --logo-text-shadow: none;
+        --logo-accent-color: var(--text-primary);
+        --header-bg: rgba(255, 255, 255, 0.95);
+        --header-border: 2px solid var(--accent-cyan);
+        --footer-bg: rgba(255, 255, 255, 0.95);
+        --btn-primary-start: #0080ff;
+        --btn-primary-end: #0055aa;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--primary-bg);
+      transition: background 0.5s ease, color 0.5s ease;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      padding: 80px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    p {
+        line-height: 1.6;
+        color: var(--text-secondary);
+        opacity: 0.9;
+    }
+    ul.list-style-none {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    ul.list-style-none li {
+        margin-bottom: 0.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 1.2rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, var(--btn-primary-start), var(--btn-primary-end));
+      color: #000;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4);
+    }
+
+    .theme-day .btn-primary:hover {
+        box-shadow: 0 15px 35px rgba(0, 128, 255, 0.4);
+    }
+
+    .mode-toggle-btn, .language-btn {
+        background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        color: #000;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .mode-toggle-btn {
+        font-size: 1.2rem;
+        padding: 0.4rem;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+        box-shadow: none;
+    }
+
+    .mode-toggle-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    }
+
+    .language-btn.active {
+        background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+        box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    }
+
+    .theme-day .language-btn.active {
+        background: linear-gradient(45deg, var(--accent-magenta), var(--accent-green));
+    }
+
+    header {
+      background: var(--header-bg);
+      backdrop-filter: blur(15px);
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 15px 0;
+      border-bottom: 2px solid var(--header-border);
+      transition: background-color 0.5s ease, border-bottom 0.5s ease;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      text-shadow: var(--logo-text-shadow);
+    }
+
+    .logo span {
+      color: var(--logo-accent-color);
+      animation: neonPulse 2s ease-in-out infinite alternate;
+    }
+
+    .theme-day .logo span {
+        animation: none;
+    }
+
+    @keyframes neonPulse {
+        0% { text-shadow: 0 0 20px var(--accent-cyan); }
+        100% { text-shadow: 0 0 30px var(--accent-cyan), 0 0 40px var(--accent-cyan); }
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+
+    .language-selector {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .animated-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+    }
+
+    .theme-day .animated-background {
+        background: linear-gradient(135deg, #f0f2f5 0%, #e2e4e8 25%, #d1d4d8 50%, #c1c4c8 75%, #b1b4b8 100%);
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+     /* Enhanced Floating STEM Elements */
+         /* Enhanced Floating STEM Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(0, 255, 255, 0.3);
+            font-size: 4rem;
+            animation: float 25s infinite linear;
+            text-shadow: 0 0 20px currentColor;
+        }
+        
+        /* Day Mode Floating Elements */
+        .theme-day .floating-element {
+            color: rgba(0, 128, 255, 0.3);
+            text-shadow: none;
+        }
+
+        .floating-element:nth-child(odd) {
+            animation-direction: reverse;
+            color: rgba(255, 0, 255, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(odd) {
+            color: rgba(255, 102, 0, 0.3);
+        }
+
+        .floating-element:nth-child(3n) {
+            color: rgba(0, 255, 0, 0.3);
+        }
+
+        .theme-day .floating-element:nth-child(3n) {
+            color: rgba(0, 136, 0, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(0.7);
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) rotate(324deg) scale(0.7);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Neon Circuit Lines */
+        .circuit-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            height: 2px;
+            animation: circuitFlow 8s infinite;
+        }
+
+        .circuit-line:nth-child(1) {
+            top: 20%;
+            width: 100%;
+            animation-delay: 0s;
+        }
+
+        .circuit-line:nth-child(2) {
+            top: 60%;
+            width: 100%;
+            animation-delay: -2s;
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent);
+        }
+
+        .circuit-line:nth-child(3) {
+            top: 80%;
+            width: 100%;
+            animation-delay: -4s;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+
+        @keyframes circuitFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* DNA Helix Enhanced */
+        .dna-helix {
+            position: fixed;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 400px;
+            z-index: -1;
+        }
+
+        .dna-strand {
+            position: absolute;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+            border-radius: 3px;
+            animation: dnaRotate 12s infinite linear;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        .theme-day .dna-strand {
+            box-shadow: none;
+        }
+
+        .dna-strand:nth-child(1) {
+            left: 30px;
+            transform-origin: center;
+        }
+
+        .dna-strand:nth-child(2) {
+            right: 30px;
+            animation-delay: -6s;
+            background: linear-gradient(180deg, var(--accent-magenta), var(--accent-green));
+        }
+
+        @keyframes dnaRotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+    .hero {
+      text-align: center;
+      padding: 150px 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    .theme-day .hero h1 {
+      animation: none;
+      -webkit-text-fill-color: initial;
+      background: none;
+    }
+
+    @keyframes titleGlow {
+        0% { filter: brightness(1); }
+        100% { filter: brightness(1.3); text-shadow: 0 0 30px rgba(0, 255, 255, 0.5); }
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      max-width: 600px;
+      margin: 0 auto;
+      margin-bottom: 3rem;
+      animation: fadeInUp 1s ease-out 0.5s both;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        animation: fadeInUp 1s ease-out 1s both;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 8px 32px 0 rgba(0, 255, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease, border 0.5s ease;
+      border: 1px solid var(--card-border-cyan);
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+    }
+
+    .theme-day .service-card:hover {
+      box-shadow: 0 20px 40px rgba(0, 128, 255, 0.2);
+    }
+
+    .service-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .theme-day .service-card h3 {
+      background: none;
+      -webkit-text-fill-color: initial;
+      color: var(--text-primary);
+    }
+
+    .service-card p {
+      margin-bottom: 25px;
+    }
+    .service-card ul {
+        text-align: left;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 20px;
+        background: -webkit-linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    .theme-day .section-title {
+        animation: none;
+        -webkit-text-fill-color: initial;
+        background: none;
+    }
+
+    .features p {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 1.1rem;
+    }
+
+    .new-features {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      padding: 4rem 0;
+      margin: 2rem 0;
+      border-radius: 20px;
+      border: 1px solid var(--card-border-green);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .feature-item {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(0, 255, 0, 0.1);
+        border-radius: 15px;
+        border: 1px solid var(--card-border-green);
+        transition: all 0.3s ease;
+    }
+
+    .theme-day .feature-item {
+        background: rgba(0, 136, 0, 0.1);
+    }
+
+    .feature-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 255, 0, 0.2);
+        background: rgba(0, 255, 0, 0.2);
+    }
+
+    .theme-day .feature-item:hover {
+        box-shadow: 0 20px 40px rgba(0, 136, 0, 0.2);
+        background: rgba(0, 136, 0, 0.2);
+    }
+
+    .feature-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        color: var(--accent-green);
+        animation: pulse 2s infinite;
+    }
+
+    footer {
+      background: var(--footer-bg);
+      backdrop-filter: blur(10px);
+      padding: 40px 0;
+      text-align: center;
+      border-top: 2px solid var(--accent-cyan);
+      transition: background-color 0.5s ease, border-top 0.5s ease;
+    }
+
+    footer h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: var(--text-primary);
+    }
+
+    footer p {
+        margin-bottom: 10px;
+        opacity: 0.7;
+    }
+
+    .footer-bottom {
+        margin-top: 30px;
+        border-top: 1px solid var(--card-border-cyan);
+        padding-top: 20px;
+    }
+
+    .hindi, .marathi { display: none; }
+    body.lang-hindi .english, body.lang-hindi .marathi { display: none; }
+    body.lang-hindi .hindi { display: inline; }
+
+    body.lang-marathi .english, body.lang-marathi .hindi { display: none; }
+    body.lang-marathi .marathi { display: inline; }
+
+    body.lang-hindi .hindi-block { display: block; }
+    body.lang-marathi .marathi-block { display: block; }
+    .hindi-block, .marathi-block { display: none; }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 0.9;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="animated-background"></div>
+  <div class="circuit-lines">
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+    <div class="circuit-line"></div>
+  </div>
+   <div class="floating-elements">
+        <div class="floating-element" style="left: 5%; animation-delay: 0s;">🧬</div>
+        <div class="floating-element" style="left: 15%; animation-delay: -2s;">⚛️</div>
+        <div class="floating-element" style="left: 25%; animation-delay: -4s;">🔬</div>
+        <div class="floating-element" style="left: 35%; animation-delay: -6s;">🧪</div>
+        <div class="floating-element" style="left: 45%; animation-delay: -8s;">⚙️</div>
+        <div class="floating-element" style="left: 55%; animation-delay: -10s;">💡</div>
+        <div class="floating-element" style="left: 65%; animation-delay: -12s;">🔭</div>
+        <div class="floating-element" style="left: 75%; animation-delay: -14s;">📐</div>
+        <div class="floating-element" style="left: 85%; animation-delay: -16s;">∑</div>
+        <div class="floating-element" style="left: 95%; animation-delay: -18s;">π</div>
+        <div class="floating-element" style="left: 10%; animation-delay: -1s;">∞</div>
+        <div class="floating-element" style="left: 20%; animation-delay: -3s;">△</div>
+        <div class="floating-element" style="left: 30%; animation-delay: -5s;">∮</div>
+        <div class="floating-element" style="left: 40%; animation-delay: -7s;">∫</div>
+        <div class="floating-element" style="left: 50%; animation-delay: -9s;">🎯</div>
+        <div class="floating-element" style="left: 60%; animation-delay: -11s;">🚀</div>
+        <div class="floating-element" style="left: 70%; animation-delay: -13s;">🔋</div>
+        <div class="floating-element" style="left: 80%; animation-delay: -15s;">💻</div>
+        <div class="floating-element" style="left: 90%; animation-delay: -17s;">🌐</div>
+    </div>
+
+    <div class="dna-helix">
+        <div class="dna-strand"></div>
+        <div class="dna-strand"></div>
+    </div>
+
+
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo"><span>X</span>Shala</a>
+      <ul class="nav-links">
+        <li>
+          <a href="index.html" class="english">Home</a>
+          <a href="index.html" class="hindi">होम</a>
+          <a href="index.html" class="marathi">होम</a>
+        </li>
+        <li>
+          <a href="#" class="english">NEET Programs</a>
+          <a href="#" class="hindi">नीट कार्यक्रम</a>
+          <a href="#" class="marathi">नीट कार्यक्रम</a>
+        </li>
+        <li>
+          <a href="#syllabus" class="english">Syllabus</a>
+          <a href="#syllabus" class="hindi">पाठ्यक्रम</a>
+          <a href="#syllabus" class="marathi">अभ्यासक्रम</a>
+        </li>
+        <li>
+          <a href="#contact" class="english">Contact</a>
+          <a href="#contact" class="hindi">संपर्क</a>
+          <a href="#contact" class="marathi">संपर्क</a>
+        </li>
+      </ul>
+      <div class="language-selector">
+        <button id="mode-toggle-btn" class="mode-toggle-btn">🌙</button>
+        <button class="language-btn" data-lang="english">EN</button>
+        <button class="language-btn" data-lang="hindi">हि</button>
+        <button class="language-btn" data-lang="marathi">म</button>
+      </div>
+    </nav>
+  </header>
+
+  <section id="hero" class="hero">
+    <div class="container">
+      <h1>
+        <span class="english">Your Gateway to MBBS & BDS: NEET 2025 Guidance</span>
+        <span class="hindi">एमबीबीएस और बीडीएस के लिए आपका प्रवेश द्वार: NEET 2025 मार्गदर्शन</span>
+        <span class="marathi">MBBS आणि BDSसाठी तुमचा प्रवेशद्वार: NEET 2025 मार्गदर्शन</span>
+      </h1>
+      <p>
+        <span class="english">Complete NEET Guidance to excel in Physics, Chemistry, and Biology for medical entrance.</span>
+        <span class="hindi">फिजिक्स, केमिस्ट्री और बायोलॉजी में उत्कृष्टता हासिल करने के लिए पूर्ण NEET मार्गदर्शन।</span>
+        <span class="marathi">फिजिक्स, केमिस्ट्री आणि बायोलॉजीमध्ये उत्कृष्टता मिळवण्यासाठी संपूर्ण NEET मार्गदर्शन.</span>
+      </p>
+      <div class="cta-buttons">
+        <a href="index.html" class="btn btn-primary">
+          <span class="english">Back to Home</span>
+          <span class="hindi">होम पर वापस जाएं</span>
+          <span class="marathi">होमवर परत जा</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="program-details" class="new-features">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="english">All You Need to Know: NEET 2025 Exam</span>
+        <span class="hindi">आपको जो जानना चाहिए: NEET 2025 परीक्षा</span>
+        <span class="marathi">तुम्हाला जे जाणून घेणे आवश्यक आहे: NEET 2025 परीक्षा</span>
+      </h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <span class="feature-icon">📝</span>
+          <h3>
+            <span class="english">Eligibility Criteria</span>
+            <span class="hindi">पात्रता मानदंड</span>
+            <span class="marathi">पात्रता निकष</span>
+          </h3>
+          <ul class="list-style-none">
+            <li>
+              <span class="english">Age: Minimum 17 years by Dec 31, 2025. No upper age limit.</span>
+              <span class="hindi">आयु: 31 दिसंबर 2025 तक न्यूनतम 17 वर्ष। ऊपरी आयु सीमा नहीं।</span>
+              <span class="marathi">वय: 31 डिसेंबर 2025 पर्यंत किमान 17 वर्षे. वरची वय मर्यादा नाही.</span>
+            </li>
+            <li>
+              <span class="english">Qualification: Passed/appearing 12th with Physics, Chemistry, Biology/Biotechnology, English.</span>
+              <span class="hindi">योग्यता: फिजिक्स, केमिस्ट्री, बायोलॉजी/बायोटेक्नोलॉजी, इंग्लिश के साथ 12वीं पास/अभ्यर्थी।</span>
+              <span class="marathi">पात्रता: फिजिक्स, केमिस्ट्री, बायोलॉजी/बायोटेक्नोलॉजी, इंग्रजीसह 12वी उत्तीर्ण/अभ्यर्थी.</span>
+            </li>
+            <li>
+              <span class="english">Minimum Marks: Gen-50%, OBC/SC/ST-40%, PWD-45%.</span>
+              <span class="hindi">न्यूनतम अंक: Gen-50%, OBC/SC/ST-40%, PWD-45%।</span>
+              <span class="marathi">किमान गुण: Gen-50%, OBC/SC/ST-40%, PWD-45%.</span>
+            </li>
+            <li>
+              <span class="english">Nationality: Indian, NRI, OCI, PIO, Foreign candidates eligible.</span>
+              <span class="hindi">राष्ट्रीयता: भारतीय, एनआरआई, ओसीआई, पीआईओ, विदेशी उम्मीदवार पात्र।</span>
+              <span class="marathi">राष्ट्रीयत्व: भारतीय, NRI, OCI, PIO, विदेशी उमेदवार पात्र.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">💻</span>
+          <h3>
+            <span class="english">Application Process</span>
+            <span class="hindi">आवेदन प्रक्रिया</span>
+            <span class="marathi">अर्ज प्रक्रिया</span>
+          </h3>
+          <ul class="list-style-none">
+            <li>
+              <span class="english">Online registration on NTA NEET website.</span>
+              <span class="hindi">NTA NEET वेबसाइट पर ऑनलाइन पंजीकरण।</span>
+              <span class="marathi">NTA NEET वेबसाइटवर ऑनलाइन नोंदणी.</span>
+            </li>
+            <li>
+              <span class="english">Fill form, upload documents, pay fee, download confirmation.</span>
+              <span class="hindi">फॉर्म भरें, दस्तावेज़ अपलोड करें, शुल्क दें, पुष्टि डाउनलोड करें।</span>
+              <span class="marathi">फॉर्म भरा, कागदपत्रे अपलोड करा, फी भरा, पुष्टीकरण डाउनलोड करा.</span>
+            </li>
+            <li>
+              <span class="english">Documents: Photo, signature, thumb impression, 10th certificate, category certificate.</span>
+              <span class="hindi">दस्तावेज़: फोटो, हस्ताक्षर, अंगूठे का निशान, 10वीं प्रमाणपत्र, श्रेणी प्रमाणपत्र।</span>
+              <span class="marathi">कागदपत्रे: फोटो, स्वाक्षरी, अंगठ्याचा ठसा, 10वी प्रमाणपत्र, श्रेणी प्रमाणपत्र.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📅</span>
+          <h3>
+            <span class="english">Important Dates</span>
+            <span class="hindi">महत्वपूर्ण तिथियाँ</span>
+            <span class="marathi">महत्त्वाच्या तारखा</span>
+          </h3>
+          <ul class="list-style-none">
+            <li>
+              <span class="english">Application: Jan-Mar 2025</span>
+              <span class="hindi">आवेदन: जनवरी-मार्च 2025</span>
+              <span class="marathi">अर्ज: जानेवारी-मार्च 2025</span>
+            </li>
+            <li>
+              <span class="english">Correction Window: March 2025</span>
+              <span class="hindi">सुधार विंडो: मार्च 2025</span>
+              <span class="marathi">दुरुस्ती विंडो: मार्च 2025</span>
+            </li>
+            <li>
+              <span class="english">Admit Card: April 2025</span>
+              <span class="hindi">एडमिट कार्ड: अप्रैल 2025</span>
+              <span class="marathi">प्रवेशपत्र: एप्रिल 2025</span>
+            </li>
+            <li>
+              <span class="english">Exam Date: May 2025</span>
+              <span class="hindi">परीक्षा तिथि: मई 2025</span>
+              <span class="marathi">परीक्षेची तारीख: मे 2025</span>
+            </li>
+            <li>
+              <span class="english">Results: June 2025</span>
+              <span class="hindi">परिणाम: जून 2025</span>
+              <span class="marathi">निकाल: जून 2025</span>
+            </li>
+            <li>
+              <span class="english">Counselling: July 2025 onwards</span>
+              <span class="hindi">काउंसलिंग: जुलाई 2025 से आगे</span>
+              <span class="marathi">काउंसिलिंग: जुलै 2025 पासून पुढे</span>
+            </li>
+          </ul>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📊</span>
+          <h3>
+            <span class="english">Exam Pattern & Marking</span>
+            <span class="hindi">परीक्षा पैटर्न और मार्किंग</span>
+            <span class="marathi">परीक्षा पॅटर्न आणि मार्किंग</span>
+          </h3>
+          <ul class="list-style-none">
+            <li>
+              <span class="english">Mode: Offline OMR sheet</span>
+              <span class="hindi">मोड: ऑफलाइन OMR शीट</span>
+              <span class="marathi">मोड: ऑफलाइन OMR शीट</span>
+            </li>
+            <li>
+              <span class="english">Duration: 3 hours 20 minutes</span>
+              <span class="hindi">समय: 3 घंटे 20 मिनट</span>
+              <span class="marathi">कालावधी: 3 तास 20 मिनिटे</span>
+            </li>
+            <li>
+              <span class="english">Questions: 200 (180 to be attempted)</span>
+              <span class="hindi">प्रश्न: 200 (180 हल करने हैं)</span>
+              <span class="marathi">प्रश्न: 200 (180 सोडवायचे आहेत)</span>
+            </li>
+            <li>
+              <span class="english">Type: MCQs (Physics, Chemistry, Biology)</span>
+              <span class="hindi">प्रकार: MCQ (फिजिक्स, केमिस्ट्री, बायोलॉजी)</span>
+              <span class="marathi">प्रकार: MCQ (फिजिक्स, केमिस्ट्री, बायोलॉजी)</span>
+            </li>
+            <li>
+              <span class="english">Marking: +4 correct, -1 wrong, 0 unattempted</span>
+              <span class="hindi">मार्किंग: +4 सही, -1 गलत, 0 न किए गए</span>
+              <span class="marathi">मार्किंग: +4 बरोबर, -1 चुकीचे, 0 न सोडवलेले</span>
+            </li>
+            <li>
+              <span class="english">Total: 720 marks</span>
+              <span class="hindi">कुल: 720 अंक</span>
+              <span class="marathi">एकूण: 720 गुण</span>
+            </li>
+          </ul>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🎫</span>
+          <h3>
+            <span class="english">Admit Card & Result</span>
+            <span class="hindi">एडमिट कार्ड और परिणाम</span>
+            <span class="marathi">प्रवेशपत्र आणि निकाल</span>
+          </h3>
+          <ul class="list-style-none">
+            <li>
+              <span class="english">Admit card downloadable online (NTA NEET website).</span>
+              <span class="hindi">एडमिट कार्ड ऑनलाइन डाउनलोड करें (NTA NEET वेबसाइट)।</span>
+              <span class="marathi">प्रवेशपत्र ऑनलाइन डाउनलोड करा (NTA NEET वेबसाइट).</span>
+            </li>
+            <li>
+              <span class="english">Result: Online scorecard with marks, rank, qualifying status.</span>
+              <span class="hindi">परिणाम: ऑनलाइन स्कोरकार्ड जिसमें अंक, रैंक, योग्यता स्थिति।</span>
+              <span class="marathi">निकाल: ऑनलाइन स्कोरकार्ड, गुण, रँक, पात्रतेची स्थिती.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🤝</span>
+          <h3>
+            <span class="english">Counselling Process</span>
+            <span class="hindi">काउंसलिंग प्रक्रिया</span>
+            <span class="marathi">काउंसिलिंग प्रक्रिया</span>
+          </h3>
+          <ul class="list-style-none">
+            <li>
+              <span class="english">MCC for All India Quota, State for State Quota.</span>
+              <span class="hindi">MCC ऑल इंडिया कोटा के लिए, राज्य राज्य कोटा के लिए।</span>
+              <span class="marathi">MCC ऑल इंडिया कोटा साठी, राज्य राज्य कोटा साठी.</span>
+            </li>
+            <li>
+              <span class="english">Steps: Registration, choice filling, seat allotment, document verification, reporting.</span>
+              <span class="hindi">चरण: पंजीकरण, विकल्प भरना, सीट आवंटन, दस्तावेज़ सत्यापन, रिपोर्टिंग।</span>
+              <span class="marathi">पायऱ्या: नोंदणी, पर्याय भरना, सीट वाटप, कागदपत्र सत्यापन, रिपोर्टिंग.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📈</span>
+          <h3>
+            <span class="english">Cut-Off & Reservation</span>
+            <span class="hindi">कट-ऑफ और आरक्षण</span>
+            <span class="marathi">कट-ऑफ आणि आरक्षण</span>
+          </h3>
+          <ul class="list-style-none">
+            <li>
+              <span class="english">Cut-Off: Gen-50 percentile, OBC/SC/ST-40 percentile, PWD-45 percentile.</span>
+              <span class="hindi">कट-ऑफ: Gen-50 पर्सेंटाइल, OBC/SC/ST-40 पर्सेंटाइल, PWD-45 पर्सेंटाइल।</span>
+              <span class="marathi">कट-ऑफ: Gen-50 पर्सेंटाइल, OBC/SC/ST-40 पर्सेंटाइल, PWD-45 पर्सेंटाइल.</span>
+            </li>
+            <li>
+              <span class="english">Reservation: SC-15%, ST-7.5%, OBC-NCL-27%, EWS-10%, PWD-5% horizontal.</span>
+              <span class="hindi">आरक्षण: SC-15%, ST-7.5%, OBC-NCL-27%, EWS-10%, PWD-5% क्षैतिज।</span>
+              <span class="marathi">आरक्षण: SC-15%, ST-7.5%, OBC-NCL-27%, EWS-10%, PWD-5% क्षैतिज.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🧠</span>
+          <h3>
+            <span class="english">Preparation Tips</span>
+            <span class="hindi">तैयारी के सुझाव</span>
+            <span class="marathi">तयारीच्या टिप्स</span>
+          </h3>
+          <ul class="list-style-none">
+            <li>
+              <span class="english">Study NCERT thoroughly for all subjects.</span>
+              <span class="hindi">सभी विषयों के लिए NCERT गहराई से पढ़ें।</span>
+              <span class="marathi">सर्व विषयांसाठी NCERT बारकाईने वाचा.</span>
+            </li>
+            <li>
+              <span class="english">Make a realistic timetable and stick to it.</span>
+              <span class="hindi">एक वास्तविक टाइमटेबल बनाएं और उसका पालन करें।</span>
+              <span class="marathi">खरे टाइमटेबल बनवा आणि त्याची अंमलबजावणी करा.</span>
+            </li>
+            <li>
+              <span class="english">Regular mock tests and previous year papers.</span>
+              <span class="hindi">नियमित मॉक टेस्ट और पिछले वर्ष के पेपर।</span>
+              <span class="marathi">नियमित मॉक टेस्ट आणि मागील वर्षांचे पेपर.</span>
+            </li>
+            <li>
+              <span class="english">Focus on time management & weak areas.</span>
+              <span class="hindi">समय प्रबंधन और कमजोर क्षेत्रों पर ध्यान दें।</span>
+              <span class="marathi">वेळ व्यवस्थापन आणि कमकुवत भागांवर लक्ष केंद्रित करा.</span>
+            </li>
+            <li>
+              <span class="english">Take care of health, avoid stress.</span>
+              <span class="hindi">स्वास्थ्य का ध्यान रखें, तनाव से बचें।</span>
+              <span class="marathi">आरोग्याची काळजी घ्या, तणाव टाळा.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="syllabus" class="features">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="english">NEET Syllabus 2025</span>
+        <span class="hindi">NEET पाठ्यक्रम 2025</span>
+        <span class="marathi">NEET अभ्यासक्रम 2025</span>
+      </h2>
+      <p>
+        <span class="english">Physics, Chemistry & Biology syllabus covers Class 11 & 12 CBSE topics. For details, refer to official NTA syllabus PDF.</span>
+        <span class="hindi">फिजिक्स, केमिस्ट्री और बायोलॉजी का पाठ्यक्रम कक्षा 11 और 12 CBSE विषयों को कवर करता है। विवरण के लिए आधिकारिक NTA पाठ्यक्रम PDF देखें।</span>
+        <span class="marathi">फिजिक्स, केमिस्ट्री आणि बायोलॉजीचा अभ्यासक्रम 11वी आणि 12वी CBSE विषय समाविष्ट करतो. तपशीलांसाठी अधिकृत NTA अभ्यासक्रम PDF पहा.</span>
+      </p>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="container">
+      <h3>
+        <span class="english">Contact</span>
+        <span class="hindi">संपर्क</span>
+        <span class="marathi">संपर्क</span>
+      </h3>
+      <p>Email: neet@xshala.edu</p>
+      <p>Phone: +91 98765 43210</p>
+      <div class="footer-bottom">
+        <p>
+          <span class="english">© 2025 XShala. All Rights Reserved.</span>
+          <span class="hindi">© 2025 XShala. सर्वाधिकार सुरक्षित।</span>
+          <span class="marathi">© 2025 XShala. सर्व हक्क राखीव.</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const MODE_KEY = 'xshala-mode';
+    const LANG_KEY = 'xshala-lang';
+
+    let currentMode = 'night';
+    let currentLanguage = 'english';
+
+    function applyMode(mode) {
+      const root = document.documentElement;
+      if (mode === 'day') {
+        root.classList.add('theme-day');
+        document.body.classList.add('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '☀️';
+        currentMode = 'day';
+      } else {
+        root.classList.remove('theme-day');
+        document.body.classList.remove('theme-day');
+        document.getElementById('mode-toggle-btn').innerHTML = '🌙';
+        currentMode = 'night';
+      }
+      localStorage.setItem(MODE_KEY, currentMode);
+    }
+
+    function toggleMode() {
+      applyMode(currentMode === 'night' ? 'day' : 'night');
+    }
+
+    function setLanguage(lang) {
+      document.body.className = document.body.className.replace(/\blang-\w+\b/g, '').trim();
+      if (lang !== 'english') {
+        document.body.classList.add('lang-' + lang);
+      }
+      currentLanguage = lang;
+      localStorage.setItem(LANG_KEY, currentLanguage);
+
+      document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+      const btn = document.querySelector(`.language-btn[data-lang="${lang}"]`);
+      if (btn) btn.classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // restore saved preferences
+      const savedMode = localStorage.getItem(MODE_KEY);
+      const savedLang = localStorage.getItem(LANG_KEY);
+
+      applyMode(savedMode || 'night');
+      setLanguage(savedLang || 'english');
+
+      document.getElementById('mode-toggle-btn').addEventListener('click', toggleMode);
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+      });
+
+      // smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
